@@ -1,0 +1,9 @@
+[{"y":"8.905144","hp":"125","class":"Tower","x":"2.795761","angle":"0.000590","pieceid":"2","left":"1"},
+{"y":"8.907166","hp":"125","class":"Tower","x":"3.684771","angle":"0.001884","pieceid":"3","left":"1"},
+{"y":"11.719154","hp":"125","class":"Tower","x":"2.795478","angle":"-0.000821","pieceid":"4","left":"1"},
+{"y":"11.718252","hp":"125","class":"Tower","x":"3.683895","angle":"-0.002611","pieceid":"5","left":"1"},
+{"y":"10.312748","snappedLeft":"3","hp":"100","class":"Arch","x":"3.674944","angle":"-0.000313","pieceid":"6","left":"1","snappedRight":"5"},
+{"y":"8.915701","hp":"150","class":"Turret","x":"4.599835","angle":"0.025231","pieceid":"7","left":"1"},
+{"y":"11.713821","hp":"150","class":"Turret","x":"4.598148","angle":"-0.025617","pieceid":"8","left":"1"},
+{"y":"8.918930","hp":"130","class":"Catapult","x":"5.255343","angle":"0.025414","pieceid":"9","left":"1","level":"1"},
+{"y":"11.713996","hp":"130","class":"Catapult","x":"5.253130","angle":"-0.025775","pieceid":"10","left":"1","level":"1"}]

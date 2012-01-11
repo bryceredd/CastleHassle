@@ -11,4 +11,122 @@
 #ifdef __OBJC__
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
+#import "TVMacros.h"
+
+
+
+
+// should never change, dont touch.
+	#define PTM_RATIO 32.0
+
+	// ai properties 
+	#define EASY_SHOT_VARIATION 30 // percent error
+	#define MEDIUM_SHOT_VARIATION 15 // percent error
+	#define HARD_SHOT_VARIATION 5 // percent error
+    #define CAMPAIGN_SHOT_VARIATION 20 // percent error
+
+	// game properties
+	#define SAVE_FILE_NAME @"save.dat" 
+
+	// hud properties
+	#define ICON_SPACING 15
+	#define HUD_HEIGHT 57
+	#define HUD_STATUS_ITEM_SIZE 60
+	#define HUD_ITEM_DRAG_OPACITY 150
+
+	// index properties
+	#define ANIMATION_Z_INDEX 6
+	#define FOREGROUND_Z_INDEX 5
+	#define PIECE_Z_INDEX 4
+	#define MIDGROUND_Z_INDEX 3
+	#define FAR_PIECE_Z_INDEX 2
+	#define BACKGROUND_Z_INDEX 1
+
+	// game properties 
+	#define STARTING_GOLD 4000
+	#define MAX_PLAYERS 4
+	#define TIME_TO_LOSS_WITHOUT_WEAPON 10.0
+	#define MAX_TILT_FOR_WEAPON 60// in degrees
+	#define NO_FIRE_TIME 2.0
+
+	// object properties
+	// structure properties
+	#define MAX_TOWER_HP 125
+	#define MAX_MERLIN_HP 150
+	#define MAX_WALL_HP 100
+	#define MAX_TURRET_HP 150
+	#define MAX_BALCONY_HP 75
+	#define MAX_ARCH_HP 100
+	#define MAX_WEDGE_HP 200
+	#define MAX_CANNON_HP 70
+	#define MAX_CATAPULT_HP 50
+	#define MAX_TOP_HP 40
+
+	// weapon properties
+    #define DAMAGE_VELOCITY_MULTIPLIER 1.0
+    
+	#define MAX_WEAPON_LEVEL 3
+	#define CANNONBALL_BASE_DAMAGE 100.0
+	#define CATAPULTBALL_BASE_DAMAGE 15.0
+
+	#define CANNONBALL_DENSITY .6
+	#define CATAPULTBALL_DENSITY .3
+
+	#define CANNON_COOLDOWN 8.0
+	#define CANNON_DEFAULT_POWER (1.0/250.0) // larger is more powerful, for shooting distance
+
+	#define CATAPULT_COOLDOWN 12.0
+	#define CATAPULT_DEFAULT_POWER (1.0/250.0) // larger is more powerful, for shooting distance
+
+	#define WEAPON_MAX_POWER 220.0
+    #define CATPULT_BALLS_PER_UPGRADE 2
+
+
+	// prices
+	#define CATAPULT_REPAIR_PRICE 90
+	#define CATAPULT_BUY_PRICE 130
+	#define CATAPULT_UPGRADE_PRICE 200
+
+	#define CANNON_REPAIR_PRICE 90
+	#define CANNON_BUY_PRICE 120
+	#define CANNON_UPGRADE_PRICE 80
+
+	#define ARCH_REPAIR_PRICE 50
+	#define ARCH_BUY_PRICE 60
+
+	#define BALCONY_REPAIR_PRICE 30
+	#define BALCONY_BUY_PRICE 40
+
+	#define MERLIN_REPAIR_PRICE 50
+	#define MERLIN_BUY_PRICE 60
+
+	#define TOP_REPAIR_PRICE 20
+	#define TOP_BUY_PRICE 25
+
+	#define TOWER_REPAIR_PRICE 50
+	#define TOWER_BUY_PRICE 60
+
+	#define TURRET_REPAIR_PRICE 60
+	#define TURRET_BUY_PRICE 70
+
+	#define WALL_REPAIR_PRICE 40
+	#define WALL_BUY_PRICE 50
+
+	#define WEDGE_REPAIR_PRICE 60
+	#define WEDGE_BUY_PRICE 75
+
+
+
+	// environment variables
+	#define WEAPON_SELECT_THRESHOLD 40.0
+	#define PIECE_SELECT_THRESHOLD 30.0
+    #define PIECE_DENSITY 0.1
+	#define BACKGROUND_SCALE_FACTOR 1.5
+	#define PLAYER_GROUND_HEIGHT 45.0
+	#define PLAYER_BACKGROUND_HEIGHT 65.0
+	#define PLAYER_GROUND_WIDTH 720.0
+	#define SCROLL_MOMENTUM 0.2
+	#define SCROLL_MOMENTUM_CAP 20.0
+
+
 #endif

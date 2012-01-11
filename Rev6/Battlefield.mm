@@ -1,0 +1,889 @@
+// Import the interfaces
+#import "Battlefield.h"
+#import "Ground.h"
+#import "ContactListener.h"
+#import "HUD.h"
+#import "HUDSelectedMenu.h"
+#import "Background.h"
+#import "Tileable.h"
+#import "PlayerAreaManager.h"
+#import "PlayerArea.h"
+#import "PieceList.h"
+#import "DestroiedPieceAnimation.h"
+#import "GameSettings.h"
+#import "AI.h"
+#import "MainMenu.h"
+#import "Loser.h"
+#import "Winner.h"
+#import "HUDActionController.h"
+
+#import "Rev5AppDelegate.h"
+#import "JSON.h"
+
+#import "MapScreen.h"
+
+//Pixel to metres ratio. Box2D uses metres as the unit for measurement.
+//This ratio defines how many pixels correspond to 1 Box2D "metre"
+//Box2D is optimized for objects of 1x1 metre therefore it makes sense
+//to define the ratio so that your most common object type is 1x1 metre.
+
+
+// enums that will be used as tags
+enum {
+	kTagTileMap = 1,
+	kTagSpriteManager = 1,
+	kTagAnimation1 = 1,
+	kTagTowerManager = 1
+};
+
+
+// Battlefield implementation
+@implementation Battlefield
+
+@synthesize touchables, selected, lastCreated, managers, hud, tileables, playerAreaManager, gameTime, sentLoseWarning, world, sentFinalLoseWarning, lastShot, bin;
+
+static Battlefield * instance = nil;
+
++(Battlefield *) instance {
+	if(instance == nil) {
+		instance = [Battlefield alloc];
+		[instance init];
+	}
+		
+	return instance;
+}
+
++(void) resetInstance {
+    [instance release];
+	instance = nil;
+}
+
++(id) scene {
+	// 'scene' is an autorelease object.
+	Scene *scene = [Scene node];
+	
+	// 'layer' is an autorelease object.
+	Battlefield *layer = [Battlefield node];
+	
+	// add layer as a child to scene
+	[scene addChild: layer];
+	
+	// return the scene
+	return scene;
+}
+
+
+
+-(id) init {
+	if( (self=[super init])) {
+		
+		instance = self;
+		
+		Rev5AppDelegate* delegate = (Rev5AppDelegate*)[[UIApplication sharedApplication] delegate];
+		[delegate.window setMultipleTouchEnabled:NO];
+		
+		//************* Sound section starts ******************************
+		// (Back ground sound, volume reduced to 0.08f, range: 0.0f - 1.0f)
+		//*****************************************************************
+		
+		SimpleAudioEngine *backgroundSound = [SimpleAudioEngine sharedEngine];
+		if (backgroundSound != nil) {
+			[backgroundSound preloadBackgroundMusic:@"backGroundMusic.caf"];
+			if (backgroundSound.willPlayBackgroundMusic) {
+				backgroundSound.backgroundMusicVolume = 0.3f;
+			}
+		}
+		
+		[backgroundSound playBackgroundMusic:@"backGroundMusic.caf"];
+		
+		//************************** Pre-load Effects **********************
+		
+		[[SimpleAudioEngine sharedEngine] preloadEffect:@"cannonball-wall-hita.caf"];
+		
+		//************************** Sound section over ********************
+		//******************************************************************
+		
+		GameSettings* gameSettings = [GameSettings instance];
+		self.touchables = [NSMutableArray array];
+		self.tileables = [NSMutableArray array];
+        self.bin = [NSMutableArray array];
+		screenMomentum = 0.0;
+		gameTime = 0.0;
+		cameraXBeforeShot = 0.0;
+		lastShot = nil;
+		followProjectile = NO;
+		sentLoseWarning = NO;
+		didMoveInFollow = NO;
+		
+                		
+		// enable touches
+		self.isTouchEnabled = YES;
+		touchDown = NO;
+		
+		// Define the gravity vector.
+		b2Vec2 gravity;
+		gravity.Set(0.0f, -9.0f);
+		
+		// Do we want to let bodies sleep?
+		// This will speed up the physics simulation
+		bool doSleep = true;
+		
+		// Construct a world object, which will hold and simulate the rigid bodies.
+		world = new b2World(gravity, doSleep);
+		world->SetContinuousPhysics(true);
+		world->SetContactListener(new ContactListener);
+		
+		Background * foreground = [[[Background alloc] initWithLeftImage:[gameSettings getBackgroundFileName:@"frontLeft.png"]
+															 rightImage:[gameSettings getBackgroundFileName:@"frontRight.png"]
+														 imageDimension:CGPointMake(607.0, 320.0) 
+																	layer:self
+																  index:FOREGROUND_Z_INDEX 
+														 parallaxFactor:-1.0] autorelease];
+		
+		Background * midground = [[[Background alloc] initWithLeftImage:[gameSettings getBackgroundFileName:@"middleLeft.png"]
+															rightImage:[gameSettings getBackgroundFileName:@"middleRight.png"]
+														imageDimension:CGPointMake(607.0, 320.0) 
+																 layer:self
+																 index:MIDGROUND_Z_INDEX 
+														parallaxFactor:BACKGROUND_SCALE_FACTOR] autorelease];
+
+		Background * background = [[[Background alloc] initWithLeftImage:[gameSettings getBackgroundFileName:@"backLeft.jpg"]
+													  	 	 rightImage:[gameSettings getBackgroundFileName:@"backRight.jpg"]
+														 imageDimension:CGPointMake(607.0, 320.0) 
+																  layer:self
+																  index:BACKGROUND_Z_INDEX 
+														 parallaxFactor:10.0] autorelease]; 
+		 
+		[tileables addObject:foreground];
+		[tileables addObject:midground];
+		[tileables addObject:background];
+
+		
+		// Set up manager pool
+		self.managers = [NSMutableDictionary dictionary];
+		
+		// hud managers
+		[self addManager:@"hud.png" capacity:1 key:@"hud"];
+		[self addManager:@"stdButtons.png" capacity:7 key:@"stdButtons"];
+		[self addManager:@"comboButtons.png" capacity:6 key:@"comboButtons"];
+		[self addManager:@"healthBars.png" capacity:6 key:@"healthBars"];
+		[self addManager:@"coins.png" capacity:6 key:@"coins"];
+		
+		// piece managers
+		[self addManager:@"city.png" capacity:4 key:@"city"];
+		[self addManager:@"citycolor.png" capacity:4 key:@"citycolor"];
+		
+		[self addManager:@"cannon.png" capacity:25 key:@"cannon"];
+		[self addManager:@"catapult.png" capacity:25 key:@"catapult"];
+		[self addManager:@"top.png" capacity:25 key:@"top"];
+		[self addManager:@"tower.png" capacity:50 key:@"tower"];
+		[self addManager:@"balcony.png" capacity:25 key:@"balcony"];
+		[self addManager:@"turret.png" capacity:25 key:@"turret"];
+		[self addManager:@"wall.png" capacity:50 key:@"wall"];
+		[self addManager:@"wedge.png" capacity:25 key:@"wedge"];
+		[self addManager:@"merlin.png" capacity:25 key:@"merlin"];
+		[self addManager:@"arch.png" capacity:25 key:@"arch"];
+		[self addManager:@"cannonball.png" capacity:1000 key:@"cannonball"];
+		[self addManager:@"catapultball.png" capacity:1000 key:@"catapultball"];
+
+		self.playerAreaManager = [[[PlayerAreaManager alloc] initWithPlayerAreaWorld:world] autorelease];		
+		[playerAreaManager loadAI];
+
+
+		[self schedule: @selector(tick:)];
+		//[self schedule:@selector(tick:) interval:1.0/30.0];
+
+		// setup the hud
+		self.hud = [[[HUD alloc] initWithManagers:managers] autorelease];
+
+		[hud showMessage:[NSString stringWithFormat:@"Build your castle, war begins soon!", NO_FIRE_TIME]];
+
+		// set initial camera position
+		screenMomentum = -PLAYER_GROUND_WIDTH*[GameSettings instance].playerID;
+		[self moveScreen];
+		screenMomentum = -6.0;
+
+	}
+	
+	return self;
+}
+
+-(void) resetInstance {
+	[self unschedule:@selector(tick:)];	
+    [[HUDActionController instance] setHud:nil];
+	[Battlefield resetInstance];
+}
+
+
+#pragma mark hud functions
+
+-(void) setSelected:(Piece *)p updateHUD:(bool)b {
+	
+	if(selected && !selected.shouldDestroy && p != selected) {
+		[selected unselect];
+	}
+	
+	if(b) [hud showSelectedMenu:p];
+	self.selected = p; 
+}
+
+
+#pragma mark tick functions
+
+-(void) tick: (ccTime) dt {
+	//It is recommended that a fixed time step is used with Box2D for stability
+	//of the simulation, however, we are using a variable time step here.
+	//You need to make an informed choice, the following URL is useful
+	//http://gafferongames.com/game-physics/fix-your-timestep/
+	
+	int32 velocityIterations = 8;
+	int32 positionIterations = 3;
+	
+	// Instruct the world to perform a single step of simulation. It is
+	// generally best to keep the time step and iterations fixed.
+	world->Step(dt, velocityIterations, positionIterations);
+	
+	gameTime += dt;
+	
+	// countdown timer
+	if(gameTime < NO_FIRE_TIME+1.0) { [hud setCountdownTimer:NO_FIRE_TIME-gameTime]; }
+	
+	// get the camera position
+	float camX,camY,camZ;
+	[self.camera centerX:&camX centerY:&camY centerZ:&camZ];
+	
+	[self checkForLoser:dt];
+	
+	//Iterate over the bodies in the physics world
+	for (b2Body* b = world->GetBodyList(); b; b = b->GetNext()) {
+		if (b->GetUserData() != NULL && ![(NSObject *)b->GetUserData() isKindOfClass:[PlayerArea class]]) {
+			
+			// Synchronize the AtlasSprites position and rotation with the corresponding body
+			Piece* piece = (Piece*)b->GetUserData();
+			b2Vec2 pos = b->GetPosition();
+			float ang = b->GetAngle();
+			
+			if(pos.y < 0) { piece.shouldDestroy = YES; }
+			
+			// remove the destroyed pieces
+			if(piece.shouldDestroy) {
+				[self cleanupTick:piece body:b];
+				continue;
+			}
+			
+			piece.currentSprite.position = ccp(pos.x*PTM_RATIO, pos.y*PTM_RATIO);
+			piece.currentSprite.rotation = -1 * CC_RADIANS_TO_DEGREES(ang);
+			piece.backSprite.position = [playerAreaManager getBackImagePosFromObjPos:ccp(pos.x * PTM_RATIO, pos.y * PTM_RATIO) 
+																		  cameraPosition:ccp(camX, camY)];
+            piece.backSprite.rotation = CC_RADIANS_TO_DEGREES(ang);
+			
+			if([piece isKindOfClass:[Weapon class]]) {
+                [(Weapon*)piece updateSpritesAngle:ang position:pos time:dt];
+			}
+			
+			if([piece isKindOfClass:[City class]]) {
+                [(City*)piece updateSprites];
+			}
+			
+			if([piece isKindOfClass:[Projectile class]]) {
+                [(Projectile*)piece updateSpritePosition:pos body:b];
+			}
+		}	
+	}
+	
+	// move the screen if there is still momentum
+	if(!touchDown && abs(screenMomentum) > (SCROLL_MOMENTUM)) {
+		
+		// cap the screen momentum 
+		if(abs(screenMomentum) > SCROLL_MOMENTUM_CAP) {	
+			screenMomentum = screenMomentum > 0 ? SCROLL_MOMENTUM_CAP : SCROLL_MOMENTUM_CAP * -1;
+		}
+		
+		[self moveScreen];
+	}
+	
+	// move the screen to the last shot
+	if([GameSettings instance].followShot && lastShot && !touchDown && lastShot.owner == [playerAreaManager getCurrentPlayerArea]) {
+		b2Body* b = lastShot.body;
+		float diff = (b->GetPosition().x*PTM_RATIO-camX);
+		
+		if(followProjectile || diff < -60 || fabs(diff) > 200) {
+			followProjectile = YES;
+			didMoveInFollow = YES;
+
+			if(b->GetPosition().x*PTM_RATIO > camX)
+				screenMomentum = -1.0*(b->GetPosition().x*PTM_RATIO-camX-200.0);
+			else
+				screenMomentum = -1.0*(b->GetPosition().x*PTM_RATIO-camX+60.0);
+			
+			[self moveScreen];
+			screenMomentum = 0.0;
+		}
+	}
+}
+
+-(void) cleanupTick:(Piece *)piece body:(b2Body *)b {
+	
+	[playerAreaManager removePiece:piece forPlayer:piece.owner];
+	[touchables removeObject:piece];
+	
+	if(![piece isKindOfClass:[Projectile class]] && piece.hasBeenPlaced) {
+		//Destruction Animation
+		//animation runs each time the piece is hit.
+		//need to make it so it runs only when destroyed...
+        
+		CGPoint loc = ccp(piece.body->GetPosition().x*PTM_RATIO, piece.body->GetPosition().y*PTM_RATIO - 8);
+		ParticleSystem* ps = [[[DestroiedPieceAnimation alloc] initWithTotalParticles:20] autorelease];
+		ps.position = loc;
+		ps.life = 0.08f;
+		[[Battlefield instance] addChild:ps z:ANIMATION_Z_INDEX];
+		
+	}
+	
+	if(piece == lastShot) { 
+		followProjectile = NO; 
+		lastShot = nil;
+	}
+	
+	// remove the spirte
+	[piece.mgr removeChild:piece.currentSprite cleanup:YES];
+	[piece.backMgr removeChild:piece.backSprite cleanup:YES];
+	
+	if([piece isKindOfClass:[Weapon class]]) {
+		Weapon* weapon = (Weapon*)piece;
+		
+		if(selected == piece || [hud.selectedMenu getSelectedPiece] == piece) {
+			[self setSelected:nil updateHUD:YES];
+		}
+		
+		if(weapon.cdSprite != nil) { 
+			[weapon.cdSprite stopAllActions];
+			[self removeChild:weapon.cdSprite cleanup:YES]; 
+		}
+		
+		if(weapon.shootIndicatorTail) {
+			[self removeChild:weapon.shootIndicatorTail cleanup:YES];
+		}
+        
+        if(weapon.shootIndicatorTop) {
+			[self removeChild:weapon.shootIndicatorTop cleanup:YES];
+		}
+		
+		[piece.mgr removeChild:weapon.swingSprite cleanup:YES];
+		[piece.backMgr removeChild:weapon.backSwingSprite cleanup:YES];
+	}
+	
+	if(![piece.owner hasWeapon] && piece.owner.ai != nil) { [piece.owner destroyPlayer]; }
+	
+	world->DestroyBody(b);
+	
+	
+	if([piece isKindOfClass:[Weapon class]]) { 
+        if([self playerDidWin]) {
+            [self winGame];
+        }
+    }
+	
+}
+
+
+#pragma mark game conclusion functions
+
+-(void) checkForLoser:(float)dt {
+	PlayerArea* player = [playerAreaManager getCurrentPlayerArea];
+	
+	// calculate if the player has lost the game
+	if(!player.hasWeapon && gameTime > NO_FIRE_TIME) {
+		
+		if(!sentLoseWarning) {
+			[hud showMessage:@"Place a weapon or you will lose!"];
+			sentLoseWarning = YES;
+		}
+		
+		if(player.timeTillLoss<5.0) {
+			
+			if(!sentFinalLoseWarning) {
+				sentFinalLoseWarning = YES;
+				[hud showMessage:@"Place a weapon or you will lose!"];
+			}
+			
+			[hud setCountdownTimer:player.timeTillLoss];
+		}
+		
+		if((player.timeTillLoss -= dt)<0.0) {
+						
+			[self loseGame];
+		}
+	}
+}
+
+-(void) winGame {
+		
+		[MainMenu resetInstance];        
+		[[Director sharedDirector] replaceScene:[MainMenu instance]];
+		
+		
+		if([GameSettings instance].type == campaign) {
+            [MapScreen saveConqueredTerritory:[GameSettings instance].territoryID];
+		}
+		
+
+		Winner* w = [Winner node];
+		[w setGameTime:gameTime];
+		[[MainMenu instance] addChild:w];
+        
+		
+		[self resetInstance];
+
+}
+
+-(void) loseGame {
+	
+	[MainMenu resetInstance];
+	[[Director sharedDirector] replaceScene: [MainMenu instance]];
+    
+    
+	Loser* l = [Loser node];
+	[l setGameTime:gameTime];
+	[[MainMenu instance] addChild:l];
+    
+	
+	[self resetInstance];
+}
+
+-(BOOL) playerDidWin {
+
+	// check for winner
+	BOOL opponentLeft = YES;
+	if(gameTime > NO_FIRE_TIME) {
+		opponentLeft = NO;
+		for(PlayerArea* pa in playerAreaManager.playerAreas) {
+        
+            BOOL areaIsOwn = pa == [playerAreaManager getCurrentPlayerArea];
+            BOOL areaIsAI = pa.ai && !areaIsOwn;
+            BOOL areaHasWeapons = !pa.destroyed;
+                        
+            opponentLeft = opponentLeft || (areaIsAI && areaHasWeapons);
+
+		}
+	}
+	
+    return !opponentLeft;
+}
+
+
+#pragma mark piece creation functions
+
+-(void) addManager:(NSString *)file capacity:(int)cap key:(NSString *)key {
+	// we've got to setup two sprite managers here for layer managing
+	// otherwise every sprite would be added to the same plane
+	
+	// setup front sprite manager
+	AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:file capacity:cap];
+	[self addChild:mgr z:PIECE_Z_INDEX];
+	[managers setValue:mgr forKey:key];
+	
+	// setup back sprite manager
+	AtlasSpriteManager *farMgr = [AtlasSpriteManager spriteManagerWithFile:file capacity:cap];
+	[self addChild:farMgr z:FAR_PIECE_Z_INDEX];
+	[managers setValue:farMgr forKey:[NSString stringWithFormat:@"far%@",key]];	
+}
+
+-(void) addNewPieceWithCoords:(CGPoint)p andClass:(Class)c withManager:(NSString *)managerName finalize:(BOOL)finalize player:(PlayerArea*)player {
+	Piece *piece;
+
+	if([c isSubclassOfClass:[Weapon class]]) {
+		piece = [[[c alloc] initWithManager:(AtlasSpriteManager *)[managers objectForKey:managerName] 
+								backManager:(AtlasSpriteManager *)[managers objectForKey:[NSString stringWithFormat:@"far%@", managerName]]
+						 projectileManager:(AtlasSpriteManager *)[managers objectForKey:[NSString stringWithFormat:@"%@ball", managerName]] 
+					 backProjectileManager:(AtlasSpriteManager *)[managers objectForKey:[NSString stringWithFormat:@"far%@ball", managerName]]
+									 world:world
+									coords:p] autorelease];
+	} else {
+		piece = [[[c alloc] initWithManager:(AtlasSpriteManager *)[managers objectForKey:managerName] 
+							   backManager:(AtlasSpriteManager *)[managers objectForKey:[NSString stringWithFormat:@"far%@", managerName]]
+									 world:world 
+									coords:p] autorelease];
+	}
+	
+	piece.owner = player;
+	
+	if(finalize) {
+		[piece snapToPosition:b2Vec2(piece.body->GetPosition().x*PTM_RATIO,piece.body->GetPosition().y*PTM_RATIO)];
+		[piece finalizePiece]; 
+	}
+	
+	[playerAreaManager addPiece:(Piece*)piece forPlayer:player];
+	
+	[touchables addObject:piece];
+	self.lastCreated = piece;
+    
+    [self.bin addObject:piece];
+}
+
+-(void) addProjectileToBin:(Projectile*)p {
+    [self.bin addObject:p];
+}
+
+
+#pragma mark movement functions 
+
+-(void) setLastShot:(Projectile*)proj {
+	float camX,camY,camZ;
+	[self.camera centerX:&camX centerY:&camY centerZ:&camZ];
+	
+	lastShot = proj;
+	cameraXBeforeShot = camX;
+}
+
+-(void) tileImagePool:(CGPoint)loc delta:(CGPoint)d {
+	
+	for(Tileable *t in tileables) {
+		[t positionForCameraLoc:loc];
+		
+		float factor = (t.parallaxFactor != 0.0 ? d.x/t.parallaxFactor + d.x : d.x);
+		
+		[t.leftImage setPosition:CGPointMake(t.leftImage.position.x - factor, t.leftImage.position.y)];
+		[t.rightImage setPosition:CGPointMake(t.rightImage.position.x - factor, t.rightImage.position.y)];
+	}
+}
+
+-(void) resetTileImagePool:(CGPoint)loc {
+
+	for(Tileable *t in tileables) {
+		[t positionForCameraLoc:loc];
+		
+		[t.leftImage setPosition:CGPointMake(loc.x-(t.leftImage.textureRect.size.width/2)+1.0, t.leftImage.position.y)];
+		[t.rightImage setPosition:CGPointMake(loc.x+(t.leftImage.textureRect.size.width/2), t.rightImage.position.y)];
+	}
+}
+
+-(void) resetScreenToX:(float)x {
+	[self setSelected:nil updateHUD:NO];
+	float camX,camY,camZ;
+	[self.camera centerX:&camX centerY:&camY centerZ:&camZ];
+	[self.camera setCenterX:x centerY:camY centerZ:0.0];
+	[self.camera setEyeX:x eyeY:camY eyeZ:[Camera getZEye]];
+	[self resetTileImagePool:ccp(x,camY)];
+	[hud moveAllObjects:ccp(camX-x, 0)];
+	
+	// could need this
+	[playerAreaManager checkAndMovePlayerAreas:ccp(x, camY)];
+	[playerAreaManager checkAndMovePlayerAreas:ccp(x, camY)];
+	[playerAreaManager checkAndMovePlayerAreas:ccp(x, camY)];
+	[playerAreaManager checkAndMovePlayerAreas:ccp(x, camY)];	
+	
+	screenMomentum = 0;
+	didMoveInFollow = NO;
+	
+}
+
+-(void) resetViewToLastShot {
+	[self resetScreenToX:cameraXBeforeShot];
+}
+
+-(BOOL) ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+	
+	CGPoint location = [self transformTouchesToPoint:touches withCameraOffset:YES];
+	initialTouch = [self transformTouchesToPoint:touches withCameraOffset:NO];
+	screenMomentum = 0.0;
+	touchDown = YES;
+	isConstructionTouch = NO;
+	
+	if(didMoveInFollow) {[self resetViewToLastShot]; }
+	
+	// check if its a hud touch
+	if ([hud handleInitialTouch:initialTouch]) {
+		[self setSelected:nil updateHUD:NO];
+		return isConstructionTouch = YES;
+	}
+	
+	// converto the location to world coords
+	b2Vec2 worldCoor = b2Vec2(location.x/PTM_RATIO, location.y/PTM_RATIO);
+	
+	bool touchHandled = NO;
+	
+	for (Piece *p in touchables) {
+		if (p.acceptsTouches && [p containsPoint:worldCoor] && p.owner == [playerAreaManager getCurrentPlayerArea]) {
+			[p onTouchBegan:location];
+			[self setSelected:p updateHUD:NO];
+			touchHandled = YES;
+			break;
+		}
+	}
+	
+	// finds any weapons within the threshold
+	if(!touchHandled) {
+		Piece *closest = [self getClosestPiece:location];
+			
+		if(closest != nil) {
+			[self setSelected:closest updateHUD:NO];
+			[closest onTouchBegan:location];
+		} else {
+			[self setSelected:nil updateHUD:NO];
+		}
+	}
+
+	return kEventHandled;
+}
+
+-(BOOL) ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+	// check if touch is in the hud
+	if ([hud handleTouchDrag:[self transformTouchesToPoint:touches withCameraOffset:NO]])
+		return YES;
+	
+	CGPoint location;
+	
+	if (selected && selected.acceptsTouches) {
+		
+		// send the move to the object if selected
+		location = [self transformTouchesToPoint:touches withCameraOffset:YES];
+		[selected onTouchMoved:location];
+		
+		if(!selected.hasBeenPlaced) {
+			if([playerAreaManager touchPos:location inPlayerArea:[GameSettings instance].playerID])
+				[selected updateView];
+			else
+				selected.currentSprite.color = ccc3(255, 40, 40);
+		}
+		
+	} else {
+		
+		// else pan the camera
+		location = [self transformTouchesToPoint:touches withCameraOffset:NO];
+		CGPoint movement = CGPointMake(location.x - initialTouch.x, location.y - initialTouch.y);
+		initialTouch = location;
+		
+		// set the acceleration 
+		screenMomentum = movement.x;
+		
+		[self moveScreen];
+	}
+	
+	return kEventHandled;
+}
+
+-(BOOL) ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+		
+	if(lastShot != nil) {
+		self.lastShot = nil;
+		
+		if(followProjectile) {
+			[self setSelected:nil updateHUD:NO];
+			float camX,camY,camZ;
+			[self.camera centerX:&camX centerY:&camY centerZ:&camZ];
+			screenMomentum = camX-cameraXBeforeShot-10.0;
+			[self moveScreen];
+			screenMomentum = 2;
+		}
+		
+		followProjectile = NO;
+		
+	}
+	
+	CGPoint location = [self transformTouchesToPoint:touches withCameraOffset:YES];
+	touchDown = NO;
+	
+	if(isConstructionTouch && ![playerAreaManager touchPos:location inPlayerArea:[GameSettings instance].playerID]) {
+		if(selected && !selected.hasBeenPlaced) {
+			selected.shouldDestroy = YES;
+			[[Battlefield instance].hud showMessage:@"Must build in your own city"];
+		}
+		return YES;
+	}
+	
+	if ([hud handleEndTouch:[self transformTouchesToPoint:touches withCameraOffset:NO]])
+		return YES;
+	
+	bool firedPiece = NO;
+	
+	if (selected && selected.acceptsTouches) { firedPiece = [selected onTouchEnded:location]; }
+	
+	b2Vec2 worldCoor = b2Vec2(location.x/PTM_RATIO, location.y/PTM_RATIO);
+	
+	bool touchHandled = NO;
+	
+	if(!isConstructionTouch) {
+		
+		Piece *closest = [self getClosestPiece:location];
+		
+		if(closest == selected) {
+			[closest onTouchEnded:location];
+			[self setSelected:closest updateHUD:YES];
+			touchHandled = YES;
+		}
+
+	}
+	
+	self.lastCreated = nil;
+	
+	if(!touchHandled && !firedPiece)
+		[self setSelected:nil updateHUD:NO];
+	
+	return kEventHandled;
+}
+
+-(Piece*) getClosestPiece:(CGPoint)location {
+	Piece *closest = nil;
+	float closestDist = WEAPON_SELECT_THRESHOLD;
+	
+	for (Piece *p in touchables) {
+		if([p isKindOfClass:[Weapon class]] && p.owner == [playerAreaManager getCurrentPlayerArea]) {
+			
+			b2Vec2 pos = p.body->GetPosition();
+			
+			float lengthFromTouch = b2Vec2(abs(pos.x*PTM_RATIO)-abs(location.x), 
+										   abs(pos.y*PTM_RATIO)-abs(location.y)).Length();
+			
+			if(lengthFromTouch < WEAPON_SELECT_THRESHOLD)					
+				closest = closestDist < lengthFromTouch ? closest : p;
+			
+		}
+	}
+
+	if(closest) { return closest; }
+	
+	for (Piece *p in touchables) {
+		if(p.owner == [playerAreaManager getCurrentPlayerArea]) {
+			
+			b2Vec2 pos = p.body->GetPosition();
+			
+			float lengthFromTouch = b2Vec2(abs(pos.x*PTM_RATIO)-abs(location.x), 
+										   abs(pos.y*PTM_RATIO)-abs(location.y)).Length();
+			
+			if(lengthFromTouch < PIECE_SELECT_THRESHOLD)					
+				closest = closestDist < lengthFromTouch ? closest : p;
+			
+		}
+	}
+	return closest;
+}
+
+-(void) moveScreen {
+	CGPoint delta = CGPointMake(screenMomentum, 0.0);
+	
+	// get the camera coords
+	float x,y,z;
+	[self.camera centerX:&x centerY:&y centerZ:&z];
+	
+	// move the objects on the screen before the camera
+	[hud moveAllObjects:delta];
+	[self tileImagePool:CGPointMake(x, y) delta:delta];
+	
+	[self.camera setCenterX:x-(delta.x) centerY:y centerZ:0.0];
+	[self.camera setEyeX:x-(delta.x) eyeY:y eyeZ:[Camera getZEye]];
+	
+	screenMomentum += screenMomentum > 0.0 ? SCROLL_MOMENTUM * -1 : SCROLL_MOMENTUM;
+	
+	[playerAreaManager checkAndMovePlayerAreas:CGPointMake(x, y)];
+}
+
+-(CGPoint) transformTouchesToPoint:(NSSet *)touches withCameraOffset:(BOOL)cam {
+	// select a touch object
+	UITouch *touch = [[touches allObjects] objectAtIndex:0];
+	
+	// get the x,y of the point on the iphone
+	CGPoint location = [touch locationInView: [touch view]];
+	
+	// convert the point to landscape
+	location = [[Director sharedDirector] convertToGL: location];
+	
+	if(cam) {
+		// offset the touch by the camera
+		float x,y,z;[self.camera centerX:&x centerY:&y centerZ:&z];
+		location.x += x - 160; location.y += y - 240;
+	}
+	
+	return location;
+}
+
+
+#pragma mark memory functions
+
+-(void) save {
+		
+	self.lastCreated = nil;
+	
+	PlayerArea* pa = [playerAreaManager.playerAreas objectAtIndex:0];
+		
+	NSArray* pieceArr = [pa getPieceDescriptions];
+		
+	NSString *savefile = [[Rev5AppDelegate documentDir] stringByAppendingPathComponent:SAVE_FILE_NAME];
+	[[pieceArr JSONRepresentation] writeToFile:savefile atomically:YES encoding:NSASCIIStringEncoding error:nil];
+	
+	NSLog(@"Game saved to: %@", savefile);
+}
+
+-(bool) canFire {
+	return NO_FIRE_TIME < gameTime;
+}
+
+-(void) loadForPlayer:(PlayerArea*)player file:(NSString*)filename {
+	self.lastCreated = nil;
+	[self setSelected:nil updateHUD:YES];
+	
+	// clear everything out
+	/*for(uint i=0; i<[playerAreaManager.playerAreas count]; ++i) {
+		PlayerArea* pa = [playerAreaManager.playerAreas objectAtIndex:i];
+		for(Piece* piece in [pa getPieces]) {
+			piece.shouldDestroy = YES;
+		}
+	}*/
+	
+	//[self tick:0.0];
+	
+	filename = [[NSBundle mainBundle] pathForResource:filename ofType:@"dat"];
+
+
+	NSLog(@"attempting to open %@", filename);
+	
+	SBJSON* jsonParser = [[[SBJSON alloc] init] autorelease];
+	NSDictionary* state = [jsonParser objectWithString:[NSString stringWithContentsOfFile:filename encoding:NSASCIIStringEncoding error:nil]];
+	
+	for(NSDictionary* data in state) {
+		NSMethodSignature *sig;
+		SEL func = @selector(addNewPieceWithCoords:andClass:withManager:finalize:player:);
+		
+		Class c = NSClassFromString([data objectForKey:@"class"]);
+		NSString* s = [[data objectForKey:@"class"] lowercaseString];
+		float x = [[data objectForKey:@"x"] floatValue]*PTM_RATIO;
+		CGPoint p = CGPointMake([[data objectForKey:@"y"] floatValue]*PTM_RATIO+player.left, x);
+		BOOL left = [[data objectForKey:@"left"] intValue] == 0;
+		BOOL f = YES;
+		
+		sig = [Battlefield instanceMethodSignatureForSelector:func];
+		
+		NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:sig];
+		[invocation setSelector: func];
+		[invocation setTarget: self];
+		[invocation setArgument:&p atIndex:2];
+		[invocation setArgument:&c atIndex:3];
+		[invocation setArgument:&s atIndex:4];
+		[invocation setArgument:&f atIndex:5];
+		[invocation setArgument:&player atIndex:6];
+		[invocation invoke];
+		
+		lastCreated.hasBeenPlaced = YES;
+		[lastCreated updateView];
+		
+		lastCreated.isFacingLeft = !left;
+		
+	}
+}
+
+-(void) dealloc {
+	[managers release];
+	[touchables release];
+	[tileables release];
+    [selected release];
+    [lastCreated release];
+    [hud release];
+    [playerAreaManager release];
+    [bin release];
+	
+	delete world;
+	
+	[super dealloc];
+}
+
+@end
