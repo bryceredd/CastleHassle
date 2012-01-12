@@ -35,6 +35,7 @@
 	#define HUD_ITEM_DRAG_OPACITY 150
 
 	// index properties
+    #define HUD_Z_INDEX 7
 	#define ANIMATION_Z_INDEX 6
 	#define FOREGROUND_Z_INDEX 5
 	#define PIECE_Z_INDEX 4

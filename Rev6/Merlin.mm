@@ -18,7 +18,7 @@
 
 @implementation Merlin
 
--(id) initWorld:(b2World*)w coords:(CGPoint)p {
+-(id) initWithWorld:(b2World*)w coords:(CGPoint)p {
 	
 	if((self = [super initWithWorld:w coords:p])) {
 		maxHp = hp = MAX_MERLIN_HP;
@@ -46,6 +46,28 @@
 	
 	return pos;
 }
+
+-(void) targetWasHit:(b2Contact*)contact by:(Projectile *)p {
+	[super targetWasHit:contact by:p];
+}
+
+-(void) updateView {
+	if (hp < (maxHp/3)) {
+		[self.currentSprite setTextureRect:CGRectMake(0,62,30,29)];
+		[self.backSprite setTextureRect:CGRectMake(0,62,30,29)];
+	} else if (hp < (maxHp*2/3)) {
+		[self.currentSprite setTextureRect:CGRectMake(0,31,30,29)];
+		[self.backSprite setTextureRect:CGRectMake(0,31,30,29)];
+	} else {
+		[self.currentSprite setTextureRect:CGRectMake(0,0,30,29)];
+		[self.backSprite setTextureRect:CGRectMake(0,0,30,29)];
+	}
+	
+	
+	[super updateView];
+	
+}
+
 
 -(void) finalizePiece {
 	b2PolygonShape dynamicBox;

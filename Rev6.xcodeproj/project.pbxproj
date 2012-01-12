@@ -200,7 +200,6 @@
 		02F5993814BDCB4100C9349A /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02F5993714BDCB4100C9349A /* RootViewController.m */; };
 		02F5993E14BDCB4100C9349A /* GLES-Render.mm in Sources */ = {isa = PBXBuildFile; fileRef = 02F5993D14BDCB4100C9349A /* GLES-Render.mm */; };
 		02F5994114BDCB4100C9349A /* blocks.png in Resources */ = {isa = PBXBuildFile; fileRef = 02F5994014BDCB4100C9349A /* blocks.png */; };
-		02F5994914BDCB7100C9349A /* HelloWorldLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 02F5994814BDCB7100C9349A /* HelloWorldLayer.mm */; };
 		02F5994B14BDCBA900C9349A /* Settings.plist in Resources */ = {isa = PBXBuildFile; fileRef = 02F5994A14BDCBA900C9349A /* Settings.plist */; };
 		02F5996314BDCBE700C9349A /* campaign1.dat in Resources */ = {isa = PBXBuildFile; fileRef = 02F5994E14BDCBE700C9349A /* campaign1.dat */; };
 		02F5996414BDCBE700C9349A /* campaign10.dat in Resources */ = {isa = PBXBuildFile; fileRef = 02F5994F14BDCBE700C9349A /* campaign10.dat */; };
@@ -874,8 +873,6 @@
 		02F5993D14BDCB4100C9349A /* GLES-Render.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = "GLES-Render.mm"; sourceTree = "<group>"; };
 		02F5993F14BDCB4100C9349A /* GameConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameConfig.h; sourceTree = "<group>"; };
 		02F5994014BDCB4100C9349A /* blocks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = blocks.png; path = Resources/blocks.png; sourceTree = "<group>"; };
-		02F5994714BDCB7100C9349A /* HelloWorldLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloWorldLayer.h; sourceTree = "<group>"; };
-		02F5994814BDCB7100C9349A /* HelloWorldLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HelloWorldLayer.mm; sourceTree = "<group>"; };
 		02F5994A14BDCBA900C9349A /* Settings.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Settings.plist; sourceTree = "<group>"; };
 		02F5994E14BDCBE700C9349A /* campaign1.dat */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = campaign1.dat; sourceTree = "<group>"; };
 		02F5994F14BDCBE700C9349A /* campaign10.dat */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = campaign10.dat; sourceTree = "<group>"; };
@@ -2253,8 +2250,6 @@
 				02C3C77614BDF535004BCC33 /* Battlefield.mm */,
 				02F5993614BDCB4100C9349A /* RootViewController.h */,
 				02F5993714BDCB4100C9349A /* RootViewController.m */,
-				02F5994714BDCB7100C9349A /* HelloWorldLayer.h */,
-				02F5994814BDCB7100C9349A /* HelloWorldLayer.mm */,
 				02F5993C14BDCB4100C9349A /* GLES-Render.h */,
 				02F5993D14BDCB4100C9349A /* GLES-Render.mm */,
 				02F5993F14BDCB4100C9349A /* GameConfig.h */,
@@ -2806,7 +2801,6 @@
 				02F5993514BDCB4100C9349A /* AppDelegate.mm in Sources */,
 				02F5993814BDCB4100C9349A /* RootViewController.m in Sources */,
 				02F5993E14BDCB4100C9349A /* GLES-Render.mm in Sources */,
-				02F5994914BDCB7100C9349A /* HelloWorldLayer.mm in Sources */,
 				02F59BED14BDD0D100C9349A /* MapScreen.mm in Sources */,
 				02F59BEE14BDD0D100C9349A /* Territory.mm in Sources */,
 				02F59BEF14BDD0D100C9349A /* BackButtonLayer.mm in Sources */,

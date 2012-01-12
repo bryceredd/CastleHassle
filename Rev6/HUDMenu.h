@@ -13,16 +13,14 @@
 
 @class HUDItem, ButtonItem, BuildItem, StatusItem, GoldItem, PurchaseItem, Piece;
 
-@interface HUDMenu : CCLayer {
+@interface HUDMenu : NSObject {
 	float extremeRight;
-	NSDictionary *managers;
 	BOOL hasBack;
 }
 
 @property(nonatomic, retain) HUDItem *selected;
 @property(nonatomic, retain) NSMutableArray* items;
 
--(id) initWithManagers:(NSDictionary*)mans;
 -(HUDItem *) getHUDItem:(CGPoint)p;
 -(void) moveAllObjects:(CGPoint)p;
 -(GoldItem *) addGoldStatusWithLeft:(float)l;

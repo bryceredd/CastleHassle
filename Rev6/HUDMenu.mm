@@ -19,11 +19,10 @@
 
 @synthesize items, selected;
 
--(id) initWithManagers:(NSDictionary*)mans {
+-(id) init {
 	
 	if( (self=[super init]) ) {
 		extremeRight = ICON_SPACING;
-		managers = mans;
 
 		self.items = [NSMutableArray array];
 	}
@@ -116,7 +115,7 @@
 	[item postInit];
 	
 	// draw the sprite on the screen
-	[self addChild:item.img];
+	[[Battlefield instance] addChild:item.img];
 }
 
 
@@ -130,7 +129,7 @@
 		item.swingImg.rotation = 45;
 		
 		// draw the sprite on the screen
-		[self addChild:item.swingImg];
+		[[Battlefield instance] addChild:item.swingImg];
 	}
 	
 	// reposition the base

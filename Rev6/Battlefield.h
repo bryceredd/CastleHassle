@@ -33,7 +33,6 @@
 @property(nonatomic, retain) NSMutableArray *touchables;
 @property(nonatomic, retain) NSMutableArray *tileables;
 @property(nonatomic, retain) NSMutableArray *bin;
-@property(nonatomic, retain) NSMutableDictionary *managers;
 @property(nonatomic, retain) PlayerAreaManager *playerAreaManager;
 @property(nonatomic, retain) Projectile* lastShot;
 

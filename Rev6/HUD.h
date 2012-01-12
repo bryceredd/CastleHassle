@@ -17,13 +17,9 @@
 @interface HUD : CCLayer {
 	float extremeRight;
     
-	NSDictionary *managers;
 	AtlasSpriteManager *tabMgr;
-	CCSprite *tabDownSprite;
-	CCSprite *tabUpSprite;
-	CCSprite *tabSprite;
 	
-	GoldItem *gold;	
+	GoldItem *gold;
 	CCLabelTTF *splashMsg;
 	int lastSecond;
 
@@ -38,9 +34,10 @@
 @property(nonatomic, retain) HUDMenu *buildNextMenu;
 @property(nonatomic, retain) HUDMenu *inFocus;
 
+@property(nonatomic, retain) CCSprite *tabUpSprite;
+@property(nonatomic, retain) CCSprite *tabSprite;
+@property(nonatomic, retain) CCSprite *tabDownSprite;
 
-
--(id) initWithManagers:(NSDictionary*)managers;
 
 -(void) initMainMenu;
 -(void) initBuildMenu;

@@ -18,7 +18,7 @@
 
 -(id) initWithWorld:(b2World*)w coords:(CGPoint)p {
 	
-	if((self = [super init])) {
+	if((self = [super initWithWorld:w coords:p])) {
 		
 		maxHp = hp = MAX_ARCH_HP;
 		buyPrice = ARCH_BUY_PRICE;

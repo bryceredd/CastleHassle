@@ -28,19 +28,11 @@
 //to define the ratio so that your most common object type is 1x1 metre.
 
 
-// enums that will be used as tags
-enum {
-	kTagTileMap = 1,
-	kTagSpriteManager = 1,
-	kTagAnimation1 = 1,
-	kTagTowerManager = 1
-};
-
 
 // Battlefield implementation
 @implementation Battlefield
 
-@synthesize touchables, selected, lastCreated, managers, hud, tileables, playerAreaManager, gameTime, sentLoseWarning, world, sentFinalLoseWarning, lastShot, bin;
+@synthesize touchables, selected, lastCreated,  hud, tileables, playerAreaManager, gameTime, sentLoseWarning, world, sentFinalLoseWarning, lastShot, bin;
 
 static Battlefield * instance = nil;
 
@@ -167,7 +159,7 @@ static Battlefield * instance = nil;
 		//[self schedule:@selector(tick:) interval:1.0/30.0];
 
 		// setup the hud
-		self.hud = [[[HUD alloc] initWithManagers:managers] autorelease];
+		self.hud = [[[HUD alloc] init] autorelease];
 
 		[hud showMessage:[NSString stringWithFormat:@"Build your castle, war begins soon!", NO_FIRE_TIME]];
 
@@ -453,8 +445,8 @@ static Battlefield * instance = nil;
 	piece.owner = player;
 	
 	if(finalize) {
-		[piece snapToPosition:b2Vec2(piece.body->GetPosition().x*PTM_RATIO,piece.body->GetPosition().y*PTM_RATIO)];
-		[piece finalizePiece]; 
+		[piece snapToPosition:b2Vec2(piece.body->GetPosition().x * PTM_RATIO, piece.body->GetPosition().y * PTM_RATIO)];
+		[piece finalizePiece];
 	}
 	
 	[playerAreaManager addPiece:(Piece*)piece forPlayer:player];
@@ -781,10 +773,10 @@ static Battlefield * instance = nil;
 	
 	for(NSDictionary* data in state) {
 		NSMethodSignature *sig;
-		SEL func = @selector(addNewPieceWithCoords:andClass:withManager:finalize:player:);
+		SEL func = @selector(addNewPieceWithCoords:andClass:withImageName:finalize:player:);
 		
 		Class c = NSClassFromString([data objectForKey:@"class"]);
-		NSString* s = [[data objectForKey:@"class"] lowercaseString];
+		NSString* s = [NSString stringWithFormat:@"%@.png", [[data objectForKey:@"class"] lowercaseString]];
 		float x = [[data objectForKey:@"x"] floatValue]*PTM_RATIO;
 		CGPoint p = CGPointMake([[data objectForKey:@"y"] floatValue]*PTM_RATIO+player.left, x);
 		BOOL left = [[data objectForKey:@"left"] intValue] == 0;
@@ -811,7 +803,6 @@ static Battlefield * instance = nil;
 }
 
 -(void) dealloc {
-	[managers release];
 	[touchables release];
 	[tileables release];
     [selected release];

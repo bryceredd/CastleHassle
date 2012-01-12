@@ -24,7 +24,7 @@
 -(id) initWithPrice:(int)p {
 	if((self = [super init])) {
 
-        coin = spriteWithRect(@"coins", CGRectMake(0, 21, 14, 14));		
+        coin = spriteWithRect(@"coins.png", CGRectMake(0, 21, 14, 14));		
 		goldPrice = p;
 		self.price = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%d", p] fontName:@"Arial" fontSize:14.0];
 		price.color = ccc3(65, 65, 65);
