@@ -7,6 +7,7 @@
 //
 
 #import "Ground.h"
+#import "Battlefield.h"
 
 @implementation Ground
 
@@ -73,12 +74,12 @@
         
         // setup the left side
         self.leftImage = spriteWithRect(lImg, CGRectMake(0,0,dim.x,dim.y));
-		[self addChild:self.leftImage z:FOREGROUND_Z_INDEX];
+		[[Battlefield instance] addChild:self.leftImage z:FOREGROUND_Z_INDEX];
         leftImage.position = ccp(-1*dim.x/2+screenSize.width/2, dim.y/2);
 		
 		// setup the right sprite
 		self.rightImage = spriteWithRect(rImg, CGRectMake(0,0,dim.x,dim.y));
-		[self addChild:self.rightImage];
+		[[Battlefield instance] addChild:self.rightImage];
 		rightImage.position = ccp(dim.x/2+screenSize.width/2, dim.y/2);
 		
 	}

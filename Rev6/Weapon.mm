@@ -48,7 +48,7 @@
 	// to either end of the cannon
     
 	self.swingSprite = spriteWithRect(image, rect);
-	[self addChild:swingSprite];
+	[[Battlefield instance] addChild:swingSprite];
 	swingSprite.position = ccp(p.x, p.y);
 	
     
@@ -56,7 +56,7 @@
     
 	self.backSwingSprite = spriteWithRect(image, rect);
 	backSwingSprite.flipX = YES;
-	[self addChild:backSwingSprite z:FAR_PIECE_Z_INDEX];
+	[[Battlefield instance] addChild:backSwingSprite z:FAR_PIECE_Z_INDEX];
 	backSwingSprite.position = ccp(p.x, p.y+PLAYER_BACKGROUND_HEIGHT);
 	[backSwingSprite setScale:1/BACKGROUND_SCALE_FACTOR];
 	

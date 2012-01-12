@@ -15,7 +15,7 @@
 @class Projectile, PlayerArea;
 
 
-@interface Piece : CCLayer {
+@interface Piece : NSObject {
 	int hp;
 	int maxHp;
 	b2Body *body;

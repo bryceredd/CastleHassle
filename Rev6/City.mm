@@ -32,14 +32,14 @@
 		colorSprite = spriteWithRect(CITY_COLOR_IMAGE, rect);
         colorSprite.position = ccp(p.x, p.y);
 		colorSprite.color = color; 
-        [self addChild:colorSprite z:PIECE_Z_INDEX];
+        [[Battlefield instance] addChild:colorSprite z:PIECE_Z_INDEX];
 		
 		colorSpriteBack = spriteWithRect(CITY_COLOR_IMAGE, rect);
 		colorSpriteBack.scale = 1/BACKGROUND_SCALE_FACTOR;
 		colorSpriteBack.position = ccp(p.x, p.y+PLAYER_BACKGROUND_HEIGHT);
 		colorSpriteBack.flipX = YES;
         colorSpriteBack.color = color; 
-		[self addChild:colorSpriteBack z:BACKGROUND_Z_INDEX];
+		[[Battlefield instance] addChild:colorSpriteBack z:BACKGROUND_Z_INDEX];
 		
 		
 		// Define the dynamic body
