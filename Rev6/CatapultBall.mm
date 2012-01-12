@@ -14,18 +14,13 @@
 
 @implementation CatapultBall
 
--(id) initWithManager:(AtlasSpriteManager*)spritemgr  
-		  backManager:(AtlasSpriteManager*)backmanager
-				world:(b2World*)w
-			   coords:(CGPoint)p 
-				level:(int)l shooter:(PlayerArea*)s {
-	if( (self=[super initWithCoords:p world:w manager:spritemgr from:s])) {
+-(id) initWithWorld:(b2World*)w coords:(CGPoint)p level:(int)l shooter:(PlayerArea*)s {
+	if((self = [super initWithCoords:p world:w from:s])) {
 		
 		bounces = 1;
-		self.backMgr = backmanager;
 		baseDamage = CATAPULTBALL_BASE_DAMAGE;
 		
-		[self setupSpritesWithRect:CGRectMake(0,0,11,10) atPoint:p];
+		[self setupSpritesWithRect:CGRectMake(0,0,11,10) image:CATAPULTBALL_IMAGE atPoint:p];
 		
 		// Define another box shape for our dynamic body.
 		b2PolygonShape dynamicBox;
@@ -62,7 +57,7 @@
 	
 	[super targetWasHit:contact by:p];
 	
-	ParticleSystem *emitter = [[[CatapultBallExplosion alloc] init] autorelease];
+	CCParticleSystem *emitter = [[[CatapultBallExplosion alloc] init] autorelease];
 	emitter.position = ccp(body->GetPosition().x*PTM_RATIO, body->GetPosition().y*PTM_RATIO);
 	[[Battlefield instance] addChild:emitter z:ANIMATION_Z_INDEX];
 }

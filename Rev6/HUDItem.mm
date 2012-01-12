@@ -11,7 +11,7 @@
 
 @implementation HUDItem
 
-@synthesize leftBound, rightBound, img, swingImg, managerName;
+@synthesize leftBound, rightBound, img, swingImg, imageName;
 
 -(id) init {
 	if( (self=[super init])) {
@@ -29,11 +29,11 @@
 }
 
 -(void) hide {
-    [img runAction:[FadeOut actionWithDuration:.25]];
+    [img runAction:[CCFadeOut actionWithDuration:.25]];
 }
 
 -(void) show {
-    [img runAction:[FadeIn actionWithDuration:.25]];
+    [img runAction:[CCFadeIn actionWithDuration:.25]];
 	float camX,camY,camZ;
 	[[Battlefield instance].camera centerX:&camX centerY:&camY centerZ:&camZ];
 	img.position = ccp(leftBound+(rightBound-leftBound)/2+camX-160, img.position.y);

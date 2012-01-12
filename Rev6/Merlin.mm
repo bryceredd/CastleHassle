@@ -12,20 +12,26 @@
 #import "StaticUtils.h"
 #import "Weapon.h"
 #import "PlayerArea.h"
+#import "Wall.h"
 #import "Balcony.h"
 
 
 @implementation Merlin
 
--(id) initWithManager:(AtlasSpriteManager*)spritemgr 
-		  backManager:(AtlasSpriteManager*)backmanager
-				world:(b2World*)w
-			   coords:(CGPoint)p {
+-(id) initWorld:(b2World*)w coords:(CGPoint)p {
 	
-	if( (self=[super initWithManager:spritemgr backManager:backmanager world:w coords:p])) {
+	if((self = [super initWithWorld:w coords:p])) {
 		maxHp = hp = MAX_MERLIN_HP;
 		buyPrice = MERLIN_BUY_PRICE;
 		repairPrice = MERLIN_REPAIR_PRICE;		
+        
+        [self setupSpritesWithRect:CGRectMake(0,0,30,29) image:MERLIN_IMAGE atPoint:p];
+		
+		// Define the dynamic body
+		b2BodyDef bodyDef;
+		bodyDef.position.Set(p.x/PTM_RATIO, p.y/PTM_RATIO);
+		bodyDef.userData = self;
+		body = world->CreateBody(&bodyDef);
 	}
 	
 	return self;

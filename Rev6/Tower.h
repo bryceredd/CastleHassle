@@ -13,10 +13,5 @@
 @interface Tower : Piece {
 
 }
-
--(id) initWithManager:(AtlasSpriteManager*)spritemgr 
-		  backManager:(AtlasSpriteManager*)spritebackmgr
-				world:(b2World*)w
-			   coords:(CGPoint)p;
 	
 @end

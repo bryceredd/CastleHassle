@@ -13,7 +13,7 @@
 
 @class HUDItem, ButtonItem, BuildItem, StatusItem, GoldItem, PurchaseItem, Piece;
 
-@interface HUDMenu : NSObject {
+@interface HUDMenu : CCLayer {
 	float extremeRight;
 	NSDictionary *managers;
 	BOOL hasBack;
@@ -32,30 +32,30 @@
 					   hudItem:(HUDItem*)item 
 			expandToStatusSize:(BOOL)expand;
 
--(StatusItem *) addStatusItemWithManagerName:(NSString *)mgrName 
+-(StatusItem *) addStatusItemWithImageName:(NSString *)mgrName 
 									imageBox:(CGRect)box 
 							   swingImageBox:(CGRect)swingBox 
 									   piece:(Piece*)p;
 
--(ButtonItem *) addButtonItemWithManagerName:(NSString *)mgrName 
+-(ButtonItem *) addButtonItemWithImageName:(NSString *)mgrName 
 							imageBox:(CGRect)box 
 					   swingImageBox:(CGRect)swingBox 
 							selector:(SEL)s 
 							   title:(NSString*)t;
 
--(BuildItem *) addBuildItemWithManagerName:(NSString *)mgrName 
+-(BuildItem *) addBuildItemWithImageName:(NSString *)mgrName 
 								imageBox:(CGRect)box 
 						   swingImageBox:(CGRect)swingBox 
 								   class:(Class)c price:(int)p;
 
--(PurchaseItem *) addPurchaseItemWithManagerName:(NSString *)mgrName 
+-(PurchaseItem *) addPurchaseItemWithImageName:(NSString *)mgrName 
 										imageBox:(CGRect)box 
 								   swingImageBox:(CGRect)swingBox 
 										selector:(SEL)s 
 										   title:(NSString*)t 
 										   piece:(Piece*)p;
 
--(void) setSwingItemWithManager:(AtlasSpriteManager*)mgr 
+-(void) setSwingItemWithImage:(NSString*)image
 					   swingBox:(CGRect)swingBox 
 					   imageBox:(CGRect)box 
 						forItem:(HUDItem*)item 

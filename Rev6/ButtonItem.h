@@ -12,11 +12,11 @@
 
 @interface ButtonItem : HUDItem {
 	SEL func;
-	Label * buttonText;
+	CCLabelTTF * buttonText;
 }
 
 @property(nonatomic) SEL func;
-@property(nonatomic, retain)Label* buttonText;
+@property(nonatomic, retain) CCLabelTTF* buttonText;
 
 -(void) postInitWithText:(NSString *)text;
 -(void) hide;

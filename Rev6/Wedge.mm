@@ -17,14 +17,8 @@
 
 @implementation Wedge
 
--(id) initWithManager:(AtlasSpriteManager*)spritemgr 
-		  backManager:(AtlasSpriteManager*)backmanager
-				world:(b2World*)w
-			   coords:(CGPoint)p {
-	
-	if( (self=[super init])) {
-		self.mgr = spritemgr;
-		self.backMgr = backmanager;
+-(id) initWithWorld:(b2World*)w coords:(CGPoint)p {
+	if((self = [super initWithWorld:w coords:p])) {
 		world = w;
 		maxHp = hp = MAX_WEDGE_HP;
 		buyPrice = WEDGE_BUY_PRICE;
@@ -32,8 +26,7 @@
 		acceptsTouches = YES;
 		acceptsDamage = YES;
 		
-		
-		[self setupSpritesWithRect:CGRectMake(0,0,30,30) atPoint:p];
+		[self setupSpritesWithRect:CGRectMake(0,0,30,30) image:WEDGE_IMAGE atPoint:p];
 		
 		// Define the dynamic body.
 		b2BodyDef bodyDef;
@@ -62,11 +55,11 @@
 	jointDef.Initialize(body, self.snappedTo.body, body->GetWorldCenter());
 	
 	if(isFacingLeft) {
-		jointDef.localAnchor1 = b2Vec2(-15.0/PTM_RATIO, 0.0);
-		jointDef.localAnchor2 = b2Vec2(15.0/PTM_RATIO, 0.0);
+		jointDef.localAnchorA = b2Vec2(-15.0/PTM_RATIO, 0.0);
+		jointDef.localAnchorB = b2Vec2(15.0/PTM_RATIO, 0.0);
 	} else {
-		jointDef.localAnchor1 = b2Vec2(15.0/PTM_RATIO, 0.0);
-		jointDef.localAnchor2 = b2Vec2(-15.0/PTM_RATIO, 0.0);
+		jointDef.localAnchorA = b2Vec2(15.0/PTM_RATIO, 0.0);
+		jointDef.localAnchorB = b2Vec2(-15.0/PTM_RATIO, 0.0);
 	}
 	
 	jointDef.lowerAngle = -0.05125f * b2_pi; // -11.25 degrees

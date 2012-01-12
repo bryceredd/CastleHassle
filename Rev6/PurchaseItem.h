@@ -25,7 +25,7 @@ typedef enum itemType {
 }
 
 @property(nonatomic, retain) Piece * selectedPiece;
-@property(nonatomic, retain) Label* price;
+@property(nonatomic, retain) CCLabelTTF* price;
 
 -(id) initWithPiece:(Piece*)p;
 -(void) updatePrice;

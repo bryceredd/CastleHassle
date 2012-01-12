@@ -23,10 +23,10 @@
 @property(nonatomic) BOOL shouldLoadVelocity;
 @property(nonatomic) int bounces;
 @property(nonatomic) int baseDamage;
-@property(nonatomic, retain) ParticleSystem* trail;
+@property(nonatomic, retain) CCParticleSystem* trail;
 
--(id) initWithCoords:(CGPoint)p world:(b2World *)w manager:(AtlasSpriteManager *)spritemgr from:(PlayerArea*)s;
-- (void) updateSpritePosition:(b2Vec2)pos body:(b2Body *)b;
+-(id) initWithCoords:(CGPoint)p world:(b2World *)w from:(PlayerArea*)s;
+-(void) updateSpritePosition:(b2Vec2)pos body:(b2Body *)b;
 -(void) setIsBack:(BOOL)b;
 -(void) saveVelocity;
 -(void) loadVelocity;

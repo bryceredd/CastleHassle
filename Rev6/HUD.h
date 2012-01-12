@@ -14,7 +14,7 @@
 
 @class AtlasSpriteManager, Battlefield, HUDMenu, Piece, HUDSelectedMenu, GoldItem, SettingsFromGame;
 
-@interface HUD : Layer {
+@interface HUD : CCLayer {
 	float extremeRight;
     
 	NSDictionary *managers;
@@ -24,7 +24,7 @@
 	CCSprite *tabSprite;
 	
 	GoldItem *gold;	
-	Label *splashMsg;
+	CCLabelTTF *splashMsg;
 	int lastSecond;
 
 	BOOL menuIsHidden;
@@ -32,7 +32,7 @@
 
 @property(nonatomic, retain) SettingsFromGame *settingsView;
 @property(nonatomic, retain) HUDSelectedMenu *selectedMenu;
-@property(nonatomic, retain) Label *countDownTimer;
+@property(nonatomic, retain) CCLabelTTF *countDownTimer;
 @property(nonatomic, retain) HUDMenu *mainMenu;
 @property(nonatomic, retain) HUDMenu *buildMenu;
 @property(nonatomic, retain) HUDMenu *buildNextMenu;

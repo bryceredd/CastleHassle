@@ -7,10 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Wall.h"
+#import "Piece.h"
 
 
-@interface Merlin : Wall {
+@interface Merlin : Piece {
 	
 }
 

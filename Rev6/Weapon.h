@@ -39,7 +39,7 @@
 @property(nonatomic, retain) CCSprite *shootIndicatorTop;
 @property(nonatomic, retain) CCSprite *cdSprite;
 
--(void) setupSwingSpritesWithRect:(CGRect)rect atPoint:(CGPoint)p;
+-(void) setupSwingSpritesWithRect:(CGRect)rect image:(NSString*)image atPoint:(CGPoint)p;
 -(void) updateSpritesAngle:(float)ang position:(b2Vec2)pos time:(float)t;
 -(void) onTouchMoved:(CGPoint)touch;
 -(BOOL) onTouchEndedLocal:(CGPoint)touch;

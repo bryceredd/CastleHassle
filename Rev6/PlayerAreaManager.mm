@@ -113,7 +113,7 @@
 
 -(void) checkAndMovePlayerAreas:(CGPoint)cameraLoc {
 	
-	if(cameraLoc.x-[Director sharedDirector].winSize.height < extremeLeft.left) {
+	if(cameraLoc.x-[CCDirector sharedDirector].winSize.height < extremeLeft.left) {
 	
 		// fetch the last item and move it to the left
 		//NSLog(@"moving %@ to the left", extremeRight);
@@ -124,7 +124,7 @@
 				
 	}
 	
-	if(cameraLoc.x+[Director sharedDirector].winSize.height > extremeRight.left+PLAYER_GROUND_WIDTH) {
+	if(cameraLoc.x+[CCDirector sharedDirector].winSize.height > extremeRight.left+PLAYER_GROUND_WIDTH) {
 		
 		// fetch the first item and move it to the right
 		//NSLog(@"moving %@ to the right", extremeLeft);

@@ -17,7 +17,7 @@
 
 -(id) init {
 	if( (self=[super init])) {
-		self.amount = [Label labelWithString:[NSString stringWithFormat:@"%03d", 0] fontName:@"Arial" fontSize:24.0];
+		self.amount = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%03d", 0] fontName:@"Arial" fontSize:24.0];
 		amount.color = ccc3(65, 65, 65);
 		[[Battlefield instance] addChild:amount z:PIECE_Z_INDEX];
 	}
@@ -47,14 +47,14 @@
 -(void) hide {
 	[super hide];
 	
-    [amount runAction:[FadeOut actionWithDuration:.25]];
+    [amount runAction:[CCFadeOut actionWithDuration:.25]];
 }
 
 -(void) show {
 	[super show];
 	[self move:ccp(0.0,0.0)];
 	
-	[amount runAction:[FadeIn actionWithDuration:.25]];
+	[amount runAction:[CCFadeIn actionWithDuration:.25]];
 }
 
 -(void) updateGold {

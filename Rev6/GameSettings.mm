@@ -39,7 +39,7 @@ static GameSettings * instance = nil;
 }
 
 -(void) setHasSound:(BOOL)b {
-	[SimpleAudioEngine sharedEngine].muted = !b;
+	[SimpleAudioEngine sharedEngine].mute = !b;
 	hasSound = b;
 }
 

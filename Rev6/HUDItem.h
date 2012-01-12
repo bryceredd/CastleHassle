@@ -12,7 +12,7 @@
 
 @class AtlasSprite;
 
-@interface HUDItem : NSObject {
+@interface HUDItem : CCLayer {
 	int leftBound; 
 	int rightBound;
 	CCSprite *img;
@@ -21,7 +21,7 @@
 	
 }
 
-@property(nonatomic, retain) NSString *managerName;
+@property(nonatomic, retain) NSString *imageName;
 @property(nonatomic, retain) CCSprite *img;
 @property(nonatomic, retain) CCSprite *swingImg;
 @property(nonatomic) int leftBound;

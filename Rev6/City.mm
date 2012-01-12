@@ -19,35 +19,28 @@
 
 - (id) initWithCoords:(CGPoint)p owner:(PlayerArea*)o colorVal:(ccColor3B)color {
 	
-	if( (self=[super init])) {
-		
-		self.mgr =[[Battlefield instance].managers objectForKey:@"city"];
-		self.backMgr = [[Battlefield instance].managers objectForKey:@"farcity"];
-		colorSpriteMgr = [[Battlefield instance].managers objectForKey:@"citycolor"];
-		backColorSpriteMgr = [[Battlefield instance].managers objectForKey:@"farcitycolor"];
-		
-		world = [Battlefield instance].world;
+	if((self = [super initWithWorld:[Battlefield instance].world coords:p])) {
 		
 		acceptsTouches = NO;
 		acceptsDamage = NO;
 		self.owner = o;
 		
 		CGRect rect = CGRectMake(0,0,420,60);
-		[self setupSpritesWithRect:rect atPoint:p];
+		[self setupSpritesWithRect:rect image:CITY_IMAGE atPoint:p];
 		
 		// setup colored sprites
-		colorSprite = [AtlasSprite spriteWithRect:rect spriteManager:colorSpriteMgr];
-		[colorSpriteMgr addChild:colorSprite];
-		colorSprite.position = ccp(p.x, p.y);
-			
-		colorSpriteBack = [AtlasSprite spriteWithRect:rect spriteManager:backColorSpriteMgr];
-		[colorSpriteBack setScale:1/BACKGROUND_SCALE_FACTOR];
-		[backColorSpriteMgr addChild:colorSpriteBack];
+		colorSprite = spriteWithRect(CITY_COLOR_IMAGE, rect);
+        colorSprite.position = ccp(p.x, p.y);
+		colorSprite.color = color; 
+        [self addChild:colorSprite z:PIECE_Z_INDEX];
+		
+		colorSpriteBack = spriteWithRect(CITY_COLOR_IMAGE, rect);
+		colorSpriteBack.scale = 1/BACKGROUND_SCALE_FACTOR;
 		colorSpriteBack.position = ccp(p.x, p.y+PLAYER_BACKGROUND_HEIGHT);
 		colorSpriteBack.flipX = YES;
+        colorSpriteBack.color = color; 
+		[self addChild:colorSpriteBack z:BACKGROUND_Z_INDEX];
 		
-		colorSprite.color = color; 
-		colorSpriteBack.color = color; 
 		
 		// Define the dynamic body
 		b2BodyDef bodyDef;
@@ -72,7 +65,6 @@
 		fixtureDef.shape = &dynamicBox;	
 		body->CreateFixture(&fixtureDef);
 		body->SetUserData(self);
-		
 	}
 	
 	return self;

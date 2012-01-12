@@ -16,17 +16,13 @@
 
 @implementation Tower
 
--(id) initWithManager:(AtlasSpriteManager*)spritemgr 
-		  backManager:(AtlasSpriteManager*)spritebackmgr
-				world:(b2World*)w
+-(id) initWithWorld:(b2World*)w
 			   coords:(CGPoint)p {
 	
 	if( (self=[super init])) {
 		
 		NSLog(@"Tower.mm: finalize piece called");
 		
-		self.backMgr = spritebackmgr;
-		self.mgr = spritemgr;
 		world = w;
 		maxHp = hp = MAX_TOWER_HP;
 		buyPrice = TOWER_BUY_PRICE;
@@ -34,7 +30,7 @@
 		acceptsTouches = YES;
 		acceptsDamage = YES;
 		
-		[self setupSpritesWithRect:CGRectMake(0,0,30,29) atPoint:p];
+		[self setupSpritesWithRect:CGRectMake(0,0,30,29) image:TOWER_IMAGE atPoint:p];
 		
 		// Define the dynamic body.
 		b2BodyDef bodyDef;

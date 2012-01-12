@@ -46,7 +46,7 @@
 		
 		// bottom wall
 		groundBox.SetAsEdge(b2Vec2(0,0), b2Vec2(dim.x/PTM_RATIO,0));
-		body->CreateFixture(&groundBox);
+		body->CreateFixture(&groundBox, 0);
 		body->SetUserData(self);
 	
 		self.pieces = [NSMutableArray array];
@@ -105,10 +105,10 @@
 	// move each piece
 	for(Piece * p in pieces) {
 		b2Body* b = p.body;
-		b->PutToSleep();
+		b->SetAwake(false);
 		b2Vec2 pos = b2Vec2(b->GetPosition().x+delta/PTM_RATIO, b->GetPosition().y);
 		b->SetTransform(pos, b->GetAngle());
-		b->WakeUp();
+		b->SetAwake(true);
 	}
 	
 	left = l;

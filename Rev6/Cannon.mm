@@ -17,12 +17,7 @@
 @implementation Cannon
 
 
--(id) initWithManager:(AtlasSpriteManager*)spritemgr  
-		  backManager:(AtlasSpriteManager*)backmanager
-	projectileManager:(AtlasSpriteManager*)projmgr
-backProjectileManager:(AtlasSpriteManager*)backprojmgr
-				world:(b2World*)w
-			   coords:(CGPoint)p {
+-(id) initWithWorld:(b2World*)w coords:(CGPoint)p {
 
 	isFacingLeft = NO;
 	
@@ -32,21 +27,17 @@ backProjectileManager:(AtlasSpriteManager*)backprojmgr
 		offset = 10.0;
 		currentShotAngle = M_PI_4;
 
-		self.mgr = spritemgr;
-		self.backMgr = backmanager;
 		world = w;
 		buyPrice = CANNON_BUY_PRICE;
 		repairPrice = CANNON_REPAIR_PRICE;
 		upgradePrice = CANNON_UPGRADE_PRICE;
 		maxCooldown = CANNON_COOLDOWN;
 		maxHp = hp = MAX_CANNON_HP;
-		self.projectileManager = projmgr;
-		self.backProjectileManager = backprojmgr;
 		acceptsPlayerColoring = YES;
 		
-		[self setupSpritesWithRect:CGRectMake(0,26,30,14) atPoint:p];
+		[self setupSpritesWithRect:CGRectMake(0,26,30,14) image:CANNON_IMAGE atPoint:p];
 		
-		[self setupSwingSpritesWithRect:CGRectMake(0,0,50,11) atPoint:p];
+		[self setupSwingSpritesWithRect:CGRectMake(0,0,50,11) image:CANNON_IMAGE atPoint:p];
 				
 		// define the base dynamic body
 		b2BodyDef bodyDef;
@@ -150,16 +141,14 @@ backProjectileManager:(AtlasSpriteManager*)backprojmgr
 	projectileLoc.x += (w/power)*pixelsInFront;
 	projectileLoc.y += (h/power)*pixelsInFront;
 	
-	CannonBall *ball = [[[CannonBall alloc] initWithManager:self.projectileManager 
-											   backManager:self.backProjectileManager
-													 world:world 
+	CannonBall *ball = [[[CannonBall alloc] initWithWorld:world 
 													coords:projectileLoc 
 													 level:weaponLevel 
 												   shooter:self.owner] autorelease];
 	
     [[Battlefield instance] addProjectileToBin:ball];
     
-    ball.body->ApplyImpulse(b2Vec2(w*CANNON_DEFAULT_POWER,h*CANNON_DEFAULT_POWER), ball.body->GetPosition());
+    ball.body->ApplyLinearImpulse(b2Vec2(w*CANNON_DEFAULT_POWER,h*CANNON_DEFAULT_POWER), ball.body->GetPosition());
     
 	[super fired:ball];
 	

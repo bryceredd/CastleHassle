@@ -14,8 +14,4 @@
 	
 }
 
--(id) initWithManager:(AtlasSpriteManager*)spritemgr 
-		  backManager:(AtlasSpriteManager*)backmanager
-				world:(b2World*)w
-			   coords:(CGPoint)p;
 @end

@@ -17,18 +17,16 @@
 #import "Weapon.h"
 #import "HUD.h"
 
-#import "Action.h"
-#import <IntervalAction.h>
-
 @implementation Piece
 
 @synthesize body, hp, currentSprite, world, acceptsTouches, acceptsDamage, shouldDestroy, snappedTo, hasBeenPlaced;
 @synthesize backSprite, maxHp, isChanged, repairPrice, owner, buyPrice, pieceID;
 @synthesize animationLabel, acceptsPlayerColoring, isFacingLeft;
 
--(id) init {
+-(id) initWithWorld:(b2World *)w coords:(CGPoint)p {
 	
 	if( (self=[super init])) {
+        world = w;
 		shouldDestroy = NO;
 		hasBeenPlaced = NO;
 		isFacingLeft = YES;
@@ -103,7 +101,7 @@
 	[self updateView];
 }
 
--(void) setupSpritesWithRect:(CGRect)rect atPoint:(CGPoint)p {
+-(void) setupSpritesWithRect:(CGRect)rect image:(NSString*)image atPoint:(CGPoint)p {
 	self.currentSprite = [AtlasSprite spriteWithRect:rect spriteManager:mgr];
 	[mgr addChild:currentSprite];
 	currentSprite.position = ccp(p.x, p.y);

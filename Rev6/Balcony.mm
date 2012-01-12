@@ -16,24 +16,18 @@
 
 @implementation Balcony
 
--(id) initWithManager:(AtlasSpriteManager*)spritemgr 
-		  backManager:(AtlasSpriteManager*)backmanager
-				world:(b2World*)w
+-(id) initWithWorld:(b2World*)w
 			   coords:(CGPoint)p {
 	
-	if( (self=[super init])) {
+	if((self = [super initWithWorld:w coords:p])) {
 		
-		self.mgr = spritemgr;
-		self.backMgr = backmanager;
-		world = w;
 		maxHp = hp = MAX_BALCONY_HP;
 		buyPrice = BALCONY_BUY_PRICE;
 		repairPrice = BALCONY_REPAIR_PRICE;
 		acceptsTouches = YES;
 		acceptsDamage = YES;
 		
-		
-		[self setupSpritesWithRect:CGRectMake(0,0,30,29) atPoint:p];
+		[self setupSpritesWithRect:CGRectMake(0,0,30,29) image:BALCONY_IMAGE atPoint:p];
 		
 		// Define the dynamic body.
 		b2BodyDef bodyDef;
@@ -62,11 +56,11 @@
 	jointDef.Initialize(body, self.snappedTo.body, body->GetWorldCenter());
 	
 	if(isFacingLeft) {
-		jointDef.localAnchor1 = b2Vec2(-15.0/PTM_RATIO, 0.0);
-		jointDef.localAnchor2 = b2Vec2(15.0/PTM_RATIO, 0.0);
+		jointDef.localAnchorA = b2Vec2(-15.0/PTM_RATIO, 0.0);
+		jointDef.localAnchorB = b2Vec2(15.0/PTM_RATIO, 0.0);
 	} else {
-		jointDef.localAnchor1 = b2Vec2(15.0/PTM_RATIO, 0.0);
-		jointDef.localAnchor2 = b2Vec2(-15.0/PTM_RATIO, 0.0);
+		jointDef.localAnchorA = b2Vec2(15.0/PTM_RATIO, 0.0);
+		jointDef.localAnchorB = b2Vec2(-15.0/PTM_RATIO, 0.0);
 	}
 	
 	

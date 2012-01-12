@@ -16,37 +16,25 @@
 
 @implementation Catapult
 
--(id) initWithManager:(AtlasSpriteManager*)spritemgr  
-		  backManager:(AtlasSpriteManager*)backmanager
-	projectileManager:(AtlasSpriteManager*)projmgr
-backProjectileManager:(AtlasSpriteManager*)backprojmgr
-				world:(b2World*)w
-			   coords:(CGPoint)p {
-
-	isFacingLeft = NO;
+-(id) initWithWorld:(b2World*)w coords:(CGPoint)p {
 	
-	if( (self=[super init])) {
+	if((self = [super init])) {
 		
 		// these adjust the offset of the arm to the base of the physical box
 		offset = 0.0;
 		currentShotAngle = M_PI_4;
 		
-		self.mgr = spritemgr;
-		self.backMgr = backmanager;
 		world = w;
 		maxHp = hp = MAX_CATAPULT_HP;
 		buyPrice = CATAPULT_BUY_PRICE;
 		repairPrice = CATAPULT_REPAIR_PRICE;
 		upgradePrice = CATAPULT_UPGRADE_PRICE;
 		maxCooldown = CATAPULT_COOLDOWN;
-		self.projectileManager = projmgr;
-		self.backProjectileManager = backprojmgr;
 		acceptsPlayerColoring = NO;
 		
 		
-		[self setupSpritesWithRect:CGRectMake(3, 6, 23, 22) atPoint:p];
-		
-		[self setupSwingSpritesWithRect:CGRectMake(0, 0, 35, 5) atPoint:p];
+		[self setupSpritesWithRect:CGRectMake(3, 6, 23, 22) image:CATAPULT_IMAGE atPoint:p];
+		[self setupSwingSpritesWithRect:CGRectMake(0, 0, 35, 5) image:CATAPULT_IMAGE atPoint:p];
 				
 		// define the base dynamic body
 		b2BodyDef bodyDef;

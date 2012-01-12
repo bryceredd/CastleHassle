@@ -27,20 +27,17 @@
 						   options:NSKeyValueObservingOptionNew
 						   context:nil];
 		
-		AtlasSpriteManager* mgr = [[Battlefield instance].managers objectForKey:@"coins"];
 		
-		coin = [AtlasSprite spriteWithRect:CGRectMake(0, 21, 14, 14) 
-										   spriteManager:mgr];
-		
-		[mgr addChild:coin];
+		coin = spriteWithRect(@"coins", CGRectMake(0, 21, 14, 14));
+		[self addChild:coin];
 		
 	}
 	return self;
 }
 
 -(void) postInitWithText:(NSString *)text {
-	self.buttonText = [Label labelWithString:text fontName:@"Arial" fontSize:14.0];
-	self.price = [Label labelWithString:[NSString stringWithFormat:@"%d", 50] fontName:@"Arial" fontSize:14.0];
+	self.buttonText = [CCLabelTTF labelWithString:text fontName:@"Arial" fontSize:14.0];
+	self.price = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%d", 50] fontName:@"Arial" fontSize:14.0];
 	[[Battlefield instance] addChild:price z:PIECE_Z_INDEX];
 	[[Battlefield instance] addChild:buttonText z:PIECE_Z_INDEX];
 	
@@ -79,18 +76,18 @@
 -(void) hide {
 	[super hide];
     
-    [buttonText runAction:[FadeOut actionWithDuration:.25]];
-    [coin runAction:[FadeOut actionWithDuration:.25]];
-    [price runAction:[FadeOut actionWithDuration:.25]];
+    [buttonText runAction:[CCFadeOut actionWithDuration:.25]];
+    [coin runAction:[CCFadeOut actionWithDuration:.25]];
+    [price runAction:[CCFadeOut actionWithDuration:.25]];
     
 }
 
 -(void) show {
 	[super show];
 
-	[buttonText runAction:[FadeIn actionWithDuration:.25]];
-    [coin runAction:[FadeIn actionWithDuration:.25]];
-    [price runAction:[FadeIn actionWithDuration:.25]];
+	[buttonText runAction:[CCFadeIn actionWithDuration:.25]];
+    [coin runAction:[CCFadeIn actionWithDuration:.25]];
+    [price runAction:[CCFadeIn actionWithDuration:.25]];
     
 	[self move:ccp(0,0)];
 	[self updatePrice];

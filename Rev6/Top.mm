@@ -19,14 +19,9 @@
 
 @implementation Top
 
--(id) initWithManager:(AtlasSpriteManager*)spritemgr 
-		  backManager:(AtlasSpriteManager*)backmanager
-				world:(b2World*)w
-			   coords:(CGPoint)p {
+-(id) initWithWorld:(b2World*)w coords:(CGPoint)p {
 	
-	if( (self=[super init])) {
-		self.mgr = spritemgr;
-		self.backMgr = backmanager;
+	if((self = [super init])) {
 		world = w;
 		maxHp = hp = MAX_TOP_HP;
 		buyPrice = TOP_BUY_PRICE;
@@ -35,7 +30,7 @@
 		acceptsDamage = YES;
 		acceptsPlayerColoring = YES;
 		
-		[self setupSpritesWithRect:CGRectMake(0,0,33,26) atPoint:p];
+		[self setupSpritesWithRect:CGRectMake(0,0,33,26) image:TOP_IMAGE atPoint:p];
 		
 		// Define the dynamic body.
 		b2BodyDef bodyDef;
@@ -48,8 +43,7 @@
 }
 
 -(void) onTouchBegan:(CGPoint)touch {
-	if(!hasBeenPlaced) { body->PutToSleep(); }
-	
+	if(!hasBeenPlaced) { body->SetAwake(false);}
 }
 
 -(b2Vec2) snapToPosition:(b2Vec2)pos {

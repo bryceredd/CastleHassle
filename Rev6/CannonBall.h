@@ -15,9 +15,5 @@
 
 }
 
--(id) initWithManager:(AtlasSpriteManager*)spritemgr  
-		  backManager:(AtlasSpriteManager*)backmanager
-				world:(b2World*)w
-			   coords:(CGPoint)p 
-				level:(int)l shooter:(PlayerArea*)s;
+-(id) initWorld:(b2World*)w coords:(CGPoint)p level:(int)l shooter:(PlayerArea*)s;
 @end

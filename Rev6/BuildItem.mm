@@ -16,28 +16,22 @@
 #import "Top.h"
 #import "HUD.h"
 #import "GameSettings.h"
-#import "Action.h"
 
 @implementation BuildItem
 
 @synthesize creationClass, price;
 
 -(id) initWithPrice:(int)p {
-	if( (self=[super init])) {
+	if((self = [super init])) {
 
-		AtlasSpriteManager* mgr = [[Battlefield instance].managers objectForKey:@"coins"];
-		
-		coin = [AtlasSprite spriteWithRect:CGRectMake(0, 21, 14, 14) 
-							 spriteManager:mgr];
-		
+        coin = spriteWithRect(@"coins", CGRectMake(0, 21, 14, 14));		
 		goldPrice = p;
-		
-		self.price = [Label labelWithString:[NSString stringWithFormat:@"%d", p] fontName:@"Arial" fontSize:14.0];
+		self.price = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%d", p] fontName:@"Arial" fontSize:14.0];
 		price.color = ccc3(65, 65, 65);
 		
 		[[Battlefield instance] addChild:price z:PIECE_Z_INDEX];
 		
-		[mgr addChild:coin];
+		[self addChild:coin];
 		
 	}
 	
@@ -130,17 +124,17 @@
 -(void) hide {
 	[super hide];
     
-    [coin runAction:[FadeOut actionWithDuration:.25]];
-    [price runAction:[FadeOut actionWithDuration:.25]];
-    [swingImg runAction:[FadeOut actionWithDuration:.25]];
+    [coin runAction:[CCFadeOut actionWithDuration:.25]];
+    [price runAction:[CCFadeOut actionWithDuration:.25]];
+    [swingImg runAction:[CCFadeOut actionWithDuration:.25]];
 }
 
 -(void) show {
 	[super show];
 	
-    [coin runAction:[FadeIn actionWithDuration:.25]];
-    [price runAction:[FadeIn actionWithDuration:.25]];
-    [swingImg runAction:[FadeIn actionWithDuration:.25]];
+    [coin runAction:[CCFadeIn actionWithDuration:.25]];
+    [price runAction:[CCFadeIn actionWithDuration:.25]];
+    [swingImg runAction:[CCFadeIn actionWithDuration:.25]];
 	
 	[self move:ccp(0,0)];
 }

@@ -8,6 +8,7 @@
 
 #import "Turret.h"
 #import "Tower.h"
+#import "Wall.h"
 #import "Projectile.h"
 #import "StaticUtils.h"
 #import "Weapon.h"
@@ -16,14 +17,9 @@
 
 @implementation Turret
 
--(id) initWithManager:(AtlasSpriteManager*)spritemgr 
-		  backManager:(AtlasSpriteManager*)backmanager
-				world:(b2World*)w
-			   coords:(CGPoint)p {
+-(id) initWithWorld:(b2World*)w coords:(CGPoint)p {
 	
 	if( (self=[super init])) {
-		self.mgr = spritemgr;
-		self.backMgr = backmanager;
 		world = w;
 		maxHp = hp = MAX_TURRET_HP;
 		buyPrice = TURRET_BUY_PRICE;
@@ -31,7 +27,7 @@
 		acceptsTouches = YES;
 		acceptsDamage = YES;
 		
-		[self setupSpritesWithRect:CGRectMake(0,0,36,29) atPoint:p];
+		[self setupSpritesWithRect:CGRectMake(0,0,36,29) image:TURRET_IMAGE atPoint:p];
 		
 		// Set up a 1m squared box in the physics world
 		b2BodyDef bodyDef;

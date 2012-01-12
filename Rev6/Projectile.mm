@@ -15,9 +15,8 @@
 
 @synthesize baseDamage, bounces, trail, shouldLoadVelocity;
 
--(id) initWithCoords:(CGPoint)p world:(b2World *)w manager:(AtlasSpriteManager *)spritemgr from:(PlayerArea*)s {
+-(id) initWithCoords:(CGPoint)p world:(b2World *)w from:(PlayerArea*)s {
 	if( (self=[super init])) {
-		self.mgr = spritemgr;
 		acceptsTouches = NO;
 		world = w;
 		baseDamage = 10;
@@ -117,7 +116,7 @@
 		//body->ApplyImpulse((savedVelocity-velocity), body->GetPosition());
 		NSLog(@"applying velocity to cancel it out and add saved (%f, %f)", (savedVelocity-velocity).x, (savedVelocity-velocity).y);
 
-		body->ApplyImpulse(b2Vec2(.1f,.1f), body->GetPosition());
+		body->ApplyLinearImpulse(b2Vec2(.1f,.1f), body->GetPosition());
 	}
 }
 

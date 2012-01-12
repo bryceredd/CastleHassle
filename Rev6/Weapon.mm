@@ -41,7 +41,7 @@
 	return self;
 }
 
--(void) setupSwingSpritesWithRect:(CGRect)rect atPoint:(CGPoint)p {
+-(void) setupSwingSpritesWithRect:(CGRect)rect image:(NSString*)image atPoint:(CGPoint)p {
 
 	// we setup a trick here, because we want the cannon barrel to pivot at one 
 	// end of the base, we'll make the sprite box twice as long, and set the center

@@ -16,14 +16,8 @@
 		//Sprite *shootIndicator;
 }
 
+-(id) initWithWorld:(b2World*)w coords:(CGPoint)p;
 -(void)moveObject:(CGPoint)touch;
 -(BOOL)shootFromAICatapult:(float)F isLeft:(BOOL)left;
-
--(id) initWithManager:(AtlasSpriteManager*)spritemgr  
-		  backManager:(AtlasSpriteManager*)backmanager
-	projectileManager:(AtlasSpriteManager*)projmgr
-backProjectileManager:(AtlasSpriteManager *)backprojmgr
-				world:(b2World*)w
-			   coords:(CGPoint)p;
 
 @end

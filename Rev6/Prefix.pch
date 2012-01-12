@@ -82,38 +82,54 @@
     #define CATPULT_BALLS_PER_UPGRADE 2
 
 
+    #define CATAPULTBALL_IMAGE @"catapultball.png"
+    #define CANNONBALL_IMAGE @"cannonball.png"
+    #define CITY_IMAGE @"city"
+    #define CITY_COLOR_IMAGE @"citycolor"
+   
+
 	// prices
 	#define CATAPULT_REPAIR_PRICE 90
 	#define CATAPULT_BUY_PRICE 130
 	#define CATAPULT_UPGRADE_PRICE 200
+    #define CATAPULT_IMAGE @"catapult.png"
 
 	#define CANNON_REPAIR_PRICE 90
 	#define CANNON_BUY_PRICE 120
 	#define CANNON_UPGRADE_PRICE 80
+    #define CANNON_IMAGE @"cannonball.png" 
 
 	#define ARCH_REPAIR_PRICE 50
 	#define ARCH_BUY_PRICE 60
+    #define ARCH_IMAGE @"arch.png"
 
 	#define BALCONY_REPAIR_PRICE 30
 	#define BALCONY_BUY_PRICE 40
+    #define BALCONY_IMAGE @"balcony"
 
 	#define MERLIN_REPAIR_PRICE 50
 	#define MERLIN_BUY_PRICE 60
+    #define MERLIN_IMAGE @"merlin.png"
 
 	#define TOP_REPAIR_PRICE 20
 	#define TOP_BUY_PRICE 25
+    #define TOP_IMAGE @"top.png"
 
 	#define TOWER_REPAIR_PRICE 50
 	#define TOWER_BUY_PRICE 60
+    #define TOWER_IMAGE @"tower.png"
 
 	#define TURRET_REPAIR_PRICE 60
 	#define TURRET_BUY_PRICE 70
+    #define TURRET_IMAGE @"turret.png"
 
 	#define WALL_REPAIR_PRICE 40
 	#define WALL_BUY_PRICE 50
+    #define WALL_IMAGE @"wall.png"
 
 	#define WEDGE_REPAIR_PRICE 60
 	#define WEDGE_BUY_PRICE 75
+    #define WEDGE_IMAGE @"wedge.png"
 
 
 

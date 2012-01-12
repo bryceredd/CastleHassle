@@ -30,7 +30,7 @@
 
 - (float) getExtremeRight {
 	// sexy line... please change
-	return leftImage.position.x < rightImage.position.x ? rightImage.position.x + (rightImage.textureRect.size.width/2) - [Director sharedDirector].winSize.height : leftImage.position.x + (leftImage.textureRect.size.width/2) - [Director sharedDirector].winSize.height;
+	return leftImage.position.x < rightImage.position.x ? rightImage.position.x + (rightImage.textureRect.size.width/2) - [CCDirector sharedDirector].winSize.height : leftImage.position.x + (leftImage.textureRect.size.width/2) - [CCDirector sharedDirector].winSize.height;
 }
 
 - (CCSprite *) getUnseenSprite:(CGPoint)pos result:(int)res{
@@ -48,7 +48,7 @@
 	float extremeLeft = [self getExtremeLeft];
 	float extremeRight = [self getExtremeRight];
 	
-	if(pos.x-[Director sharedDirector].winSize.height/2 < extremeLeft)
+	if(pos.x-[CCDirector sharedDirector].winSize.height/2 < extremeLeft)
 		return -1;
 	if(pos.x > extremeRight)
 		return 1;

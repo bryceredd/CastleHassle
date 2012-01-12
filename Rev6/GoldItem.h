@@ -15,7 +15,7 @@
 @class AtlasSprite;
 
 @interface GoldItem : HUDItem {
-	Label* amount;
+	CCLabelTTF* amount;
     BOOL isObserving;
 }
 
@@ -23,6 +23,6 @@
 
 -(void) updateGold;
 
-@property(nonatomic, retain) Label* amount;
+@property(nonatomic, retain) CCLabelTTF* amount;
 
 @end

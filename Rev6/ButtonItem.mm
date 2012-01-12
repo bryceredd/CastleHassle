@@ -16,7 +16,7 @@
 
 
 -(void) postInitWithText:(NSString *)text {
-	self.buttonText = [Label labelWithString:text fontName:@"Arial" fontSize:20.0];
+	self.buttonText = [CCLabelTTF labelWithString:text fontName:@"Arial" fontSize:20.0];
 	[buttonText setPosition:CGPointMake(img.position.x, img.position.y)];
 	[[Battlefield instance] addChild:buttonText z:PIECE_Z_INDEX];
 }
@@ -38,13 +38,13 @@
 -(void) hide {
 	[super hide];
     
-    [buttonText runAction:[FadeOut actionWithDuration:.25]];
+    [buttonText runAction:[CCFadeOut actionWithDuration:.25]];
 }
 
 -(void) show {
 	[super show];
 
-	[buttonText runAction:[FadeIn actionWithDuration:.25]];
+	[buttonText runAction:[CCFadeIn actionWithDuration:.25]];
     
 	buttonText.position = img.position;
 }

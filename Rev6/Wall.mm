@@ -17,14 +17,9 @@
 
 @implementation Wall
 
--(id) initWithManager:(AtlasSpriteManager*)spritemgr 
-		  backManager:(AtlasSpriteManager*)backmanager
-				world:(b2World*)w
-			   coords:(CGPoint)p {
+-(id) initWithWorld:(b2World*)w coords:(CGPoint)p {
 	
-	if( (self=[super init])) {
-		self.mgr = spritemgr;
-		self.backMgr = backmanager;
+	if((self = [super init])) {
 		world = w;
 		maxHp = hp = MAX_WALL_HP;
 		buyPrice = WALL_BUY_PRICE;
@@ -32,7 +27,7 @@
 		acceptsTouches = YES;
 		acceptsDamage = YES;
 		
-		[self setupSpritesWithRect:CGRectMake(0,0,30,29) atPoint:p];
+		[self setupSpritesWithRect:CGRectMake(0,0,30,29) image:WALL_IMAGE atPoint:p];
 		
 		// Define the dynamic body
 		b2BodyDef bodyDef;

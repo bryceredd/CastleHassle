@@ -17,7 +17,7 @@
 }
 
 @property(nonatomic, assign) Class creationClass;
-@property(nonatomic, retain) Label* price;
+@property(nonatomic, retain) CCLabelTTF* price;
 
 -(id) initWithPrice:(int)p;
 -(void) postInit;

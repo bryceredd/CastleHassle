@@ -16,23 +16,17 @@
 
 @synthesize rightSnappedTo;
 
--(id) initWithManager:(AtlasSpriteManager*)spritemgr 
-		  backManager:(AtlasSpriteManager*)backmanager
-				world:(b2World*)w
-			   coords:(CGPoint)p {
+-(id) initWithWorld:(b2World*)w coords:(CGPoint)p {
 	
-	if( (self=[super init])) {
+	if((self = [super init])) {
 		
-		self.backMgr = backmanager;
-		self.mgr = spritemgr;
-		world = w;
 		maxHp = hp = MAX_ARCH_HP;
 		buyPrice = ARCH_BUY_PRICE;
 		repairPrice = ARCH_REPAIR_PRICE;
 		acceptsTouches = YES;
 		acceptsDamage = YES;
 		
-		[self setupSpritesWithRect:CGRectMake(0,0,60,30) atPoint:p];
+		[self setupSpritesWithRect:CGRectMake(0,0,60,30) image:ARCH_IMAGE atPoint:p];
 				
 		// Define the dynamic body.
 		b2BodyDef bodyDef;
@@ -71,8 +65,8 @@
 		jointDef1.maxMotorTorque = 1.0f;
 		jointDef1.motorSpeed = 0.0f;
 		jointDef1.enableMotor = true;
-		jointDef1.localAnchor1 = b2Vec2((self.currentSprite.textureRect.size.width/-2.0)/PTM_RATIO, (self.currentSprite.textureRect.size.height/3.0)/PTM_RATIO);
-		jointDef1.localAnchor2 = b2Vec2((pieceLeft.currentSprite.textureRect.size.width/2.0)/PTM_RATIO, (pieceLeft.currentSprite.textureRect.size.height/3.0)/PTM_RATIO);
+		jointDef1.localAnchorA = b2Vec2((self.currentSprite.textureRect.size.width/-2.0)/PTM_RATIO, (self.currentSprite.textureRect.size.height/3.0)/PTM_RATIO);
+		jointDef1.localAnchorB = b2Vec2((pieceLeft.currentSprite.textureRect.size.width/2.0)/PTM_RATIO, (pieceLeft.currentSprite.textureRect.size.height/3.0)/PTM_RATIO);
 		
 		world->CreateJoint(&jointDef1);
 		
@@ -83,8 +77,8 @@
 		jointDef2.maxMotorTorque = 1.0f;
 		jointDef2.motorSpeed = 0.0f;
 		jointDef2.enableMotor = true;
-		jointDef2.localAnchor1 = b2Vec2((self.currentSprite.textureRect.size.width/2.0)/PTM_RATIO, (self.currentSprite.textureRect.size.height/3.0)/PTM_RATIO);
-		jointDef2.localAnchor2 = b2Vec2((pieceRight.currentSprite.textureRect.size.width/-2.0)/PTM_RATIO, (pieceRight.currentSprite.textureRect.size.height/3.0)/PTM_RATIO);
+		jointDef2.localAnchorA = b2Vec2((self.currentSprite.textureRect.size.width/2.0)/PTM_RATIO, (self.currentSprite.textureRect.size.height/3.0)/PTM_RATIO);
+		jointDef2.localAnchorB = b2Vec2((pieceRight.currentSprite.textureRect.size.width/-2.0)/PTM_RATIO, (pieceRight.currentSprite.textureRect.size.height/3.0)/PTM_RATIO);
 		
 		world->CreateJoint(&jointDef2);
 	}

@@ -31,15 +31,13 @@
 	return self;
 }
 
--(StatusItem *) addStatusItemWithManagerName:(NSString *)mgrName imageBox:(CGRect)box swingImageBox:(CGRect)swingBox piece:(Piece*)p {
+-(StatusItem *) addStatusItemWithImageName:(NSString *)image imageBox:(CGRect)box swingImageBox:(CGRect)swingBox piece:(Piece*)p {
 	StatusItem *item = [[[StatusItem alloc] init] autorelease];
 	
 	// modify box to be more wide	
-	[self addItemWithManagerName:mgrName imageBox:box swingImageBox:swingBox hudItem:item expandToStatusSize:YES];
+	[self addItemWithImageName:image imageBox:box swingImageBox:swingBox hudItem:item expandToStatusSize:YES];
 	
-	AtlasSpriteManager* mgr = [managers objectForKey:mgrName];
-	
-	[self setSwingItemWithManager:mgr swingBox:swingBox imageBox:box forItem:item forClass:[p class]];
+	[self setSwingItemWithImage:image swingBox:swingBox imageBox:box forItem:item forClass:[p class]];
 	
 	[item postInitWithPiece:p];
 	[items addObject:item];
@@ -47,14 +45,12 @@
 	return item;
 }
 
--(BuildItem *) addBuildItemWithManagerName:(NSString *)mgrName imageBox:(CGRect)box swingImageBox:(CGRect)swingBox class:(Class)c price:(int)p {
+-(BuildItem *) addBuildItemWithImageName:(NSString *)imageName imageBox:(CGRect)box swingImageBox:(CGRect)swingBox class:(Class)c price:(int)p {
 	BuildItem *item = [[[BuildItem alloc] initWithPrice:p] autorelease];
 	
-	[self addItemWithManagerName:mgrName imageBox:box swingImageBox:swingBox hudItem:item expandToStatusSize:NO];
+	[self addItemWithManagerName:imageName imageBox:box swingImageBox:swingBox hudItem:item expandToStatusSize:NO];
 	
-	AtlasSpriteManager* mgr = [managers objectForKey:mgrName];
-	
-	[self setSwingItemWithManager:mgr swingBox:swingBox imageBox:box forItem:item forClass:c];
+	[self setSwingItemWithImage:imageName swingBox:swingBox imageBox:box forItem:item forClass:c];
 	
 	[item setCreationClass:c];
 	
@@ -63,14 +59,14 @@
 	return item;
 }
 
--(ButtonItem *) addButtonItemWithManagerName:(NSString *)mgrName 
+-(ButtonItem *) addButtonItemWithImageName:(NSString *)imageName 
 									imageBox:(CGRect)box 
 							   swingImageBox:(CGRect)swingBox 
 									selector:(SEL)s 
 									   title:(NSString*)t {
 	ButtonItem *item = [[[ButtonItem alloc] init] autorelease];
 	
-	[self addItemWithManagerName:mgrName imageBox:box swingImageBox:swingBox hudItem:item expandToStatusSize:NO];
+	[self addItemWithImageName:imageName imageBox:box swingImageBox:swingBox hudItem:item expandToStatusSize:NO];
 	
 	[item postInitWithText:t];
 	item.func = s;
@@ -80,14 +76,14 @@
 	return item;
 }
 
--(PurchaseItem *) addPurchaseItemWithManagerName:(NSString *)mgrName 
+-(PurchaseItem *) addPurchaseItemWithImageName:(NSString *)imageName
 									imageBox:(CGRect)box 
 							   swingImageBox:(CGRect)swingBox 
 									selector:(SEL)s 
-										   title:(NSString*)t piece:(Piece*)p {
+                                       title:(NSString*)t piece:(Piece*)p {
 	PurchaseItem *item = [[[PurchaseItem alloc] initWithPiece:p] autorelease];
 	
-	[self addItemWithManagerName:mgrName imageBox:box swingImageBox:swingBox hudItem:item expandToStatusSize:NO];
+	[self addItemWithImageName:imageName imageBox:box swingImageBox:swingBox hudItem:item expandToStatusSize:NO];
 	
 	[item postInitWithText:t];
 	item.func = s;
@@ -114,12 +110,11 @@
 	return item;
 }
 
--(void) addItemWithManagerName:(NSString *)mgrName 
+-(void) addItemWithImageName:(NSString *)imageName 
 					  imageBox:(CGRect)box 
 				 swingImageBox:(CGRect)swingBox 
 					   hudItem:(HUDItem*)item 
 			expandToStatusSize:(BOOL)expand {
-	AtlasSpriteManager* mgr = [managers objectForKey:mgrName];
 	
 	// set left/right limits
 	item.leftBound = extremeRight;
@@ -127,33 +122,31 @@
 	item.rightBound = extremeRight;
 	
 	// create sprites along top border
-	item.img = [AtlasSprite spriteWithRect:box 
-							 spriteManager:mgr];
+	item.img = spriteWithRect(imageName, box);
 	
 	// put the sprite in the right position
 	item.img.position = ccp(item.leftBound+(item.rightBound-item.leftBound)/2, 320-(HUD_HEIGHT/2));
 	
-	item.managerName = mgrName;
+	item.imageName = imageName;
 	
 	[item postInit];
 	
 	// draw the sprite on the screen
-	[mgr addChild:item.img];
+	[self addChild:item.img];
 }
 
 
--(void) setSwingItemWithManager:(AtlasSpriteManager*)mgr swingBox:(CGRect)swingBox imageBox:(CGRect)box forItem:(HUDItem*)item forClass:(Class)c {
+-(void) setSwingItemWithImage:(NSString*)imageName swingBox:(CGRect)swingBox imageBox:(CGRect)box forItem:(HUDItem*)item forClass:(Class)c {
 	// if there was a swing box, draw it and add it
 	if(swingBox.size.width > 0 && swingBox.size.height > 0) {
 		
-		item.swingImg = [AtlasSprite spriteWithRect:swingBox 
-									  spriteManager:mgr];
+		item.swingImg = spriteWithRect(imageName, swingBox);
 		
 		// put the sprite in the right position
 		item.swingImg.rotation = 45;
 		
 		// draw the sprite on the screen
-		[mgr addChild:item.swingImg];
+		[self addChild:item.swingImg];
 	}
 	
 	// reposition the base

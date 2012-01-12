@@ -15,19 +15,13 @@
 
 @implementation CannonBall
 
--(id) initWithManager:(AtlasSpriteManager*)spritemgr  
-		  backManager:(AtlasSpriteManager*)backmanager
-				world:(b2World*)w
-			   coords:(CGPoint)p 
-				level:(int)l 
-			  shooter:(PlayerArea*)s {
-	if( (self=[super initWithCoords:p world:w manager:spritemgr from:s])) {
+-(id) initWorld:(b2World*)w coords:(CGPoint)p level:(int)l shooter:(PlayerArea*)s {
+	if((self = [super initWithCoords:p world:w from:s])) {
 	
 		bounces = l;
-		self.backMgr = backmanager;
 		baseDamage = CANNONBALL_BASE_DAMAGE;
 
-		[self setupSpritesWithRect:CGRectMake(0,0,7,7) atPoint:p];
+		[self setupSpritesWithRect:CGRectMake(0,0,7,7) image:CANNON_IMAGE atPoint:p];
 		
 		// Define another box shape for our dynamic body.
 		b2PolygonShape dynamicBox;
@@ -60,7 +54,7 @@
 -(void) targetWasHit:(b2Contact*)contact by:(Projectile *)p {
 	[super targetWasHit:contact by:p];
 	
-	ParticleSystem *emitter = [[[CannonBallExplosion alloc] init] autorelease];
+	CCParticleSystem *emitter = [[[CannonBallExplosion alloc] init] autorelease];
 	emitter.position = ccp(body->GetPosition().x*PTM_RATIO, body->GetPosition().y*PTM_RATIO);
 	[[Battlefield instance] addChild:emitter z:ANIMATION_Z_INDEX];
 }

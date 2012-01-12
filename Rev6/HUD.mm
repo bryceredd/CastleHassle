@@ -33,14 +33,14 @@
 		
 		[[HUDActionController instance] setHud:self];
 		tabMgr = [managers objectForKey:@"hud"];
-		tabUpSprite = [AtlasSprite spriteWithRect:CGRectMake(184, 58, 112, 22) spriteManager:tabMgr];
+		tabUpSprite = spriteWithRect(@"hud.png", CGRectMake(184, 58, 112, 22));
 		tabUpSprite.position = CGPointMake(480.0/2.0, 320.0-HUD_HEIGHT-(22.0/2.0));
 		
-		tabDownSprite = [AtlasSprite spriteWithRect:CGRectMake(184, 81, 112, 22) spriteManager:tabMgr];
+		tabDownSprite = spriteWithRect(@"hud.png", CGRectMake(184, 81, 112, 22));
 		tabDownSprite.position = CGPointMake(480.0/2.0, 320.0-(22.0/2.0));
 		[tabDownSprite setVisible:NO];
 		
-		tabSprite = [AtlasSprite spriteWithRect:CGRectMake(0, 0, 480, HUD_HEIGHT) spriteManager:tabMgr];
+		tabSprite = spriteWithRect(@"hud.png", CGRectMake(0, 0, 480, HUD_HEIGHT));
 		tabSprite.position = CGPointMake(480.0/2.0, 320.0-(HUD_HEIGHT/2.0));
 		[tabSprite setVisible:YES];
 		
@@ -59,16 +59,12 @@
 		
 		// init gold box
 		gold = [[GoldItem alloc] init];
-		CGRect box = CGRectMake(0, 0, 20, 20);
 		gold.leftBound = 360;
 		gold.rightBound = gold.leftBound+100;
-		NSString* mgrName = @"coins";
-		AtlasSpriteManager* mgr = [managers objectForKey:mgrName];
-		gold.img = [AtlasSprite spriteWithRect:box 
-								 spriteManager:mgr];
-		gold.managerName = mgrName;
+
+		gold.img = spriteWithRect(@"hud.png", CGRectMake(0, 0, 20, 20));
 		gold.img.position = ccp(0, 320-HUD_HEIGHT-15);
-		[mgr addChild:gold.img];
+		[self addChild:gold.img];
 		[gold postInit];
 		[gold show];
 		
@@ -78,7 +74,7 @@
 }
 
 -(void) initMainMenu {
-	self.countDownTimer = [Label labelWithString:@"" fontName:@"Arial" fontSize:48.0];
+	self.countDownTimer = [CCLabelTTF labelWithString:@"" fontName:@"Arial" fontSize:48.0];
 	self.countDownTimer.position = ccp(240.0, 180.0);
 	self.countDownTimer.color = ccRED;
 	[[Battlefield instance] addChild:self.countDownTimer z:ANIMATION_Z_INDEX];
@@ -90,7 +86,7 @@
 							  swingImageBox:CGRectMake(0, 0, 0, 0)
 								  selector:@selector(showBuildMenu) 
 									 title:@"Build"]; 
-	
+
 	/*[mainMenu addButtonItemWithManagerName:@"stdButtons"
 								  imageBox:CGRectMake(0, 77, 104, 37) 
 							 swingImageBox:CGRectMake(0, 0, 0, 0)
@@ -444,18 +440,18 @@
 		[self removeMessage];
 	}
 	
-	splashMsg = [Label labelWithString:message fontName:@"Arial" fontSize:24.0];
+	splashMsg = [CCLabelTTF labelWithString:message fontName:@"Arial" fontSize:24.0];
 	splashMsg.color = ccRED;
 	[splashMsg setPosition:CGPointMake(tabDownSprite.position.x, 320-HUD_HEIGHT-50)];
 	
 	 // add some animation
-	id labelAction1 = [ScaleTo actionWithDuration:0.05 scale:1.1];
-	id labelAction2 = [ScaleTo actionWithDuration:0.1 scale:1.0];
-	id labelAction3 = [ScaleTo actionWithDuration:1.5 scale:1.0];
+	id labelAction1 = [CCScaleTo actionWithDuration:0.05 scale:1.1];
+	id labelAction2 = [CCScaleTo actionWithDuration:0.1 scale:1.0];
+	id labelAction3 = [CCScaleTo actionWithDuration:1.5 scale:1.0];
 	
-	id seq3 = [Sequence actionOne:labelAction3 two:[CallFunc actionWithTarget:self selector:@selector(removeMessage)]];
-	id seq2 = [Sequence actionOne:labelAction2 two:seq3];
-	id seq1 = [Sequence actionOne:labelAction1 two:seq2];
+	id seq3 = [CCSequence actionOne:labelAction3 two:[CCCallFunc actionWithTarget:self selector:@selector(removeMessage)]];
+	id seq2 = [CCSequence actionOne:labelAction2 two:seq3];
+	id seq1 = [CCSequence actionOne:labelAction1 two:seq2];
 	 
 	[splashMsg runAction:seq1];
 	 
