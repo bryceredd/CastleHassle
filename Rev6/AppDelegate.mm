@@ -12,6 +12,7 @@
 #import "GameConfig.h"
 #import "HelloWorldLayer.h"
 #import "RootViewController.h"
+#import "MainMenu.h"
 
 @implementation AppDelegate
 
@@ -111,7 +112,7 @@
 	[self removeStartupFlicker];
 	
 	// Run the intro Scene
-	[[CCDirector sharedDirector] runWithScene: [HelloWorldLayer scene]];
+	[[CCDirector sharedDirector] runWithScene:[MainMenu instance]];
 }
 
 

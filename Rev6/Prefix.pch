@@ -84,8 +84,8 @@
 
     #define CATAPULTBALL_IMAGE @"catapultball.png"
     #define CANNONBALL_IMAGE @"cannonball.png"
-    #define CITY_IMAGE @"city"
-    #define CITY_COLOR_IMAGE @"citycolor"
+    #define CITY_IMAGE @"city.png"
+    #define CITY_COLOR_IMAGE @"citycolor.png"
    
 
 	// prices
@@ -105,7 +105,7 @@
 
 	#define BALCONY_REPAIR_PRICE 30
 	#define BALCONY_BUY_PRICE 40
-    #define BALCONY_IMAGE @"balcony"
+    #define BALCONY_IMAGE @"balcony.png"
 
 	#define MERLIN_REPAIR_PRICE 50
 	#define MERLIN_BUY_PRICE 60

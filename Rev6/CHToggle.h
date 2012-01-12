@@ -21,7 +21,7 @@
 @property(nonatomic, assign) int selectedIndex;
 @property(nonatomic, retain) NSString* image;
 
--(id)initWithImageName: (NSString*) s;
+-(id)initWithImageName:(NSString*)s;
 -(void)addItem:(CHToggleItem*)item;
 -(void)selectItem:(id)sender;
 -(void)selectItemAtIndex:(int)index;

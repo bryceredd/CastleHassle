@@ -23,7 +23,7 @@
 		selectedRect = sel;
 		unselectedRect = desel;
         img = spriteWithRect(p.image, sel);
-		[self addChild:img];
+		[parent addChild:img];
 		
 		item = [CCMenuItemFont itemFromString:str target:self selector:@selector(responder:)];
 		
