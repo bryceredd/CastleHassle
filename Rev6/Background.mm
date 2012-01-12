@@ -29,13 +29,13 @@
 		// setup the left sprite
 		leftImage = spriteWithRect(lImg, CGRectMake(0,0,dim.x,dim.y));
         leftImage.position = ccp(-1*dim.x/2+screenSize.width/2, dim.y/2);
-		[self addChild:leftImage z:index];
+		[parent addChild:leftImage z:index];
     
 		 
 		// setup the right sprite
 		rightImage = spriteWithRect(rImg, CGRectMake(0,0,dim.x,dim.y));
 		rightImage.position = ccp(dim.x/2+screenSize.width/2-1, dim.y/2);
-        [self addChild:rightImage];
+        [parent addChild:rightImage z:index];
 	}
 	
 	return self;

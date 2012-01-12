@@ -91,7 +91,7 @@
 	
 	//Riparazione Animazione
 	CGPoint loc = ccp(body->GetPosition().x*PTM_RATIO, body->GetPosition().y*PTM_RATIO - 8);
-	ParticleSystem* ps = [[[PoofRepairAnimation alloc] initWithTotalParticles:60] autorelease];
+	CCParticleSystem* ps = [[[PoofRepairAnimation alloc] initWithTotalParticles:60] autorelease];
 	ps.position = loc;
 	ps.life = 0.08f;
 	[[Battlefield instance] addChild:ps z:ANIMATION_Z_INDEX];
@@ -102,13 +102,13 @@
 }
 
 -(void) setupSpritesWithRect:(CGRect)rect image:(NSString*)image atPoint:(CGPoint)p {
-	self.currentSprite = [AtlasSprite spriteWithRect:rect spriteManager:mgr];
-	[mgr addChild:currentSprite];
+	self.currentSprite = spriteWithRect(image, rect);
+	[[Battlefield instance] addChild:currentSprite z:FOREGROUND_Z_INDEX];
 	currentSprite.position = ccp(p.x, p.y);
 	
-	self.backSprite = [AtlasSprite spriteWithRect:rect spriteManager:backMgr];
+	self.backSprite = spriteWithRect(image, rect);
 	[backSprite setScale:1/BACKGROUND_SCALE_FACTOR];
-	[backMgr addChild:backSprite];
+	[[Battlefield instance] addChild:backSprite z:BACKGROUND_Z_INDEX];
 	backSprite.position = ccp(p.x, p.y+PLAYER_BACKGROUND_HEIGHT);
 	backSprite.flipX = YES;
 }
@@ -126,7 +126,7 @@
 }
 
 -(void) onTouchBegan:(CGPoint)touch {
-	if(!hasBeenPlaced) { body->PutToSleep(); }
+	if(!hasBeenPlaced) { body->SetAwake(false); }
 }
 
 -(void) onTouchMoved:(CGPoint)touch {
@@ -134,7 +134,7 @@
 		
 		[currentSprite setOpacity:HUD_ITEM_DRAG_OPACITY];
 		
-		body->PutToSleep();
+		body->SetAwake(false);
 		
 		// get touch location
 		b2Vec2 pos = b2Vec2(touch.x/PTM_RATIO, touch.y/PTM_RATIO);
@@ -214,18 +214,16 @@
 	
 	//NSLog(@"Cannon ball hit object");
 
-	self.animationLabel = [Label labelWithString:[NSString stringWithFormat:@"%.0f", damage] fontName:@"Arial-BoldMT" fontSize:20];
+	self.animationLabel = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%.0f", damage] fontName:@"Arial-BoldMT" fontSize:20];
 	[animationLabel setColor:ccc3(255,0,0)];
 	
 	//position the label relative to target hit
 	animationLabel.position = CGPointMake( p.body->GetPosition().x * PTM_RATIO, p.body->GetPosition().y * PTM_RATIO + 40);
 	
 	// add some animation
-	id labelAction1 = [MoveBy actionWithDuration:0.8 position:ccp(0,100)];
-	id labelAction2 = [FadeOut actionWithDuration:0.9];
-	id labelAction2Sel = [Sequence actionOne:labelAction2
-										 two:[CallFunc actionWithTarget:self 
-															   selector:@selector(actionDone)]];
+	id labelAction1 = [CCMoveBy actionWithDuration:0.8 position:ccp(0,100)];
+	id labelAction2 = [CCFadeOut actionWithDuration:0.9];
+	id labelAction2Sel = [CCSequence actionOne:labelAction2 two:[CCCallFunc actionWithTarget:self selector:@selector(actionDone)]];
 	
 	//Start animating label
 	[animationLabel runAction:labelAction1];
@@ -258,7 +256,7 @@
 -(void) finalizePieceBase {
     pieceID = [owner getUniquePieceID];
 		
-	body->WakeUp();
+	body->SetAwake(true);
 	hasBeenPlaced = YES;
 	[currentSprite setOpacity:255];
 	[self updateView];
@@ -290,9 +288,9 @@
 	float angle = [[state objectForKey:@"angle"] floatValue];
 	BOOL isLeft = [[state objectForKey:@"left"] intValue] == 1;
 	
-	body->PutToSleep();
+	body->SetAwake(false);
 	body->SetTransform(b2Vec2(x,y), angle);
-	body->WakeUp();
+	body->SetAwake(true);
 	
 	[self updateView];
 	[self setIsFacingLeft:isLeft];

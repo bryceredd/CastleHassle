@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		02A0C4DF14BEA8CB00B739E3 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 02A0C4DE14BEA8CB00B739E3 /* JSONKit.m */; };
+		02A0C4E214BEC68D00B739E3 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02A0C4E114BEC68D00B739E3 /* StoreKit.framework */; };
 		02C3C6F214BDD19E004BCC33 /* PListReader.mm in Sources */ = {isa = PBXBuildFile; fileRef = 02C3C6EB14BDD19E004BCC33 /* PListReader.mm */; };
 		02C3C6F314BDD19E004BCC33 /* StaticUtils.mm in Sources */ = {isa = PBXBuildFile; fileRef = 02C3C6ED14BDD19E004BCC33 /* StaticUtils.mm */; };
 		02C3C6F414BDD19E004BCC33 /* LinkedList.mm in Sources */ = {isa = PBXBuildFile; fileRef = 02C3C6EF14BDD19E004BCC33 /* LinkedList.mm */; };
@@ -479,6 +481,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		02A0C4DD14BEA8CB00B739E3 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
+		02A0C4DE14BEA8CB00B739E3 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
+		02A0C4E114BEC68D00B739E3 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		02C3C6EA14BDD19E004BCC33 /* PListReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PListReader.h; sourceTree = "<group>"; };
 		02C3C6EB14BDD19E004BCC33 /* PListReader.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PListReader.mm; sourceTree = "<group>"; };
 		02C3C6EC14BDD19E004BCC33 /* StaticUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StaticUtils.h; sourceTree = "<group>"; };
@@ -1181,6 +1186,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				02A0C4E214BEC68D00B739E3 /* StoreKit.framework in Frameworks */,
 				02F5975F14BDCB3F00C9349A /* QuartzCore.framework in Frameworks */,
 				02F5976114BDCB3F00C9349A /* OpenGLES.framework in Frameworks */,
 				02F5976314BDCB3F00C9349A /* OpenAL.framework in Frameworks */,
@@ -1198,6 +1204,8 @@
 		02C3C6E914BDD187004BCC33 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				02A0C4DD14BEA8CB00B739E3 /* JSONKit.h */,
+				02A0C4DE14BEA8CB00B739E3 /* JSONKit.m */,
 				02C3C77414BDD6B2004BCC33 /* TVMacros.h */,
 				02C3C6EA14BDD19E004BCC33 /* PListReader.h */,
 				02C3C6EB14BDD19E004BCC33 /* PListReader.mm */,
@@ -1369,6 +1377,7 @@
 		02F5975D14BDCB3F00C9349A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				02A0C4E114BEC68D00B739E3 /* StoreKit.framework */,
 				02F5975E14BDCB3F00C9349A /* QuartzCore.framework */,
 				02F5976014BDCB3F00C9349A /* OpenGLES.framework */,
 				02F5976214BDCB3F00C9349A /* OpenAL.framework */,
@@ -2868,6 +2877,7 @@
 				02C3C76A14BDD29D004BCC33 /* ContactListener.mm in Sources */,
 				02C3C76B14BDD29D004BCC33 /* MainScene.mm in Sources */,
 				02C3C77714BDF538004BCC33 /* Battlefield.mm in Sources */,
+				02A0C4DF14BEA8CB00B739E3 /* JSONKit.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

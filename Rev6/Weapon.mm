@@ -27,7 +27,7 @@
 
 @implementation Weapon
 
-@synthesize swingSprite, initialTouch, offset, currentShotAngle, shotPower, projectileManager, backProjectileManager, backSwingSprite;
+@synthesize swingSprite, initialTouch, offset, currentShotAngle, shotPower, backSwingSprite;
 @synthesize upgradePrice, weaponLevel, shootIndicatorTop, shootIndicatorTail, cooldown, maxCooldown, cdSprite;
 
 -(id) init {
@@ -47,16 +47,16 @@
 	// end of the base, we'll make the sprite box twice as long, and set the center
 	// to either end of the cannon
     
-	self.swingSprite = [AtlasSprite spriteWithRect:rect spriteManager:self.mgr];
-	[self.mgr addChild:swingSprite];
+	self.swingSprite = spriteWithRect(image, rect);
+	[self addChild:swingSprite];
 	swingSprite.position = ccp(p.x, p.y);
 	
     
 	// define the shadow sprites
     
-	self.backSwingSprite = [AtlasSprite spriteWithRect:rect spriteManager:self.backMgr];
+	self.backSwingSprite = spriteWithRect(image, rect);
 	backSwingSprite.flipX = YES;
-	[self.backMgr addChild:backSwingSprite];
+	[self addChild:backSwingSprite z:FAR_PIECE_Z_INDEX];
 	backSwingSprite.position = ccp(p.x, p.y+PLAYER_BACKGROUND_HEIGHT);
 	[backSwingSprite setScale:1/BACKGROUND_SCALE_FACTOR];
 	
@@ -110,8 +110,8 @@
 	shotPower = 0;
 	
 	if(hasBeenPlaced && [self isUsable]) {
-        self.shootIndicatorTail = [Sprite spriteWithFile:@"shootIndicatorTail.png"];
-        self.shootIndicatorTop = [Sprite spriteWithFile:@"shootIndicatorTop.png"];
+        self.shootIndicatorTail = sprite(@"shootIndicatorTail.png");
+        self.shootIndicatorTop = sprite(@"shootIndicatorTop.png");
         
         self.shootIndicatorTail.position = self.swingSprite.position;
         self.shootIndicatorTop.position = touch;
@@ -196,7 +196,7 @@
 }
 
 -(BOOL)shouldDestroy {
-    BOOL isSleeping = self.body->IsSleeping();
+    BOOL isSleeping = !self.body->IsAwake();
     BOOL isTiltedTooFar = ((int) CC_RADIANS_TO_DEGREES(body->GetAngle())%360) > MAX_TILT_FOR_WEAPON || ((int) CC_RADIANS_TO_DEGREES(body->GetAngle())%360) < -MAX_TILT_FOR_WEAPON;
     
     return [super shouldDestroy] || (isTiltedTooFar && isSleeping && hasBeenPlaced);
@@ -232,15 +232,15 @@
 		if(follow) { [[Battlefield instance] setLastShot:p]; }
 	}
 	
-	self.cdSprite = [Sprite spriteWithFile:@"timer_00000.png"];
-	Animation* anim = [Animation animationWithName:@"cooldown" delay:cooldown/59.f];
+	self.cdSprite = [CCSprite spriteWithFile:@"timer_00000.png"];
+	CCAnimation* anim = [CCAnimation animationWithName:@"cooldown" delay:cooldown/59.f];
 	
 	for(int i=0;i<59;++i) {
 		[anim addFrameWithFilename:[NSString stringWithFormat:@"timer_000%02d.png", i]];
 	}
 	
-	id action = [Animate actionWithAnimation:anim];
-	id seq = [Sequence actionOne:action two:[CallFunc actionWithTarget:self selector:@selector(removeCooldownImage)]];
+	id action = [CCAnimate actionWithAnimation:anim];
+	id seq = [CCSequence actionOne:action two:[CCCallFunc actionWithTarget:self selector:@selector(removeCooldownImage)]];
 	
 	[[Battlefield instance] addChild:cdSprite z:ANIMATION_Z_INDEX];
 	[cdSprite runAction:seq];

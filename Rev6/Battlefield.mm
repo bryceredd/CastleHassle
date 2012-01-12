@@ -9,7 +9,7 @@
 #import "PlayerAreaManager.h"
 #import "PlayerArea.h"
 #import "PieceList.h"
-#import "DestroiedPieceAnimation.h"
+#import "DestroyedPieceAnimation.h"
 #import "GameSettings.h"
 #import "AI.h"
 #import "MainMenu.h"
@@ -17,8 +17,8 @@
 #import "Winner.h"
 #import "HUDActionController.h"
 
-#import "Rev5AppDelegate.h"
-#import "JSON.h"
+#import "AppDelegate.h"
+#import "JSONKit.h"
 
 #import "MapScreen.h"
 
@@ -60,7 +60,7 @@ static Battlefield * instance = nil;
 
 +(id) scene {
 	// 'scene' is an autorelease object.
-	Scene *scene = [Scene node];
+	CCScene *scene = [CCScene node];
 	
 	// 'layer' is an autorelease object.
 	Battlefield *layer = [Battlefield node];
@@ -79,7 +79,7 @@ static Battlefield * instance = nil;
 		
 		instance = self;
 		
-		Rev5AppDelegate* delegate = (Rev5AppDelegate*)[[UIApplication sharedApplication] delegate];
+		AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
 		[delegate.window setMultipleTouchEnabled:NO];
 		
 		//************* Sound section starts ******************************
@@ -333,7 +333,7 @@ static Battlefield * instance = nil;
 		//need to make it so it runs only when destroyed...
         
 		CGPoint loc = ccp(piece.body->GetPosition().x*PTM_RATIO, piece.body->GetPosition().y*PTM_RATIO - 8);
-		ParticleSystem* ps = [[[DestroiedPieceAnimation alloc] initWithTotalParticles:20] autorelease];
+		CCParticleSystem* ps = [[[DestroyedPieceAnimation alloc] initWithTotalParticles:20] autorelease];
 		ps.position = loc;
 		ps.life = 0.08f;
 		[[Battlefield instance] addChild:ps z:ANIMATION_Z_INDEX];
@@ -346,8 +346,8 @@ static Battlefield * instance = nil;
 	}
 	
 	// remove the spirte
-	[piece.mgr removeChild:piece.currentSprite cleanup:YES];
-	[piece.backMgr removeChild:piece.backSprite cleanup:YES];
+	[self removeChild:piece.currentSprite cleanup:YES];
+	[self removeChild:piece.backSprite cleanup:YES];
 	
 	if([piece isKindOfClass:[Weapon class]]) {
 		Weapon* weapon = (Weapon*)piece;
@@ -369,8 +369,8 @@ static Battlefield * instance = nil;
 			[self removeChild:weapon.shootIndicatorTop cleanup:YES];
 		}
 		
-		[piece.mgr removeChild:weapon.swingSprite cleanup:YES];
-		[piece.backMgr removeChild:weapon.backSwingSprite cleanup:YES];
+		[self removeChild:weapon.swingSprite cleanup:YES];
+		[self removeChild:weapon.backSwingSprite cleanup:YES];
 	}
 	
 	if(![piece.owner hasWeapon] && piece.owner.ai != nil) { [piece.owner destroyPlayer]; }
@@ -420,7 +420,7 @@ static Battlefield * instance = nil;
 -(void) winGame {
 		
 		[MainMenu resetInstance];        
-		[[Director sharedDirector] replaceScene:[MainMenu instance]];
+		[[CCDirector sharedDirector] replaceScene:[MainMenu instance]];
 		
 		
 		if([GameSettings instance].type == campaign) {
@@ -440,7 +440,7 @@ static Battlefield * instance = nil;
 -(void) loseGame {
 	
 	[MainMenu resetInstance];
-	[[Director sharedDirector] replaceScene: [MainMenu instance]];
+	[[CCDirector sharedDirector] replaceScene: [MainMenu instance]];
     
     
 	Loser* l = [Loser node];
@@ -474,37 +474,8 @@ static Battlefield * instance = nil;
 
 #pragma mark piece creation functions
 
--(void) addManager:(NSString *)file capacity:(int)cap key:(NSString *)key {
-	// we've got to setup two sprite managers here for layer managing
-	// otherwise every sprite would be added to the same plane
-	
-	// setup front sprite manager
-	AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:file capacity:cap];
-	[self addChild:mgr z:PIECE_Z_INDEX];
-	[managers setValue:mgr forKey:key];
-	
-	// setup back sprite manager
-	AtlasSpriteManager *farMgr = [AtlasSpriteManager spriteManagerWithFile:file capacity:cap];
-	[self addChild:farMgr z:FAR_PIECE_Z_INDEX];
-	[managers setValue:farMgr forKey:[NSString stringWithFormat:@"far%@",key]];	
-}
-
 -(void) addNewPieceWithCoords:(CGPoint)p andClass:(Class)c withManager:(NSString *)managerName finalize:(BOOL)finalize player:(PlayerArea*)player {
-	Piece *piece;
-
-	if([c isSubclassOfClass:[Weapon class]]) {
-		piece = [[[c alloc] initWithManager:(AtlasSpriteManager *)[managers objectForKey:managerName] 
-								backManager:(AtlasSpriteManager *)[managers objectForKey:[NSString stringWithFormat:@"far%@", managerName]]
-						 projectileManager:(AtlasSpriteManager *)[managers objectForKey:[NSString stringWithFormat:@"%@ball", managerName]] 
-					 backProjectileManager:(AtlasSpriteManager *)[managers objectForKey:[NSString stringWithFormat:@"far%@ball", managerName]]
-									 world:world
-									coords:p] autorelease];
-	} else {
-		piece = [[[c alloc] initWithManager:(AtlasSpriteManager *)[managers objectForKey:managerName] 
-							   backManager:(AtlasSpriteManager *)[managers objectForKey:[NSString stringWithFormat:@"far%@", managerName]]
-									 world:world 
-									coords:p] autorelease];
-	}
+	Piece *piece = [[[c alloc] initWithWorld:world coords:p] autorelease];
 	
 	piece.owner = player;
 	
@@ -563,7 +534,7 @@ static Battlefield * instance = nil;
 	float camX,camY,camZ;
 	[self.camera centerX:&camX centerY:&camY centerZ:&camZ];
 	[self.camera setCenterX:x centerY:camY centerZ:0.0];
-	[self.camera setEyeX:x eyeY:camY eyeZ:[Camera getZEye]];
+	[self.camera setEyeX:x eyeY:camY eyeZ:[CCCamera getZEye]];
 	[self resetTileImagePool:ccp(x,camY)];
 	[hud moveAllObjects:ccp(camX-x, 0)];
 	
@@ -623,14 +594,12 @@ static Battlefield * instance = nil;
 			[self setSelected:nil updateHUD:NO];
 		}
 	}
-
-	return kEventHandled;
 }
 
--(BOOL) ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+-(void) ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
 	// check if touch is in the hud
 	if ([hud handleTouchDrag:[self transformTouchesToPoint:touches withCameraOffset:NO]])
-		return YES;
+		return;
 	
 	CGPoint location;
 	
@@ -660,10 +629,9 @@ static Battlefield * instance = nil;
 		[self moveScreen];
 	}
 	
-	return kEventHandled;
 }
 
--(BOOL) ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+-(void) ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
 		
 	if(lastShot != nil) {
 		self.lastShot = nil;
@@ -689,11 +657,11 @@ static Battlefield * instance = nil;
 			selected.shouldDestroy = YES;
 			[[Battlefield instance].hud showMessage:@"Must build in your own city"];
 		}
-		return YES;
+		return;
 	}
 	
 	if ([hud handleEndTouch:[self transformTouchesToPoint:touches withCameraOffset:NO]])
-		return YES;
+		return;
 	
 	bool firedPiece = NO;
 	
@@ -720,7 +688,6 @@ static Battlefield * instance = nil;
 	if(!touchHandled && !firedPiece)
 		[self setSelected:nil updateHUD:NO];
 	
-	return kEventHandled;
 }
 
 -(Piece*) getClosestPiece:(CGPoint)location {
@@ -771,7 +738,7 @@ static Battlefield * instance = nil;
 	[self tileImagePool:CGPointMake(x, y) delta:delta];
 	
 	[self.camera setCenterX:x-(delta.x) centerY:y centerZ:0.0];
-	[self.camera setEyeX:x-(delta.x) eyeY:y eyeZ:[Camera getZEye]];
+	[self.camera setEyeX:x-(delta.x) eyeY:y eyeZ:[CCCamera getZEye]];
 	
 	screenMomentum += screenMomentum > 0.0 ? SCROLL_MOMENTUM * -1 : SCROLL_MOMENTUM;
 	
@@ -786,7 +753,7 @@ static Battlefield * instance = nil;
 	CGPoint location = [touch locationInView: [touch view]];
 	
 	// convert the point to landscape
-	location = [[Director sharedDirector] convertToGL: location];
+	location = [[CCDirector sharedDirector] convertToGL: location];
 	
 	if(cam) {
 		// offset the touch by the camera
@@ -808,7 +775,7 @@ static Battlefield * instance = nil;
 		
 	NSArray* pieceArr = [pa getPieceDescriptions];
 		
-	NSString *savefile = [[Rev5AppDelegate documentDir] stringByAppendingPathComponent:SAVE_FILE_NAME];
+	NSString *savefile = [[AppDelegate documentDir] stringByAppendingPathComponent:SAVE_FILE_NAME];
 	[[pieceArr JSONRepresentation] writeToFile:savefile atomically:YES encoding:NSASCIIStringEncoding error:nil];
 	
 	NSLog(@"Game saved to: %@", savefile);
@@ -837,8 +804,7 @@ static Battlefield * instance = nil;
 
 	NSLog(@"attempting to open %@", filename);
 	
-	SBJSON* jsonParser = [[[SBJSON alloc] init] autorelease];
-	NSDictionary* state = [jsonParser objectWithString:[NSString stringWithContentsOfFile:filename encoding:NSASCIIStringEncoding error:nil]];
+	NSDictionary* state = [[NSString stringWithContentsOfFile:filename encoding:NSASCIIStringEncoding error:nil] objectFromJSONString];
 	
 	for(NSDictionary* data in state) {
 		NSMethodSignature *sig;

@@ -9,7 +9,7 @@ void ContactListener::BeginContact(b2Contact* contact)
 	b2Fixture* fixtureA = contact->GetFixtureA();
 	b2Fixture* fixtureB = contact->GetFixtureB();
 	
-	if (contact->IsSolid()) {
+	if (contact->IsTouching()) {
 		
 		//check if the object is a block
 		Piece *p1 = (Piece *)fixtureA->GetBody()->GetUserData();

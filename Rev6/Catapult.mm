@@ -107,16 +107,14 @@
 		}
 		
 		// this initiates the catapultball just outside the weapon
-		ball = [[[CatapultBall alloc] initWithManager:self.projectileManager 
-										 backManager:self.backProjectileManager
-											   world:world 
+		ball = [[[CatapultBall alloc] initWorld:world 
 											  coords:projectileLoc 
 											   level:weaponLevel 
 											 shooter:self.owner] autorelease];
 				
         [[Battlefield instance] addProjectileToBin:ball];
         
-		ball.body->ApplyImpulse(b2Vec2(w*xRandomness*CATAPULT_DEFAULT_POWER,h*yRandomness*CATAPULT_DEFAULT_POWER),
+		ball.body->ApplyLinearImpulse(b2Vec2(w*xRandomness*CATAPULT_DEFAULT_POWER,h*yRandomness*CATAPULT_DEFAULT_POWER),
 								ball.body->GetPosition());
 		
 		firstball = firstball == nil ? ball : firstball;
@@ -136,9 +134,7 @@
 	CGPoint swingLoc = ccp((float)self.swingSprite.position.x, (float)self.swingSprite.position.y);
 	swingLoc.y += 20;
 	
-	CatapultBall * ball = [[[CatapultBall alloc] initWithManager:self.projectileManager 
-									 backManager:self.backProjectileManager
-										   world:world 
+	CatapultBall * ball = [[[CatapultBall alloc] initWithWorld:world 
 										  coords:swingLoc 
 										   level:weaponLevel 
 										 shooter:self.owner] autorelease];
@@ -148,7 +144,7 @@
 	float forceX = [AI getCatapultForce]*cos(CC_DEGREES_TO_RADIANS(45));
 	float forceY = [AI getCatapultForce]*sin(CC_DEGREES_TO_RADIANS(45));
 	
-	ball.body->ApplyImpulse(b2Vec2(forceX*(left?-1:1),forceY),ball.body->GetPosition());
+	ball.body->ApplyLinearImpulse(b2Vec2(forceX*(left?-1:1),forceY),ball.body->GetPosition());
 	
 	currentShotAngle = M_PI_2+(left?-M_PI_4:M_PI_4);
 	
