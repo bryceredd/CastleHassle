@@ -107,10 +107,7 @@
 		}
 		
 		// this initiates the catapultball just outside the weapon
-		ball = [[[CatapultBall alloc] initWorld:world 
-											  coords:projectileLoc 
-											   level:weaponLevel 
-											 shooter:self.owner] autorelease];
+		ball = [[[CatapultBall alloc] initWithWorld:world coords:projectileLoc level:weaponLevel shooter:self.owner] autorelease];
 				
         [[Battlefield instance] addProjectileToBin:ball];
         

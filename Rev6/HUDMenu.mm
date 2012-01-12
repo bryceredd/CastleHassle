@@ -48,7 +48,7 @@
 -(BuildItem *) addBuildItemWithImageName:(NSString *)imageName imageBox:(CGRect)box swingImageBox:(CGRect)swingBox class:(Class)c price:(int)p {
 	BuildItem *item = [[[BuildItem alloc] initWithPrice:p] autorelease];
 	
-	[self addItemWithManagerName:imageName imageBox:box swingImageBox:swingBox hudItem:item expandToStatusSize:NO];
+	[self addItemWithImageName:imageName imageBox:box swingImageBox:swingBox hudItem:item expandToStatusSize:NO];
 	
 	[self setSwingItemWithImage:imageName swingBox:swingBox imageBox:box forItem:item forClass:c];
 	
@@ -59,11 +59,7 @@
 	return item;
 }
 
--(ButtonItem *) addButtonItemWithImageName:(NSString *)imageName 
-									imageBox:(CGRect)box 
-							   swingImageBox:(CGRect)swingBox 
-									selector:(SEL)s 
-									   title:(NSString*)t {
+-(ButtonItem *) addButtonItemWithImageName:(NSString *)imageName imageBox:(CGRect)box swingImageBox:(CGRect)swingBox selector:(SEL)s title:(NSString*)t {
 	ButtonItem *item = [[[ButtonItem alloc] init] autorelease];
 	
 	[self addItemWithImageName:imageName imageBox:box swingImageBox:swingBox hudItem:item expandToStatusSize:NO];
@@ -76,11 +72,7 @@
 	return item;
 }
 
--(PurchaseItem *) addPurchaseItemWithImageName:(NSString *)imageName
-									imageBox:(CGRect)box 
-							   swingImageBox:(CGRect)swingBox 
-									selector:(SEL)s 
-                                       title:(NSString*)t piece:(Piece*)p {
+-(PurchaseItem *) addPurchaseItemWithImageName:(NSString *)imageName imageBox:(CGRect)box swingImageBox:(CGRect)swingBox selector:(SEL)s title:(NSString*)t piece:(Piece*)p {
 	PurchaseItem *item = [[[PurchaseItem alloc] initWithPiece:p] autorelease];
 	
 	[self addItemWithImageName:imageName imageBox:box swingImageBox:swingBox hudItem:item expandToStatusSize:NO];
@@ -96,11 +88,7 @@
 -(GoldItem *) addGoldStatusWithLeft:(float)l {
 	GoldItem *item = [[[GoldItem alloc] init] autorelease];
 	
-	[self addItemWithManagerName:@"coins"
-						imageBox:CGRectMake(0, 0, 20, 20) 
-				   swingImageBox:CGRectMake(0,0,0,0) 
-						 hudItem:item 
-			  expandToStatusSize:NO];
+	[self addItemWithImageName:@"coins" imageBox:CGRectMake(0, 0, 20, 20) swingImageBox:CGRectMake(0,0,0,0) hudItem:item expandToStatusSize:NO];
 	
 	item.leftBound = l;
 	item.rightBound = l+100;
@@ -110,11 +98,7 @@
 	return item;
 }
 
--(void) addItemWithImageName:(NSString *)imageName 
-					  imageBox:(CGRect)box 
-				 swingImageBox:(CGRect)swingBox 
-					   hudItem:(HUDItem*)item 
-			expandToStatusSize:(BOOL)expand {
+-(void) addItemWithImageName:(NSString *)imageName imageBox:(CGRect)box swingImageBox:(CGRect)swingBox hudItem:(HUDItem*)item expandToStatusSize:(BOOL)expand {
 	
 	// set left/right limits
 	item.leftBound = extremeRight;

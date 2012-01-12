@@ -46,7 +46,6 @@
 
 -(bool) canFire;
 -(void) moveScreen;
--(void) addManager:(NSString *)file capacity:(int)cap key:(NSString *)key;
 -(void) tileImagePool:(CGPoint)loc delta:(CGPoint)d;
 -(BOOL) playerDidWin;
 -(void) checkForLoser:(float)dt;
@@ -64,7 +63,7 @@
 -(void) addProjectileToBin:(Projectile*)p;
 
 -(void) setSelected:(Piece *)p updateHUD:(bool)b;
--(void) addNewPieceWithCoords:(CGPoint)p andClass:(Class)c withManager:(NSString *)managerName finalize:(BOOL)finalize player:(PlayerArea*)player;
+-(void) addNewPieceWithCoords:(CGPoint)p andClass:(Class)c withImageName:(NSString *)managerName finalize:(BOOL)finalize player:(PlayerArea*)player;
 
 -(void) cleanupTick:(Piece *)piece body:(b2Body *)b;
 

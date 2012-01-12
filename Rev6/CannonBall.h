@@ -15,5 +15,5 @@
 
 }
 
--(id) initWorld:(b2World*)w coords:(CGPoint)p level:(int)l shooter:(PlayerArea*)s;
+-(id) initWithWorld:(b2World*)w coords:(CGPoint)p level:(int)l shooter:(PlayerArea*)s;
 @end

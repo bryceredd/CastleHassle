@@ -26,40 +26,13 @@
 -(HUDItem *) getHUDItem:(CGPoint)p;
 -(void) moveAllObjects:(CGPoint)p;
 -(GoldItem *) addGoldStatusWithLeft:(float)l;
--(void) addItemWithManagerName:(NSString *)mgrName 
-					  imageBox:(CGRect)box 
-				 swingImageBox:(CGRect)swingBox 
-					   hudItem:(HUDItem*)item 
-			expandToStatusSize:(BOOL)expand;
 
--(StatusItem *) addStatusItemWithImageName:(NSString *)mgrName 
-									imageBox:(CGRect)box 
-							   swingImageBox:(CGRect)swingBox 
-									   piece:(Piece*)p;
-
--(ButtonItem *) addButtonItemWithImageName:(NSString *)mgrName 
-							imageBox:(CGRect)box 
-					   swingImageBox:(CGRect)swingBox 
-							selector:(SEL)s 
-							   title:(NSString*)t;
-
--(BuildItem *) addBuildItemWithImageName:(NSString *)mgrName 
-								imageBox:(CGRect)box 
-						   swingImageBox:(CGRect)swingBox 
-								   class:(Class)c price:(int)p;
-
--(PurchaseItem *) addPurchaseItemWithImageName:(NSString *)mgrName 
-										imageBox:(CGRect)box 
-								   swingImageBox:(CGRect)swingBox 
-										selector:(SEL)s 
-										   title:(NSString*)t 
-										   piece:(Piece*)p;
-
--(void) setSwingItemWithImage:(NSString*)image
-					   swingBox:(CGRect)swingBox 
-					   imageBox:(CGRect)box 
-						forItem:(HUDItem*)item 
-					   forClass:(Class)c;
+-(StatusItem *) addStatusItemWithImageName:(NSString *)image imageBox:(CGRect)box swingImageBox:(CGRect)swingBox piece:(Piece*)p;
+-(BuildItem *) addBuildItemWithImageName:(NSString *)imageName imageBox:(CGRect)box swingImageBox:(CGRect)swingBox class:(Class)c price:(int)p;
+-(ButtonItem *) addButtonItemWithImageName:(NSString *)imageName imageBox:(CGRect)box swingImageBox:(CGRect)swingBox selector:(SEL)s title:(NSString*)t;
+-(PurchaseItem *) addPurchaseItemWithImageName:(NSString *)imageName imageBox:(CGRect)box swingImageBox:(CGRect)swingBox selector:(SEL)s title:(NSString*)t piece:(Piece*)p;
+-(void) addItemWithImageName:(NSString *)imageName imageBox:(CGRect)box swingImageBox:(CGRect)swingBox hudItem:(HUDItem*)item expandToStatusSize:(BOOL)expand;
+-(void) setSwingItemWithImage:(NSString*)imageName swingBox:(CGRect)swingBox imageBox:(CGRect)box forItem:(HUDItem*)item forClass:(Class)c;
 
 -(void) hideAll;
 -(void) showAll;

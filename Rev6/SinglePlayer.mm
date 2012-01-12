@@ -44,7 +44,7 @@ static SinglePlayer* instance = nil;
 		title.position = ccp(240,280);
 		[self addChild:title z:1];//Pirla
 				
-		difficulties = [[CHToggle alloc] initWithImage:@"comboButtons.png"];
+		difficulties = [[CHToggle alloc] initWithImageName:@"comboButtons.png"];
 		
 		CHToggleItem* easy = [[CHToggleItem alloc] initWithParent:difficulties 
 													 selectedRect:CGRectMake(0, 121, 94, 36) 
@@ -76,7 +76,7 @@ static SinglePlayer* instance = nil;
 		[difficulties release];
 		
 		
-		opponents = [[CHToggle alloc] initWithImage:@"comboButtons.png"];
+		opponents = [[CHToggle alloc] initWithImageName:@"comboButtons.png"];
 		
 		CHToggleItem* one = [[CHToggleItem alloc] initWithParent:opponents 
 													selectedRect:CGRectMake(0, 121, 94, 36) 
@@ -110,7 +110,7 @@ static SinglePlayer* instance = nil;
 		
 		//Pirla start ****************************************
 		
-		environment = [[CHToggle alloc] initWithImage:@"comboButtons.png"];
+		environment = [[CHToggle alloc] initWithImageName:@"comboButtons.png"];
 		
 		CHToggleItem *tuscany = [[CHToggleItem alloc] initWithParent:environment 
 													selectedRect:CGRectMake(0, 0, 94, 60) 

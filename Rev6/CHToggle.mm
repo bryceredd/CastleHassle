@@ -15,7 +15,7 @@
 
 @synthesize position, image, selectedIndex;
 
--(id)initWithImage:(NSString*)s {
+-(id)initWithImageName:(NSString*)s {
 	
 	if( (self = [super init]) ) {
         self.image = s;

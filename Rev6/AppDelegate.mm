@@ -151,6 +151,11 @@
 	[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
 }
 
++ (NSString *) documentDir {
+	NSArray *documentPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+	return [documentPaths objectAtIndex:0];
+}
+
 - (void)dealloc {
 	[[CCDirector sharedDirector] end];
 	[window release];

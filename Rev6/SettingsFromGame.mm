@@ -52,7 +52,7 @@
 }
 
 -(void) setupFollowShot {
-	followShot = [[CHToggle alloc] initWithImage:@"comboButtons.png"];
+	followShot = [[CHToggle alloc] initWithImageName:@"comboButtons.png"];
 	
 	CHToggleItem* on = [[CHToggleItem alloc] initWithParent:followShot 
 											   selectedRect:CGRectMake(0, 121, 94, 36) 
@@ -91,7 +91,7 @@
 	soundLabel.position = ccp(50,222);
 	[self addChild:soundLabel];
 	
-	soundState = [[CHToggle alloc] initWithImage:@"comboButtons.png"];
+	soundState = [[CHToggle alloc] initWithImageName:@"comboButtons.png"];
 	
 	CHToggleItem *son = [[CHToggleItem alloc] initWithParent:soundState
 												selectedRect:CGRectMake(0,122,94,33) 

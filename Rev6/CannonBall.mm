@@ -15,7 +15,7 @@
 
 @implementation CannonBall
 
--(id) initWorld:(b2World*)w coords:(CGPoint)p level:(int)l shooter:(PlayerArea*)s {
+-(id) initWithWorld:(b2World*)w coords:(CGPoint)p level:(int)l shooter:(PlayerArea*)s {
 	if((self = [super initWithCoords:p world:w from:s])) {
 	
 		bounces = l;

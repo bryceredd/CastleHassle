@@ -13,7 +13,7 @@
 - (id)initWithLeftImage:(NSString *)lImg 
 			 rightImage:(NSString *)rImg
 		 imageDimension:(CGPoint)dim
-				  layer:(CCLabelTTF*)parent 
+				  layer:(CCLayer*)parent 
 				  index:(int)index 
 		 parallaxFactor:(float)pf {
 	

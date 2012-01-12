@@ -21,7 +21,7 @@
 
 @synthesize body, hp, currentSprite, world, acceptsTouches, acceptsDamage, shouldDestroy, snappedTo, hasBeenPlaced;
 @synthesize backSprite, maxHp, isChanged, repairPrice, owner, buyPrice, pieceID;
-@synthesize animationLabel, acceptsPlayerColoring, isFacingLeft;
+@synthesize animationLabel, acceptsPlayerColoring, isFacingLeft, spriteName;
 
 -(id) initWithWorld:(b2World *)w coords:(CGPoint)p {
 	

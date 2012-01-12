@@ -48,7 +48,7 @@ NSString* settingsFile = @"settings.plist";
 		[self addChild:soundLabel];
 		
 		//Sound On/Off Graphics		
-		soundState = [[CHToggle alloc] initWithImage:@"comboButtons.png"];
+		soundState = [[CHToggle alloc] initWithImageName:@"comboButtons.png"];
 				
 		CHToggleItem *on = [[CHToggleItem alloc] initWithParent:soundState
 												   selectedRect:CGRectMake(0,122,94,33) 

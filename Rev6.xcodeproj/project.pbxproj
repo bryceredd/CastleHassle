@@ -12,7 +12,6 @@
 		02C3C6F214BDD19E004BCC33 /* PListReader.mm in Sources */ = {isa = PBXBuildFile; fileRef = 02C3C6EB14BDD19E004BCC33 /* PListReader.mm */; };
 		02C3C6F314BDD19E004BCC33 /* StaticUtils.mm in Sources */ = {isa = PBXBuildFile; fileRef = 02C3C6ED14BDD19E004BCC33 /* StaticUtils.mm */; };
 		02C3C6F414BDD19E004BCC33 /* LinkedList.mm in Sources */ = {isa = PBXBuildFile; fileRef = 02C3C6EF14BDD19E004BCC33 /* LinkedList.mm */; };
-		02C3C6F514BDD19E004BCC33 /* PurchaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 02C3C6F114BDD19E004BCC33 /* PurchaseManager.m */; };
 		02C3C6FF14BDD1B7004BCC33 /* GameSettings.mm in Sources */ = {isa = PBXBuildFile; fileRef = 02C3C6F814BDD1B7004BCC33 /* GameSettings.mm */; };
 		02C3C70014BDD1B7004BCC33 /* PlayerArea.mm in Sources */ = {isa = PBXBuildFile; fileRef = 02C3C6FA14BDD1B7004BCC33 /* PlayerArea.mm */; };
 		02C3C70114BDD1B7004BCC33 /* PlayerAreaManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 02C3C6FC14BDD1B7004BCC33 /* PlayerAreaManager.mm */; };
@@ -490,8 +489,6 @@
 		02C3C6ED14BDD19E004BCC33 /* StaticUtils.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = StaticUtils.mm; sourceTree = "<group>"; };
 		02C3C6EE14BDD19E004BCC33 /* LinkedList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkedList.h; sourceTree = "<group>"; };
 		02C3C6EF14BDD19E004BCC33 /* LinkedList.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LinkedList.mm; sourceTree = "<group>"; };
-		02C3C6F014BDD19E004BCC33 /* PurchaseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PurchaseManager.h; sourceTree = "<group>"; };
-		02C3C6F114BDD19E004BCC33 /* PurchaseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PurchaseManager.m; sourceTree = "<group>"; };
 		02C3C6F714BDD1B7004BCC33 /* GameSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameSettings.h; sourceTree = "<group>"; };
 		02C3C6F814BDD1B7004BCC33 /* GameSettings.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GameSettings.mm; sourceTree = "<group>"; };
 		02C3C6F914BDD1B7004BCC33 /* PlayerArea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerArea.h; sourceTree = "<group>"; };
@@ -1213,8 +1210,6 @@
 				02C3C6ED14BDD19E004BCC33 /* StaticUtils.mm */,
 				02C3C6EE14BDD19E004BCC33 /* LinkedList.h */,
 				02C3C6EF14BDD19E004BCC33 /* LinkedList.mm */,
-				02C3C6F014BDD19E004BCC33 /* PurchaseManager.h */,
-				02C3C6F114BDD19E004BCC33 /* PurchaseManager.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -2839,7 +2834,6 @@
 				02C3C6F214BDD19E004BCC33 /* PListReader.mm in Sources */,
 				02C3C6F314BDD19E004BCC33 /* StaticUtils.mm in Sources */,
 				02C3C6F414BDD19E004BCC33 /* LinkedList.mm in Sources */,
-				02C3C6F514BDD19E004BCC33 /* PurchaseManager.m in Sources */,
 				02C3C6FF14BDD1B7004BCC33 /* GameSettings.mm in Sources */,
 				02C3C70014BDD1B7004BCC33 /* PlayerArea.mm in Sources */,
 				02C3C70114BDD1B7004BCC33 /* PlayerAreaManager.mm in Sources */,

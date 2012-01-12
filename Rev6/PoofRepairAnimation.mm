@@ -14,7 +14,7 @@
 	return [self initWithTotalParticles:7];
 }
 
--(id) initWithTotalParticles:(int)p {
+-(id) initWithTotalParticles:(NSUInteger)p {
 	if(!(self=[super initWithTotalParticles:p]))
 		return nil;
 	

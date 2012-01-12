@@ -233,7 +233,8 @@
 	}
 	
 	self.cdSprite = [CCSprite spriteWithFile:@"timer_00000.png"];
-	CCAnimation* anim = [CCAnimation animationWithName:@"cooldown" delay:cooldown/59.f];
+	CCAnimation* anim = [CCAnimation animation];
+    anim.delay = cooldown/59.f;
 	
 	for(int i=0;i<59;++i) {
 		[anim addFrameWithFilename:[NSString stringWithFormat:@"timer_000%02d.png", i]];

@@ -158,33 +158,6 @@ static Battlefield * instance = nil;
 		[tileables addObject:midground];
 		[tileables addObject:background];
 
-		
-		// Set up manager pool
-		self.managers = [NSMutableDictionary dictionary];
-		
-		// hud managers
-		[self addManager:@"hud.png" capacity:1 key:@"hud"];
-		[self addManager:@"stdButtons.png" capacity:7 key:@"stdButtons"];
-		[self addManager:@"comboButtons.png" capacity:6 key:@"comboButtons"];
-		[self addManager:@"healthBars.png" capacity:6 key:@"healthBars"];
-		[self addManager:@"coins.png" capacity:6 key:@"coins"];
-		
-		// piece managers
-		[self addManager:@"city.png" capacity:4 key:@"city"];
-		[self addManager:@"citycolor.png" capacity:4 key:@"citycolor"];
-		
-		[self addManager:@"cannon.png" capacity:25 key:@"cannon"];
-		[self addManager:@"catapult.png" capacity:25 key:@"catapult"];
-		[self addManager:@"top.png" capacity:25 key:@"top"];
-		[self addManager:@"tower.png" capacity:50 key:@"tower"];
-		[self addManager:@"balcony.png" capacity:25 key:@"balcony"];
-		[self addManager:@"turret.png" capacity:25 key:@"turret"];
-		[self addManager:@"wall.png" capacity:50 key:@"wall"];
-		[self addManager:@"wedge.png" capacity:25 key:@"wedge"];
-		[self addManager:@"merlin.png" capacity:25 key:@"merlin"];
-		[self addManager:@"arch.png" capacity:25 key:@"arch"];
-		[self addManager:@"cannonball.png" capacity:1000 key:@"cannonball"];
-		[self addManager:@"catapultball.png" capacity:1000 key:@"catapultball"];
 
 		self.playerAreaManager = [[[PlayerAreaManager alloc] initWithPlayerAreaWorld:world] autorelease];		
 		[playerAreaManager loadAI];
@@ -474,7 +447,7 @@ static Battlefield * instance = nil;
 
 #pragma mark piece creation functions
 
--(void) addNewPieceWithCoords:(CGPoint)p andClass:(Class)c withManager:(NSString *)managerName finalize:(BOOL)finalize player:(PlayerArea*)player {
+-(void) addNewPieceWithCoords:(CGPoint)p andClass:(Class)c withImageName:(NSString *)managerName finalize:(BOOL)finalize player:(PlayerArea*)player {
 	Piece *piece = [[[c alloc] initWithWorld:world coords:p] autorelease];
 	
 	piece.owner = player;
@@ -553,7 +526,7 @@ static Battlefield * instance = nil;
 	[self resetScreenToX:cameraXBeforeShot];
 }
 
--(BOOL) ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+-(void) ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
 	
 	CGPoint location = [self transformTouchesToPoint:touches withCameraOffset:YES];
 	initialTouch = [self transformTouchesToPoint:touches withCameraOffset:NO];
@@ -566,7 +539,7 @@ static Battlefield * instance = nil;
 	// check if its a hud touch
 	if ([hud handleInitialTouch:initialTouch]) {
 		[self setSelected:nil updateHUD:NO];
-		return isConstructionTouch = YES;
+		return; //isConstructionTouch = YES;
 	}
 	
 	// converto the location to world coords
@@ -776,7 +749,7 @@ static Battlefield * instance = nil;
 	NSArray* pieceArr = [pa getPieceDescriptions];
 		
 	NSString *savefile = [[AppDelegate documentDir] stringByAppendingPathComponent:SAVE_FILE_NAME];
-	[[pieceArr JSONRepresentation] writeToFile:savefile atomically:YES encoding:NSASCIIStringEncoding error:nil];
+	[[pieceArr JSONString] writeToFile:savefile atomically:YES encoding:NSASCIIStringEncoding error:nil];
 	
 	NSLog(@"Game saved to: %@", savefile);
 }

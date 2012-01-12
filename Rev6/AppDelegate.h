@@ -17,4 +17,6 @@
 
 @property (nonatomic, retain) UIWindow *window;
 
++ (NSString *) documentDir;
+
 @end
