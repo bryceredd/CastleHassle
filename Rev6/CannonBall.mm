@@ -18,7 +18,7 @@
 -(id) initWithWorld:(b2World*)w coords:(CGPoint)p level:(int)l shooter:(PlayerArea*)s {
 	if((self = [super initWithCoords:p world:w from:s])) {
 	
-		bounces = l;
+		bounces = l+1;
 		baseDamage = CANNONBALL_BASE_DAMAGE;
 
 		[self setupSpritesWithRect:CGRectMake(0,0,7,7) image:CANNONBALL_IMAGE atPoint:p];

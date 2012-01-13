@@ -30,11 +30,11 @@ void ContactListener::BeginContact(b2Contact* contact)
 		
 		
 		// if contact is made with the ground, blow it up
-		if([p1 isKindOfClass:[PlayerArea class]]) {
+		if([p1 isKindOfClass:[PlayerArea class]] && p2.acceptsDamage) {
 			p2.shouldDestroy = YES;
 		}
 		
-		if([p2 isKindOfClass:[PlayerArea class]]) {
+		if([p2 isKindOfClass:[PlayerArea class]] && p1.acceptsDamage) {
 			p1.shouldDestroy = YES;
 		}
 			

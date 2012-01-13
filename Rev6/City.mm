@@ -64,6 +64,7 @@
 		fixtureDef.shape = &dynamicBox;	
 		body->CreateFixture(&fixtureDef);
 		body->SetUserData(self);
+        body->SetType(b2_staticBody);
 	}
 	
 	return self;
@@ -75,6 +76,10 @@
 	
 	self.colorSprite.position = self.currentSprite.position;
 	self.colorSprite.rotation = self.currentSprite.rotation;	
+}
+
+- (void) setShouldDestroy:(BOOL)flag {
+    [super setShouldDestroy:flag];
 }
 
 @end

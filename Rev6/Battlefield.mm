@@ -289,8 +289,9 @@ static Battlefield * instance = nil;
 
 -(void) cleanupTick:(Piece *)piece body:(b2Body *)b {
 	
-	[playerAreaManager removePiece:piece forPlayer:piece.owner];
+    [playerAreaManager removePiece:piece forPlayer:piece.owner];
 	[touchables removeObject:piece];
+
 	
 	if(![piece isKindOfClass:[Projectile class]] && piece.hasBeenPlaced) {
 		//Destruction Animation
@@ -348,7 +349,6 @@ static Battlefield * instance = nil;
             [self winGame];
         }
     }
-	
 }
 
 

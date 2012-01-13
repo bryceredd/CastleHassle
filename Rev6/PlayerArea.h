@@ -32,6 +32,7 @@
 @property(nonatomic) BOOL destroyed;
 @property(nonatomic, retain) NSMutableArray* pieces;
 @property(nonatomic, retain) AI* ai;
+@property(nonatomic, retain) City* city;
 
 -(id) initWithLeft:(float)left dimentions:(CGPoint)dim world:(b2World *)w;
 -(void) makeCityWithColor:(ccColor3B)color;

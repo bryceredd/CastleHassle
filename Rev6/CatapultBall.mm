@@ -17,7 +17,7 @@
 -(id) initWithWorld:(b2World*)w coords:(CGPoint)p level:(int)l shooter:(PlayerArea*)s {
 	if((self = [super initWithCoords:p world:w from:s])) {
 		
-		bounces = 1;
+		bounces = 2;
 		baseDamage = CATAPULTBALL_BASE_DAMAGE;
 		
 		[self setupSpritesWithRect:CGRectMake(0,0,11,10) image:CATAPULTBALL_IMAGE atPoint:p];

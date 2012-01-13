@@ -20,7 +20,7 @@
 		acceptsTouches = NO;
 		world = w;
 		baseDamage = 10;
-		bounces = 1;
+		bounces = 2;
 		trail = nil;
 		isBack = NO;
 		self.owner = s;
@@ -33,6 +33,7 @@
 		
 		// Setup the body
 		body = w->CreateBody(&bodyDef);
+        body->SetType(b2_dynamicBody);
 		body->SetBullet(true);
 	}
 	return self;
@@ -40,8 +41,6 @@
 
 - (void) updateSpritePosition:(b2Vec2)pos body:(b2Body *)b {
 	
-    NSLog(@"moving projectile to position %f %f", pos.x, pos.y);
-    
 	float camX,camY,camZ;
 	[[Battlefield instance].camera centerX:&camX centerY:&camY centerZ:&camZ];
 	

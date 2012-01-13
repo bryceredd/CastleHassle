@@ -16,7 +16,7 @@
 
 @implementation PlayerArea
 
-@synthesize left, gold, overallHealth, ai, hasWeapon, timeTillLoss, destroyed, pieces;
+@synthesize left, gold, overallHealth, ai, hasWeapon, timeTillLoss, destroyed, pieces, city;
 
 -(id) initWithLeft:(float)l 
 		dimentions:(CGPoint)dim 
@@ -68,7 +68,7 @@
 }
 
 -(void) makeCityWithColor:(ccColor3B)color {
-	City* city = [[[City alloc] initWithCoords:ccp(left+(PLAYER_GROUND_WIDTH/2.0), PLAYER_GROUND_HEIGHT) owner:self colorVal:color] autorelease];
+	self.city = [[[City alloc] initWithCoords:ccp(left+(PLAYER_GROUND_WIDTH/2.0), PLAYER_GROUND_HEIGHT) owner:self colorVal:color] autorelease];
 	
     [self addPiece:city];
 }
