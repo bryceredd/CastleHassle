@@ -60,8 +60,8 @@
     ccColor4F start = (ccColor4F){(float)color.r/255.f, (float)color.g/255.f, (float)color.b/255.f, .5f};
     ccColor4F end = (ccColor4F){(float)color.r/255.f, (float)color.g/255.f, (float)color.b/255.f, 0.f};
 
-    self.startColor = start;
-    self.endColor = end;
+    //self.startColor = start;
+    //self.endColor = end;
 	
 	self.texture = [[CCTextureCache sharedTextureCache] addImage:@"ball tracer.png"];
 	

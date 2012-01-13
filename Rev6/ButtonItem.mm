@@ -18,7 +18,7 @@
 -(void) postInitWithText:(NSString *)text {
 	self.buttonText = [CCLabelTTF labelWithString:text fontName:@"Arial" fontSize:20.0];
 	[buttonText setPosition:CGPointMake(img.position.x, img.position.y)];
-	[[Battlefield instance] addChild:buttonText z:HUD_Z_INDEX];
+	[[Battlefield instance] addChild:buttonText z:HUD_Z_INDEX+1];
 }
 
 -(BOOL) handleInitialTouch:(CGPoint)p {

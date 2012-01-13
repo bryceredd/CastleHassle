@@ -29,7 +29,7 @@
 		
 		
 		coin = spriteWithRect(@"coins.png", CGRectMake(0, 21, 14, 14));
-		[[Battlefield instance] addChild:coin z:HUD_Z_INDEX];
+		[[Battlefield instance] addChild:coin z:HUD_Z_INDEX+1];
 		
 	}
 	return self;
@@ -38,8 +38,8 @@
 -(void) postInitWithText:(NSString *)text {
 	self.buttonText = [CCLabelTTF labelWithString:text fontName:@"Arial" fontSize:14.0];
 	self.price = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%d", 50] fontName:@"Arial" fontSize:14.0];
-	[[Battlefield instance] addChild:price z:PIECE_Z_INDEX];
-	[[Battlefield instance] addChild:buttonText z:PIECE_Z_INDEX];
+	[[Battlefield instance] addChild:price z:HUD_Z_INDEX];
+	[[Battlefield instance] addChild:buttonText z:HUD_Z_INDEX];
 	
 	if([text compare:@"Repair"] == NSOrderedSame)
 		type = repair;

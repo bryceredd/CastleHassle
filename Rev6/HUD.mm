@@ -60,7 +60,7 @@
 		gold.leftBound = 360;
 		gold.rightBound = gold.leftBound+100;
 
-		gold.img = spriteWithRect(@"hud.png", CGRectMake(0, 0, 20, 20));
+		gold.img = spriteWithRect(@"coins.png", CGRectMake(0, 0, 20, 20));
 		gold.img.position = ccp(0, 320-HUD_HEIGHT-15);
 		[[Battlefield instance] addChild:gold.img z:HUD_Z_INDEX];
 		[gold postInit];
