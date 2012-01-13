@@ -114,7 +114,7 @@ static MainMenu * instance = nil;
 -(void)campaign: (id)sender {
 	MainMenu* main = [MainMenu instance];
 	[main removeChild:self cleanup:YES];
-	CCSprite* blackBg = [CCSprite spriteWithFile:@"blackWall.png"];
+	CCSprite* blackBg = sprite(@"blackWall.png");
 	[blackBg setPosition:ccp(240, 160)];
 	[main addChild:blackBg z:1];
 	[main addChild:[MapScreen node] z:2];
