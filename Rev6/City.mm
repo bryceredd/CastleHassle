@@ -31,7 +31,7 @@
 		colorSprite = spriteWithRect(CITY_COLOR_IMAGE, rect);
         colorSprite.position = ccp(p.x, p.y);
 		colorSprite.color = color; 
-        [[Battlefield instance] addChild:colorSprite z:PIECE_Z_INDEX];
+        [[Battlefield instance] addChild:colorSprite z:PIECE_Z_INDEX+1];
 		
 		colorSpriteBack = spriteWithRect(CITY_COLOR_IMAGE, rect);
 		colorSpriteBack.scale = 1/BACKGROUND_SCALE_FACTOR;
