@@ -103,7 +103,7 @@
 
 -(void) setupSpritesWithRect:(CGRect)rect image:(NSString*)image atPoint:(CGPoint)p {
 	self.currentSprite = spriteWithRect(image, rect);
-	[[Battlefield instance] addChild:currentSprite z:FOREGROUND_Z_INDEX];
+	[[Battlefield instance] addChild:currentSprite z:FOREGROUND_Z_INDEX+10];
 	currentSprite.position = ccp(p.x, p.y);
 	
 	self.backSprite = spriteWithRect(image, rect);
@@ -132,6 +132,8 @@
 -(void) onTouchMoved:(CGPoint)touch {
 	if(!hasBeenPlaced) {
 		
+        NSLog(@"moving %f %f", touch.x, touch.y);
+        
 		[currentSprite setOpacity:HUD_ITEM_DRAG_OPACITY];
 		
 		body->SetAwake(false);

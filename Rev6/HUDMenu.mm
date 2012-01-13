@@ -115,7 +115,7 @@
 	[item postInit];
 	
 	// draw the sprite on the screen
-	[[Battlefield instance] addChild:item.img];
+	[[Battlefield instance] addChild:item.img z:HUD_Z_INDEX];
 }
 
 
@@ -129,7 +129,7 @@
 		item.swingImg.rotation = 45;
 		
 		// draw the sprite on the screen
-		[[Battlefield instance] addChild:item.swingImg];
+		[[Battlefield instance] addChild:item.swingImg z:HUD_Z_INDEX];
 	}
 	
 	// reposition the base

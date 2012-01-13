@@ -29,7 +29,7 @@
 		
 		
 		coin = spriteWithRect(@"coins", CGRectMake(0, 21, 14, 14));
-		[self addChild:coin];
+		[[Battlefield instance] addChild:coin z:HUD_Z_INDEX];
 		
 	}
 	return self;

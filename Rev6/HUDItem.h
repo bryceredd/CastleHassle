@@ -12,7 +12,7 @@
 
 @class AtlasSprite;
 
-@interface HUDItem : CCLayer {
+@interface HUDItem : NSObject {
 	int leftBound; 
 	int rightBound;
 	CCSprite *img;

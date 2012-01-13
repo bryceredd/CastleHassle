@@ -42,12 +42,11 @@
 		self.tabSprite = spriteWithRect(@"hud.png", CGRectMake(0, 0, 480, HUD_HEIGHT));
 		tabSprite.position = CGPointMake(480.0/2.0, 320.0-(HUD_HEIGHT/2.0));
 		[tabSprite setVisible:YES];
-		
 		[tabSprite setOpacity:200.0f];
 		
-		[tabMgr addChild:tabUpSprite];
-		[tabMgr addChild:tabDownSprite];
-		[tabMgr addChild:tabSprite];
+		[[Battlefield instance] addChild:tabUpSprite z:HUD_Z_INDEX];
+		[[Battlefield instance] addChild:tabDownSprite z:HUD_Z_INDEX];
+		[[Battlefield instance] addChild:tabSprite z:HUD_Z_INDEX];
 		
 		[self initBuildMenu];
 		[self initBuildNextMenu];
@@ -125,7 +124,7 @@
 	
 	selectedMenu = [[HUDSelectedMenu alloc] init];
 	
-	NSString* mgrName = [NSStringFromClass([p class]) lowercaseString];
+	NSString* mgrName = [NSString stringWithFormat:@"%f.png", [NSStringFromClass([p class]) lowercaseString]];
 	
 	if([p isKindOfClass:[Weapon class]]) {
 		
@@ -327,8 +326,7 @@
 }
 
 -(void) hideMenu {
-	if(inFocus != nil)
-		[inFocus hideAll]; 
+    [inFocus hideAll]; 
 	
 	inFocus = nil;
 }

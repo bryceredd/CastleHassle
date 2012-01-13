@@ -12,12 +12,10 @@
 
 #define BACK_BUTTON_SPACING_FROM_RIGHT 40
 
-@class AtlasSpriteManager, Battlefield, HUDMenu, Piece, HUDSelectedMenu, GoldItem, SettingsFromGame;
+@class Battlefield, HUDMenu, Piece, HUDSelectedMenu, GoldItem, SettingsFromGame;
 
 @interface HUD : CCLayer {
 	float extremeRight;
-    
-	AtlasSpriteManager *tabMgr;
 	
 	GoldItem *gold;
 	CCLabelTTF *splashMsg;

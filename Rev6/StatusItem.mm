@@ -29,8 +29,8 @@
 	healthBarContainer = spriteWithRect(@"healthBars", CGRectMake(14, 30, 65, 9));
 	healthBar = spriteWithRect(@"healthBars", CGRectMake(15, 23, 62, 6)); 
 	
-	[self addChild:healthBarContainer];
-	[self addChild:healthBar];
+	[[Battlefield instance] addChild:healthBarContainer z:HUD_Z_INDEX];
+	[[Battlefield instance] addChild:healthBar z:HUD_Z_INDEX];
 	
 	if(p.acceptsPlayerColoring) {
 		img.color = [[GameSettings instance] getColorForPlayer:p.owner];

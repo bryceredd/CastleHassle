@@ -19,9 +19,7 @@
 -(id) initWithWorld:(b2World*)w
 			   coords:(CGPoint)p {
 	
-	if( (self=[super init])) {
-		
-		NSLog(@"Tower.mm: finalize piece called");
+	if((self = [super init])) {
 		
 		world = w;
 		maxHp = hp = MAX_TOWER_HP;

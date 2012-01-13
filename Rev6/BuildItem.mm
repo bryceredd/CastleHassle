@@ -30,8 +30,7 @@
 		price.color = ccc3(65, 65, 65);
 		
 		[[Battlefield instance] addChild:price z:PIECE_Z_INDEX];
-		
-		[self addChild:coin];
+		[[Battlefield instance] addChild:coin z:HUD_Z_INDEX];
 		
 	}
 	
@@ -79,14 +78,15 @@
 	
 	// create the new block set in the selector
 	Class c = creationClass;
-	NSString* s = managerName;
+	NSString* s = [NSString stringWithFormat:@"%@.png", [NSStringFromClass(creationClass) lowercaseString]];
 	BOOL f = NO;
 	
-	NSMethodSignature* sig = [Battlefield instanceMethodSignatureForSelector:@selector(addNewPieceWithCoords:andClass:withManager:finalize:player:)];
+	NSMethodSignature* sig = [Battlefield instanceMethodSignatureForSelector:@selector(addNewPieceWithCoords:andClass:withImageName:finalize:player:)];
 	
 	NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:sig];
-	[invocation setSelector: @selector(addNewPieceWithCoords:andClass:withManager:finalize:player:)];
-	[invocation setTarget: [Battlefield instance]];
+    
+	[invocation setSelector: @selector(addNewPieceWithCoords:andClass:withImageName:finalize:player:)];
+	[invocation setTarget:[Battlefield instance]];
 	[invocation setArgument:&p atIndex:2];
 	[invocation setArgument:&c atIndex:3];
 	[invocation setArgument:&s atIndex:4];

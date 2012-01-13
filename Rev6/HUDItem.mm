@@ -36,7 +36,7 @@
     [img runAction:[CCFadeIn actionWithDuration:.25]];
 	float camX,camY,camZ;
 	[[Battlefield instance].camera centerX:&camX centerY:&camY centerZ:&camZ];
-	img.position = ccp(leftBound+(rightBound-leftBound)/2+camX-160, img.position.y);
+	img.position = ccp(leftBound+(rightBound-leftBound)/2+camX, img.position.y);
 }
 
 - (void) dealloc {

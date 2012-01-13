@@ -67,7 +67,7 @@ static Battlefield * instance = nil;
 
 
 -(id) init {
-	if( (self=[super init])) {
+	if((self = [super init])) {
 		
 		instance = self;
 		
