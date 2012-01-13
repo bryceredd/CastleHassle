@@ -26,8 +26,8 @@
 	
 
 	
-	healthBarContainer = spriteWithRect(@"healthBars", CGRectMake(14, 30, 65, 9));
-	healthBar = spriteWithRect(@"healthBars", CGRectMake(15, 23, 62, 6)); 
+	healthBarContainer = spriteWithRect(@"healthBars.png", CGRectMake(14, 30, 65, 9));
+	healthBar = spriteWithRect(@"healthBars.png", CGRectMake(15, 23, 62, 6)); 
 	
 	[[Battlefield instance] addChild:healthBarContainer z:HUD_Z_INDEX];
 	[[Battlefield instance] addChild:healthBar z:HUD_Z_INDEX];

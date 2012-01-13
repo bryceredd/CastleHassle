@@ -16,7 +16,7 @@
 @synthesize baseDamage, bounces, trail, shouldLoadVelocity;
 
 -(id) initWithCoords:(CGPoint)p world:(b2World *)w from:(PlayerArea*)s {
-	if( (self=[super init])) {
+	if((self = [super initWithWorld:w coords:p])) {
 		acceptsTouches = NO;
 		world = w;
 		baseDamage = 10;
@@ -40,6 +40,8 @@
 
 - (void) updateSpritePosition:(b2Vec2)pos body:(b2Body *)b {
 	
+    NSLog(@"moving projectile to position %f %f", pos.x, pos.y);
+    
 	float camX,camY,camZ;
 	[[Battlefield instance].camera centerX:&camX centerY:&camY centerZ:&camZ];
 	
@@ -56,10 +58,6 @@
 		b2Vec2 pos = b2Vec2(b->GetPosition().x-delta/PTM_RATIO, b->GetPosition().y);
 		b->SetTransform(pos, b->GetAngle());
 	}	
-	
-	if(self.shouldLoadVelocity) {
-		[self loadVelocity];
-	}
 	
 	if(self.trail) {
 		
@@ -100,25 +98,6 @@
 		self.trail.duration=0.0;
 }
 
--(void) saveVelocity {
-	savedVelocity = body->GetLinearVelocity();
-	NSLog(@"saved velocity (%f, %f)", savedVelocity.x, savedVelocity.y);
-	shouldLoadVelocity = YES;
-}
-
--(void) loadVelocity {
-	@synchronized(self) {
-		if(!shouldLoadVelocity) { return; }
-		shouldLoadVelocity = NO;
-		b2Vec2 velocity = body->GetLinearVelocity();
-		
-		NSLog(@"current velocity (%f, %f)", body->GetLinearVelocity().x, body->GetLinearVelocity().y);
-		//body->ApplyImpulse((savedVelocity-velocity), body->GetPosition());
-		NSLog(@"applying velocity to cancel it out and add saved (%f, %f)", (savedVelocity-velocity).x, (savedVelocity-velocity).y);
-
-		body->ApplyLinearImpulse(b2Vec2(.1f,.1f), body->GetPosition());
-	}
-}
 
 - (void) dealloc {
     [trail release];

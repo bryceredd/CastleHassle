@@ -17,8 +17,7 @@
 @synthesize colorSpriteBack;
 @synthesize colorSprite;
 
-- (id) initWithCoords:(CGPoint)p owner:(PlayerArea*)o colorVal:(ccColor3B)color {
-	
+- (id) initWithCoords:(CGPoint)p owner:(PlayerArea*)o colorVal:(ccColor3B)color {	
 	if((self = [super initWithWorld:[Battlefield instance].world coords:p])) {
 		
 		acceptsTouches = NO;
@@ -69,6 +68,7 @@
 	
 	return self;
 }
+
 - (void) updateSprites {
     self.colorSpriteBack.position = self.backSprite.position;
 	self.colorSpriteBack.rotation = self.backSprite.rotation;

@@ -451,7 +451,9 @@ static Battlefield * instance = nil;
 	
 	[playerAreaManager addPiece:(Piece*)piece forPlayer:player];
 	
-	[touchables addObject:piece];
+    if([piece isKindOfClass:[Weapon class]])
+        [touchables addObject:piece];
+        
 	self.lastCreated = piece;
     
     [self.bin addObject:piece];
@@ -723,7 +725,7 @@ static Battlefield * instance = nil;
 	if(cam) {
 		// offset the touch by the camera
 		float x,y,z;[self.camera centerX:&x centerY:&y centerZ:&z];
-		location.x += x - 160; location.y += y - 240;
+		location.x += x; location.y += y;
 	}
 	
 	return location;

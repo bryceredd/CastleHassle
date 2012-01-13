@@ -43,7 +43,10 @@
 		
 	}
 	return self;
-	
+}
+
+- (void) dealloc {
+    [super dealloc];
 }
 
 +(float) getMass {

@@ -21,7 +21,7 @@
 		bounces = l;
 		baseDamage = CANNONBALL_BASE_DAMAGE;
 
-		[self setupSpritesWithRect:CGRectMake(0,0,7,7) image:CANNON_IMAGE atPoint:p];
+		[self setupSpritesWithRect:CGRectMake(0,0,7,7) image:CANNONBALL_IMAGE atPoint:p];
 		
 		// Define another box shape for our dynamic body.
 		b2PolygonShape dynamicBox;

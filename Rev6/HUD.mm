@@ -62,7 +62,7 @@
 
 		gold.img = spriteWithRect(@"hud.png", CGRectMake(0, 0, 20, 20));
 		gold.img.position = ccp(0, 320-HUD_HEIGHT-15);
-		[self addChild:gold.img];
+		[[Battlefield instance] addChild:gold.img z:HUD_Z_INDEX];
 		[gold postInit];
 		[gold show];
 		
@@ -124,7 +124,7 @@
 	
 	selectedMenu = [[HUDSelectedMenu alloc] init];
 	
-	NSString* mgrName = [NSString stringWithFormat:@"%f.png", [NSStringFromClass([p class]) lowercaseString]];
+	NSString* mgrName = [NSString stringWithFormat:@"%@.png", [NSStringFromClass([p class]) lowercaseString]];
 	
 	if([p isKindOfClass:[Weapon class]]) {
 		

@@ -35,6 +35,7 @@
 		bodyDef.position.Set(p.x/PTM_RATIO, p.y/PTM_RATIO);
 		bodyDef.userData = self;
 		body = world->CreateBody(&bodyDef);
+        body->SetType(b2_dynamicBody);
 		
 	}
 	return self;

@@ -28,7 +28,7 @@
 						   context:nil];
 		
 		
-		coin = spriteWithRect(@"coins", CGRectMake(0, 21, 14, 14));
+		coin = spriteWithRect(@"coins.png", CGRectMake(0, 21, 14, 14));
 		[[Battlefield instance] addChild:coin z:HUD_Z_INDEX];
 		
 	}

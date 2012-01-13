@@ -28,8 +28,6 @@
 -(id) initWithCoords:(CGPoint)p world:(b2World *)w from:(PlayerArea*)s;
 -(void) updateSpritePosition:(b2Vec2)pos body:(b2Body *)b;
 -(void) setIsBack:(BOOL)b;
--(void) saveVelocity;
--(void) loadVelocity;
 +(float) getMass;
 
 @end

@@ -25,7 +25,7 @@
 
 -(id) initWithWorld:(b2World *)w coords:(CGPoint)p {
 	
-	if( (self=[super init])) {
+	if((self = [super init])) {
         world = w;
 		shouldDestroy = NO;
 		hasBeenPlaced = NO;
@@ -103,7 +103,7 @@
 
 -(void) setupSpritesWithRect:(CGRect)rect image:(NSString*)image atPoint:(CGPoint)p {
 	self.currentSprite = spriteWithRect(image, rect);
-	[[Battlefield instance] addChild:currentSprite z:FOREGROUND_Z_INDEX+10];
+	[[Battlefield instance] addChild:currentSprite z:FOREGROUND_Z_INDEX];
 	currentSprite.position = ccp(p.x, p.y);
 	
 	self.backSprite = spriteWithRect(image, rect);
@@ -132,8 +132,6 @@
 -(void) onTouchMoved:(CGPoint)touch {
 	if(!hasBeenPlaced) {
 		
-        NSLog(@"moving %f %f", touch.x, touch.y);
-        
 		[currentSprite setOpacity:HUD_ITEM_DRAG_OPACITY];
 		
 		body->SetAwake(false);
@@ -220,7 +218,7 @@
 	[animationLabel setColor:ccc3(255,0,0)];
 	
 	//position the label relative to target hit
-	animationLabel.position = CGPointMake( p.body->GetPosition().x * PTM_RATIO, p.body->GetPosition().y * PTM_RATIO + 40);
+	animationLabel.position = CGPointMake(p.body->GetPosition().x * PTM_RATIO, p.body->GetPosition().y * PTM_RATIO + 40);
 	
 	// add some animation
 	id labelAction1 = [CCMoveBy actionWithDuration:0.8 position:ccp(0,100)];
@@ -257,7 +255,7 @@
 
 -(void) finalizePieceBase {
     pieceID = [owner getUniquePieceID];
-		
+    body->SetType(b2_dynamicBody);
 	body->SetAwake(true);
 	hasBeenPlaced = YES;
 	[currentSprite setOpacity:255];

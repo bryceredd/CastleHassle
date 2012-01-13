@@ -48,7 +48,7 @@
 	// to either end of the cannon
     
 	self.swingSprite = spriteWithRect(image, rect);
-	[[Battlefield instance] addChild:swingSprite];
+	[[Battlefield instance] addChild:swingSprite z:PIECE_Z_INDEX];
 	swingSprite.position = ccp(p.x, p.y);
 	
     

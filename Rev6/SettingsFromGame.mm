@@ -23,7 +23,7 @@
 		if (self != nil) {
 						
 			navBack = [CCSprite spriteWithFile:@"menuBack.png"];
-			navBack.position = ccp(240.0, 320.0/2.0);
+			navBack.position = ccp(400.0, 320.0/2.0);
 			
 			[self addChild:navBack z:0];
 			
