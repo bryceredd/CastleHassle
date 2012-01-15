@@ -117,11 +117,11 @@
 	
 		// fetch the last item and move it to the left
 		NSLog(@"moving %@ to the left", extremeRight);
-		
+
 		[extremeRight moveToLeft:extremeLeft.left - PLAYER_GROUND_WIDTH];
-		
+
 		[self setExtremePlayerAreas];
-				
+
 	}
 	
 	if(cameraLoc.x > extremeRight.left) {

@@ -481,8 +481,8 @@ static Battlefield * instance = nil;
 		
 		float factor = (t.parallaxFactor != 0.0 ? d.x/t.parallaxFactor + d.x : d.x);
 		
-		[t.leftImage setPosition:CGPointMake(t.leftImage.position.x - factor, t.leftImage.position.y)];
-		[t.rightImage setPosition:CGPointMake(t.rightImage.position.x - factor, t.rightImage.position.y)];
+		[t.imageA setPosition:CGPointMake(t.imageA.position.x - factor, t.imageA.position.y)];
+		[t.imageB setPosition:CGPointMake(t.imageB.position.x - factor, t.imageB.position.y)];
 	}
 }
 
@@ -491,8 +491,8 @@ static Battlefield * instance = nil;
 	for(Tileable *t in tileables) {
 		[t positionForCameraLoc:loc];
 		
-		[t.leftImage setPosition:CGPointMake(loc.x-(t.leftImage.textureRect.size.width/2)+1.0, t.leftImage.position.y)];
-		[t.rightImage setPosition:CGPointMake(loc.x+(t.leftImage.textureRect.size.width/2), t.rightImage.position.y)];
+		[t.imageA setPosition:CGPointMake(loc.x-(t.imageA.textureRect.size.width/2)+1.0, t.imageA.position.y)];
+		[t.imageB setPosition:CGPointMake(loc.x+(t.imageB.textureRect.size.width/2), t.imageB.position.y)];
 	}
 }
 
@@ -699,10 +699,9 @@ static Battlefield * instance = nil;
 	// get the camera coords
 	float x,y,z;
 	[self.camera centerX:&x centerY:&y centerZ:&z];
-	
-    
+
     NSLog(@"camera x: %f", x);
-    
+
 	// move the objects on the screen before the camera
 	[hud moveAllObjects:delta];
 	[self tileImagePool:CGPointMake(x, y) delta:delta];

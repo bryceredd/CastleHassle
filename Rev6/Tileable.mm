@@ -10,36 +10,23 @@
 
 @implementation Tileable
 
-@synthesize leftImage, rightImage, parallaxFactor;
+@synthesize imageA, imageB, parallaxFactor;
 
--(id) init {
-	
-	// ensure this doesn't go uninitialized
-	parallaxFactor = 0.0;
-	
-	if( (self=[super init])) {
-		
-	}
-	
-	return self;
-}
 
 - (float) getExtremeLeft {
-	return leftImage.position.x < rightImage.position.x ? leftImage.position.x - (leftImage.textureRect.size.width/2) : rightImage.position.x - (rightImage.textureRect.size.width/2);
+    return MIN(imageA.position.x, imageB.position.x);
 }
 
 - (float) getExtremeRight {
-	// sexy line... please change
-	return leftImage.position.x < rightImage.position.x ? rightImage.position.x + (rightImage.textureRect.size.width/2) - [CCDirector sharedDirector].winSize.height : leftImage.position.x + (leftImage.textureRect.size.width/2) - [CCDirector sharedDirector].winSize.height;
+    return MAX(imageA.position.x + imageA.textureRect.size.width, imageB.position.x + imageB.textureRect.size.width);
 }
 
 - (CCSprite *) getUnseenSprite:(CGPoint)pos result:(int)res{
 	
 	if(res > 0)
-		return leftImage.position.x < rightImage.position.x ? leftImage : rightImage;
+		return imageA.position.x < imageB.position.x ? imageA : imageB;
 	else 
-		return leftImage.position.x > rightImage.position.x ? leftImage : rightImage;
-	
+		return imageA.position.x > imageB.position.x ? imageA : imageB;
 }
 
 - (int) cameraOutOfBounds:(CGPoint)pos {
@@ -54,7 +41,6 @@
 		return 1;
 	
 	return 0;
-	
 }
 
 - (void) repositionSprite:(CGPoint)pos result:(int)res {
@@ -62,11 +48,7 @@
 	CCSprite * sprite = [self getUnseenSprite:pos result:res];
 	
 	// the last part is to scoot the images 2 pixels closer
-    CGPoint position = ccp( sprite.textureRect.size.width*2*(float)res+(-2*(float)res) + sprite.position.x, sprite.position.y);
-	
-    sprite.position = position;
-
-	
+    sprite.position = ccp(res*sprite.textureRect.size.width*2, sprite.position.y);
 }
 
 - (void) positionForCameraLoc:(CGPoint)loc {

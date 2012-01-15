@@ -10,15 +10,13 @@
 #import "Piece.h"
 
 @interface Tileable : Piece {
-	CCSprite* leftImage;
-	CCSprite* rightImage;
 	float parallaxFactor;
 
 }
 
 @property (nonatomic) float parallaxFactor;
-@property (nonatomic, retain) CCSprite* leftImage;
-@property (nonatomic, retain) CCSprite* rightImage;
+@property (nonatomic, retain) CCSprite* imageA;
+@property (nonatomic, retain) CCSprite* imageB;
 
 - (int) cameraOutOfBounds:(CGPoint)pos;
 - (void) positionForCameraLoc:(CGPoint)loc;
