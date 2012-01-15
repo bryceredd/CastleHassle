@@ -39,8 +39,9 @@
 		
 		// create a trail 
 		self.trail = [[[CannonBallTrail alloc] initWithTotalParticles:200 color:[[GameSettings instance] getColorForPlayer:s]] autorelease];
-		self.trail.position = ccp(body->GetPosition().x*PTM_RATIO, body->GetPosition().y*PTM_RATIO);
-		[[Battlefield instance] addChild:self.trail z:ANIMATION_Z_INDEX];
+        //self.trail = [CCParticleSmoke new];
+		self.trail.position = p;
+		[[Battlefield instance] addChild:self.trail z:ANIMATION_Z_INDEX+2];
 		
 	}
 	return self;
@@ -56,7 +57,7 @@
 	
 	CCParticleSystem *emitter = [[[CannonBallExplosion alloc] init] autorelease];
 	emitter.position = ccp(body->GetPosition().x*PTM_RATIO, body->GetPosition().y*PTM_RATIO);
-	[[Battlefield instance] addChild:emitter z:ANIMATION_Z_INDEX];
+	[[Battlefield instance] addChild:emitter z:ANIMATION_Z_INDEX+2];
 }
 
 @end

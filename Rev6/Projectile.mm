@@ -70,7 +70,7 @@
 			
 		} else {*/
 			
-			self.trail.position = ccp(pos.x*PTM_RATIO, pos.y*PTM_RATIO);
+            self.trail.position = ccp(pos.x*PTM_RATIO, pos.y*PTM_RATIO);
 			[self setIsBack:NO];
 			
 		//}
