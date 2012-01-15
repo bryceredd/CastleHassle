@@ -51,17 +51,6 @@
 	
 		self.pieces = [NSMutableArray array];
 		
-		//Pirla
-		
-		//************************** Pre-load Effects **********************
-		
-		[[SimpleAudioEngine sharedEngine] preloadEffect:@"test.caf"];
-		
-		//************************** Sound section over ********************
-		//******************************************************************
-		
-		//end Pirla
-	
 	}
 
 	return self;

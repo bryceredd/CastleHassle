@@ -48,7 +48,7 @@
 	float extremeLeft = [self getExtremeLeft];
 	float extremeRight = [self getExtremeRight];
 	
-	if(pos.x-[CCDirector sharedDirector].winSize.height/2 < extremeLeft)
+	if(pos.x < extremeLeft)
 		return -1;
 	if(pos.x > extremeRight)
 		return 1;

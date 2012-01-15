@@ -528,7 +528,7 @@ static Battlefield * instance = nil;
 	touchDown = YES;
 	isConstructionTouch = NO;
 	
-	if(didMoveInFollow) {[self resetViewToLastShot]; }
+	//if(didMoveInFollow) {[self resetViewToLastShot]; }
 	
 	// check if its a hud touch
 	if ([hud handleInitialTouch:initialTouch]) {
@@ -700,6 +700,9 @@ static Battlefield * instance = nil;
 	float x,y,z;
 	[self.camera centerX:&x centerY:&y centerZ:&z];
 	
+    
+    NSLog(@"camera x: %f", x);
+    
 	// move the objects on the screen before the camera
 	[hud moveAllObjects:delta];
 	[self tileImagePool:CGPointMake(x, y) delta:delta];

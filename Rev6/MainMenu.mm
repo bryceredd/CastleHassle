@@ -40,17 +40,13 @@ static MainMenu * instance = nil;
         [self addChild:[MainMenuLayer node] z:1 tag:MAIN_MENU_LAYER];
 
 		
-		//Add intro sound here...
-		SimpleAudioEngine *introSound = [SimpleAudioEngine sharedEngine];
-		if (introSound != nil) {
-			[introSound preloadBackgroundMusic:@"background-music.caf"];
-			if (introSound.willPlayBackgroundMusic) {
-				introSound.backgroundMusicVolume = 1.0f;
-			}
-		}
-		
-		[introSound playBackgroundMusic:@"background-music.caf"];
-		//sound section ends here
+        [[SimpleAudioEngine sharedEngine] preloadBackgroundMusic:@"background-music.caf"];
+        
+        if ([SimpleAudioEngine sharedEngine].willPlayBackgroundMusic) {
+            [SimpleAudioEngine sharedEngine].backgroundMusicVolume = 1.0f;
+        }
+    
+		[[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"background-music.caf"];
 		
     }
 		

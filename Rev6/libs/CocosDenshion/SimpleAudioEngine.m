@@ -34,7 +34,10 @@ static CDBufferManager *bufferManager = nil;
 // Init
 + (SimpleAudioEngine *) sharedEngine
 {
-    return nil;
+    #if TARGET_IPHONE_SIMULATOR
+        return nil;
+    #endif
+    
 	@synchronized(self)     {
 		if (!sharedEngine)
 			sharedEngine = [[SimpleAudioEngine alloc] init];
