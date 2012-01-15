@@ -144,7 +144,7 @@ static Battlefield * instance = nil;
 														 imageDimension:CGPointMake(607.0, 320.0) 
 																  layer:self
 																  index:BACKGROUND_Z_INDEX 
-														 parallaxFactor:10.0] autorelease]; 
+														 parallaxFactor:10.0] autorelease];
 		 
 		[tileables addObject:foreground];
 		[tileables addObject:midground];

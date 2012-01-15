@@ -31,14 +31,21 @@
 
 - (int) cameraOutOfBounds:(CGPoint)pos {
 	
+    float screenWidth = MAX([CCDirector sharedDirector].winSize.width, [CCDirector sharedDirector].winSize.height);
+    
 	// we calculate the left and right most points for the tiling images
 	float extremeLeft = [self getExtremeLeft];
 	float extremeRight = [self getExtremeRight];
 	
-	if(pos.x < extremeLeft)
+    NSLog(@"extremeRight %f", extremeRight);
+    
+    
+	if(pos.x < extremeLeft) {
 		return -1;
-	if(pos.x > extremeRight)
-		return 1;
+    }
+	if(pos.x > extremeRight - screenWidth) {
+		return 1;    
+    }
 	
 	return 0;
 }
@@ -48,7 +55,8 @@
 	CCSprite * sprite = [self getUnseenSprite:pos result:res];
 	
 	// the last part is to scoot the images 2 pixels closer
-    sprite.position = ccp(res*sprite.textureRect.size.width*2, sprite.position.y);
+    sprite.position = ccp(sprite.textureRect.size.width * 2 * res + (-2 * res) + sprite.position.x, sprite.position.y);
+	
 }
 
 - (void) positionForCameraLoc:(CGPoint)loc {
