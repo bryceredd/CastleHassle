@@ -149,23 +149,32 @@
 
 -(CGPoint) getBackImagePosFromObjPos:(CGPoint)piecePos cameraPosition:(CGPoint)camPos {
 
-	float midScreen = camPos.x + 80;
-	float span = midScreen - piecePos.x;
-	
-	if(fabs(span) > (.5 * worldWidth) - (.4 * backgroundWidth) &&
-	   fabs(span) < (.5 * worldWidth) + (.6 * backgroundWidth)) {
+    // calculate the possible position of the piece both to the right and left,
+    // 
+    // keep whichever is closer
 
-		if(span > 0) {
-			float distanceFromBorder = ((.5 * worldWidth) + (.5 * backgroundWidth) - span)/BACKGROUND_SCALE_FACTOR;
-			return ccp(camPos.x+320.0-distanceFromBorder, piecePos.y/BACKGROUND_SCALE_FACTOR+PLAYER_BACKGROUND_HEIGHT);
-		} else {
-			float distanceFromBorder = ((.5 * worldWidth) + (.5 * backgroundWidth) + span)/BACKGROUND_SCALE_FACTOR;
-			return ccp(camPos.x-160.0+distanceFromBorder, piecePos.y/BACKGROUND_SCALE_FACTOR+PLAYER_BACKGROUND_HEIGHT);
-		}
+    
+    float screenWidth = MAX([CCDirector sharedDirector].winSize.width, [CCDirector sharedDirector].winSize.height);
+    float midCamera = camPos.x + screenWidth/2.f;
+    float halfwayAroundTheWorld = worldWidth/2.f;
+    float pieceDistanceFromMiddle = piecePos.x - midCamera;
 
-	}
-	
-	return ccp(-100.0, -100.0);
+
+    float shadowPositionA = midCamera - pieceDistanceFromMiddle/BACKGROUND_SCALE_FACTOR + halfwayAroundTheWorld/BACKGROUND_SCALE_FACTOR;
+    float shadowPositionB = midCamera - pieceDistanceFromMiddle/BACKGROUND_SCALE_FACTOR - halfwayAroundTheWorld/BACKGROUND_SCALE_FACTOR;
+    
+    
+    
+    float realShadowPosition;
+    
+    if(fabs(shadowPositionA - midCamera) > fabs(shadowPositionB - midCamera)) {
+        realShadowPosition = shadowPositionB;
+    } else {
+        realShadowPosition = shadowPositionA;
+    }
+
+    return ccp(realShadowPosition, piecePos.y/BACKGROUND_SCALE_FACTOR+PLAYER_BACKGROUND_HEIGHT);
+    
 }
 
 -(int) getPlayerID:(PlayerArea*)pa {

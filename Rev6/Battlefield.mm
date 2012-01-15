@@ -238,8 +238,7 @@ static Battlefield * instance = nil;
 			
 			piece.currentSprite.position = ccp(pos.x*PTM_RATIO, pos.y*PTM_RATIO);
 			piece.currentSprite.rotation = -1 * CC_RADIANS_TO_DEGREES(ang);
-			piece.backSprite.position = [playerAreaManager getBackImagePosFromObjPos:ccp(pos.x * PTM_RATIO, pos.y * PTM_RATIO) 
-																		  cameraPosition:ccp(camX, camY)];
+			piece.backSprite.position = [playerAreaManager getBackImagePosFromObjPos:ccp(pos.x * PTM_RATIO, pos.y * PTM_RATIO) cameraPosition:ccp(camX, camY)];
             piece.backSprite.rotation = CC_RADIANS_TO_DEGREES(ang);
 			
 			if([piece isKindOfClass:[Weapon class]]) {
@@ -704,12 +703,12 @@ static Battlefield * instance = nil;
 	[hud moveAllObjects:delta];
 	[self tileImagePool:CGPointMake(x, y) delta:delta];
 	
+    [playerAreaManager checkAndMovePlayerAreas:CGPointMake(x, y)];
+    
 	[self.camera setCenterX:x-(delta.x) centerY:y centerZ:0.0];
 	[self.camera setEyeX:x-(delta.x) eyeY:y eyeZ:[CCCamera getZEye]];
 	
 	screenMomentum += screenMomentum > 0.0 ? SCROLL_MOMENTUM * -1 : SCROLL_MOMENTUM;
-	
-	[playerAreaManager checkAndMovePlayerAreas:CGPointMake(x, y)];
 }
 
 -(CGPoint) transformTouchesToPoint:(NSSet *)touches withCameraOffset:(BOOL)cam {

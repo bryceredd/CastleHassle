@@ -237,7 +237,7 @@
 }
 
 //label action calls this function when action is over to clean up label from screen
--(void) actionDone{
+-(void) actionDone {
 	[[Battlefield instance] removeChild:animationLabel cleanup:YES];
     self.animationLabel = nil;
 }
