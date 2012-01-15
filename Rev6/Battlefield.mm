@@ -700,8 +700,6 @@ static Battlefield * instance = nil;
 	float x,y,z;
 	[self.camera centerX:&x centerY:&y centerZ:&z];
 
-    NSLog(@"camera x: %f", x);
-
 	// move the objects on the screen before the camera
 	[hud moveAllObjects:delta];
 	[self tileImagePool:CGPointMake(x, y) delta:delta];

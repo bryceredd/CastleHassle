@@ -37,8 +37,6 @@
 	float extremeLeft = [self getExtremeLeft];
 	float extremeRight = [self getExtremeRight];
 	
-    NSLog(@"extremeRight %f", extremeRight);
-    
     
 	if(pos.x < extremeLeft) {
 		return -1;
