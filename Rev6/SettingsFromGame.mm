@@ -23,7 +23,7 @@
 		if (self != nil) {
 						
 			navBack = [CCSprite spriteWithFile:@"menuBack.png"];
-			navBack.position = ccp(400.0, 320.0/2.0);
+			navBack.position = ccp(480.0/2.0, 320.0/2.0);
 			
 			[self addChild:navBack z:0];
 			
@@ -34,11 +34,11 @@
 			title.position = ccp(240,280);
 			[self addChild:title];
 			
-			leaveGame = [self makeButtonWithString:@"Return"
+			[self makeButtonWithString:@"Return"
 										atPosition:ccp(-150,-120)
 									  withSelector:@selector(closeWindow:)];
 			
-			leaveGame = [self makeButtonWithString:@"Abandon Game"
+			[self makeButtonWithString:@"Abandon Game"
 										atPosition:ccp(150,-120)
 									  withSelector:@selector(leaveGame:)];
 			

@@ -13,7 +13,7 @@
 @interface BaseMenu : CCLayer {
 }
 
--(CCMenuItemFont*)makeButtonWithString:(NSString*)s atPosition:(CGPoint)p withSelector:(SEL)selector;
+-(CCMenuItemSprite*)makeButtonWithString:(NSString*)s atPosition:(CGPoint)p withSelector:(SEL)selector;
 -(CCMenuItemSprite*)makeButtonFromRect:(CGRect)rect atPosition:(CGPoint)p withSelector:(SEL)selector;
 -(void)toggled:(id)sender;
 

@@ -353,7 +353,7 @@
 
 -(void) showSettings {
 
-	[[Battlefield instance] resetScreenToX:160.0];
+	[[Battlefield instance] resetScreenToX:0.0];
 	
 	// add settings layer
 	self.settingsView = [[[SettingsFromGame alloc] init] autorelease];

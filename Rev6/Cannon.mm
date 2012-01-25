@@ -97,7 +97,7 @@
 
 }
 
--(BOOL) onTouchEndedLocal:(CGPoint)touch {
+- (BOOL) onTouchEndedLocal:(CGPoint)touch {
     
 	if(self.shootIndicatorTail) { 
         [[Battlefield instance] removeChild:self.shootIndicatorTail cleanup:YES]; 

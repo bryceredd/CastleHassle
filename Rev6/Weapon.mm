@@ -141,7 +141,10 @@
 		// make the object transparent
 		[self.currentSprite setOpacity:HUD_ITEM_DRAG_OPACITY];
 		[self.swingSprite setOpacity:HUD_ITEM_DRAG_OPACITY];
-		
+        
+		shotPower = 0;
+        
+        return;
 	}
 	
 	// calculate angle of current pull
