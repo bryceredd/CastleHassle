@@ -143,8 +143,6 @@
 		[self.swingSprite setOpacity:HUD_ITEM_DRAG_OPACITY];
         
 		shotPower = 0;
-        
-        return;
 	}
 	
 	// calculate angle of current pull
@@ -187,6 +185,10 @@
     self.shootIndicatorTop.position = ccpSub(self.shootIndicatorTail.position, ccp(cos(-currentShotAngle)*headPixelsInFront, sin(-currentShotAngle)*headPixelsInFront));
                                        
     [self.shootIndicatorTail setScaleY:tailScale];
+    
+    
+    if(!hasBeenPlaced) { shotPower = 0; }
+
 }
 
 -(BOOL) onTouchEnded:(CGPoint)touch {

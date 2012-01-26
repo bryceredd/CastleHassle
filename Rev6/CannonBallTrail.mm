@@ -64,7 +64,7 @@
     
     self.texture = [[CCTextureCache sharedTextureCache] addImage:@"balltracer.png"];
     
-    self.blendAdditive = YES;
+    self.blendAdditive = NO;
 	
 	
 	return self;
