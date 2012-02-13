@@ -42,8 +42,7 @@ static float CatapultForce = 0;
 			baseName = @"medium";
 		if([GameSettings instance].type == hard)
 			baseName = @"hard";
-		if([GameSettings instance].type == campaign)
-		{
+		if([GameSettings instance].type == campaign) {
 			baseName = @"campaign";
 			fileNum = [GameSettings instance].territoryID;
 		}

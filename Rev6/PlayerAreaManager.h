@@ -39,5 +39,6 @@
 -(PlayerArea*) getPlayerArea:(int)index;
 -(int) getPlayerID:(PlayerArea*)pa;
 -(void) loadAI;
+-(void) loadPlayer;
 
 @end

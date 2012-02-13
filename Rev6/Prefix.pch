@@ -49,7 +49,7 @@
 	#define MAX_PLAYERS 4
 	#define TIME_TO_LOSS_WITHOUT_WEAPON 10.0
 	#define MAX_TILT_FOR_WEAPON 60// in degrees
-	#define NO_FIRE_TIME 2.0
+	#define NO_FIRE_TIME 200.0
 
 	// object properties
 	// structure properties

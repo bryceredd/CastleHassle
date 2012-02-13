@@ -13,6 +13,9 @@
 		0239A41F14C0B0D800B7AD45 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0239A41C14C0B0D800B7AD45 /* icon@2x.png */; };
 		0239A42014C0B0D800B7AD45 /* iconLarge.png in Resources */ = {isa = PBXBuildFile; fileRef = 0239A41D14C0B0D800B7AD45 /* iconLarge.png */; };
 		0284CA0B14C3559D000B4C01 /* fire.png in Resources */ = {isa = PBXBuildFile; fileRef = 0284CA0A14C3559D000B4C01 /* fire.png */; };
+		028E7C2614E968A300115B3E /* playerMedium.dat in Resources */ = {isa = PBXBuildFile; fileRef = 028E7C2314E968A300115B3E /* playerMedium.dat */; };
+		028E7C2714E968A300115B3E /* playerHard.dat in Resources */ = {isa = PBXBuildFile; fileRef = 028E7C2414E968A300115B3E /* playerHard.dat */; };
+		028E7C2814E968A300115B3E /* playerEasy.dat in Resources */ = {isa = PBXBuildFile; fileRef = 028E7C2514E968A300115B3E /* playerEasy.dat */; };
 		02A0C4DF14BEA8CB00B739E3 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 02A0C4DE14BEA8CB00B739E3 /* JSONKit.m */; };
 		02A0C4E214BEC68D00B739E3 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02A0C4E114BEC68D00B739E3 /* StoreKit.framework */; };
 		02C3C6F214BDD19E004BCC33 /* PListReader.mm in Sources */ = {isa = PBXBuildFile; fileRef = 02C3C6EB14BDD19E004BCC33 /* PListReader.mm */; };
@@ -483,6 +486,9 @@
 		0239A41C14C0B0D800B7AD45 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
 		0239A41D14C0B0D800B7AD45 /* iconLarge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iconLarge.png; sourceTree = "<group>"; };
 		0284CA0A14C3559D000B4C01 /* fire.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fire.png; sourceTree = "<group>"; };
+		028E7C2314E968A300115B3E /* playerMedium.dat */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = playerMedium.dat; sourceTree = "<group>"; };
+		028E7C2414E968A300115B3E /* playerHard.dat */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = playerHard.dat; sourceTree = "<group>"; };
+		028E7C2514E968A300115B3E /* playerEasy.dat */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = playerEasy.dat; sourceTree = "<group>"; };
 		02A0C4DD14BEA8CB00B739E3 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
 		02A0C4DE14BEA8CB00B739E3 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
 		02A0C4E114BEC68D00B739E3 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
@@ -1191,6 +1197,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		028E7C1B14E95D4B00115B3E /* Player Start States */ = {
+			isa = PBXGroup;
+			children = (
+				028E7C2314E968A300115B3E /* playerMedium.dat */,
+				028E7C2414E968A300115B3E /* playerHard.dat */,
+				028E7C2514E968A300115B3E /* playerEasy.dat */,
+			);
+			name = "Player Start States";
+			sourceTree = "<group>";
+		};
 		02C3C6E914BDD187004BCC33 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -1849,6 +1865,7 @@
 		02F5994C14BDCBCC00C9349A /* Saves */ = {
 			isa = PBXGroup;
 			children = (
+				028E7C1B14E95D4B00115B3E /* Player Start States */,
 				02F5994D14BDCBD800C9349A /* Campaign */,
 				02F5997814BDCBF700C9349A /* basic5.dat */,
 				02F5997914BDCBF700C9349A /* hard5.dat */,
@@ -2650,6 +2667,9 @@
 				0239A41F14C0B0D800B7AD45 /* icon@2x.png in Resources */,
 				0239A42014C0B0D800B7AD45 /* iconLarge.png in Resources */,
 				0284CA0B14C3559D000B4C01 /* fire.png in Resources */,
+				028E7C2614E968A300115B3E /* playerMedium.dat in Resources */,
+				028E7C2714E968A300115B3E /* playerHard.dat in Resources */,
+				028E7C2814E968A300115B3E /* playerEasy.dat in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

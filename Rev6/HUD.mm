@@ -19,6 +19,8 @@
 #import "GoldItem.h"
 #import "SettingsFromGame.h"
 
+#define LEVEL_CREATION_BUTTONS NO
+
 @implementation HUD
 
 @synthesize selectedMenu, countDownTimer, settingsView, inFocus, mainMenu, buildMenu, buildNextMenu, tabUpSprite, tabDownSprite, tabSprite;
@@ -59,7 +61,7 @@
 		gold = [[GoldItem alloc] init];
 		gold.leftBound = 360;
 		gold.rightBound = gold.leftBound+100;
-
+        
 		gold.img = spriteWithRect(@"coins.png", CGRectMake(0, 0, 20, 20));
 		gold.img.position = ccp(0, 320-HUD_HEIGHT-15);
 		[[Battlefield instance] addChild:gold.img z:HUD_Z_INDEX];
@@ -80,38 +82,33 @@
 	self.mainMenu = [[[HUDMenu alloc] init] autorelease];
 	
 	[mainMenu addButtonItemWithImageName:@"stdButtons.png"
-								   imageBox:CGRectMake(0, 77, 104, 37) 
-							  swingImageBox:CGRectMake(0, 0, 0, 0)
-								  selector:@selector(showBuildMenu) 
-									 title:@"Build"]; 
-
-	/*[mainMenu addButtonItemWithImageName:@"stdButtons"
-								  imageBox:CGRectMake(0, 77, 104, 37) 
-							 swingImageBox:CGRectMake(0, 0, 0, 0)
-								  selector:@selector(save) 
-									 title:@"Save"];
+                                imageBox:CGRectMake(0, 77, 104, 37) 
+                           swingImageBox:CGRectMake(0, 0, 0, 0)
+                                selector:@selector(showBuildMenu) 
+                                   title:@"Build"]; 
+    
+    if(LEVEL_CREATION_BUTTONS) {
+        [mainMenu addButtonItemWithImageName:@"stdButtons.png"
+                                    imageBox:CGRectMake(0, 77, 104, 37) 
+                               swingImageBox:CGRectMake(0, 0, 0, 0)
+                                    selector:@selector(save) 
+                                       title:@"Save"];
+        
+        [mainMenu addButtonItemWithImageName:@"stdButtons.png"
+                                    imageBox:CGRectMake(0, 77, 104, 37) 
+                               swingImageBox:CGRectMake(0, 0, 0, 0)
+                                    selector:@selector(clear) 
+                                       title:@"Clear"];
+    }
 	
-	[mainMenu addButtonItemWithImageName:@"stdButtons"
-								  imageBox:CGRectMake(0, 77, 104, 37) 
-							 swingImageBox:CGRectMake(0, 0, 0, 0)
-								  selector:@selector(clear) 
-									 title:@"Clear"];
-	
-	//[mainMenu addGoldStatusWithLeft:160.0];
-	
-	[mainMenu addButtonItemWithImageName:@"stdButtons"
-								  imageBox:CGRectMake(0, 77, 104, 37) 
-							 swingImageBox:CGRectMake(0, 0, 0, 0)
-								  selector:@selector(load) 
-									 title:@"Load"];*/
 	
 	ButtonItem * settingButton = [mainMenu addButtonItemWithImageName:@"stdButtons.png"
-															   imageBox:CGRectMake(0, 77, 104, 37) 
-														  swingImageBox:CGRectMake(0, 0, 0, 0)
-															   selector:@selector(showSettings) 
-																  title:@"Menu"]; 
+                                                             imageBox:CGRectMake(0, 77, 104, 37) 
+                                                        swingImageBox:CGRectMake(0, 0, 0, 0)
+                                                             selector:@selector(showSettings) 
+                                                                title:@"Menu"]; 
 	
-
+    
 	
 	settingButton.leftBound = 480-ICON_SPACING-settingButton.img.textureRect.size.width;
 	settingButton.rightBound = 480-ICON_SPACING;
@@ -130,42 +127,42 @@
 		
 		Weapon* w = (Weapon*)p;
 		[selectedMenu addStatusItemWithImageName:mgrName 
-										  imageBox:w.currentSprite.textureRect 
-									 swingImageBox:w.swingSprite.textureRect
-											 piece:w];
+                                        imageBox:w.currentSprite.textureRect 
+                                   swingImageBox:w.swingSprite.textureRect
+                                           piece:w];
 		
 		
 		
 	} else {
 		[selectedMenu addStatusItemWithImageName:mgrName 
-										  imageBox:p.currentSprite.textureRect 
-									 swingImageBox:CGRectMake(0, 0, 0, 0) 
-											 piece:p];	
+                                        imageBox:p.currentSprite.textureRect 
+                                   swingImageBox:CGRectMake(0, 0, 0, 0) 
+                                           piece:p];	
 	}
 	
 	[selectedMenu addPurchaseItemWithImageName:@"stdButtons.png"
-										imageBox:CGRectMake(0, 77, 104, 37) 
-								   swingImageBox:CGRectMake(0, 0, 0, 0)
-										selector:@selector(repairPiece) 
-										   title:@"Repair" 
-										   piece:p];
+                                      imageBox:CGRectMake(0, 77, 104, 37) 
+                                 swingImageBox:CGRectMake(0, 0, 0, 0)
+                                      selector:@selector(repairPiece) 
+                                         title:@"Repair" 
+                                         piece:p];
 	
 	if([p isKindOfClass:[Weapon class]]) {
 		
 		[selectedMenu addPurchaseItemWithImageName:@"stdButtons.png"
-											imageBox:CGRectMake(0, 0, 145, 37) 
-									   swingImageBox:CGRectMake(0, 0, 0, 0)
-											selector:@selector(upgradePiece) 
-											   title:@"Upgrade" 
-											   piece:p];
+                                          imageBox:CGRectMake(0, 0, 145, 37) 
+                                     swingImageBox:CGRectMake(0, 0, 0, 0)
+                                          selector:@selector(upgradePiece) 
+                                             title:@"Upgrade" 
+                                             piece:p];
 	}
 	
 	
 	/*[selectedMenu addButtonItemWithImageName:@"stdButtons" 
-									  imageBox:CGRectMake(187, 76, 40, 39) 
-								 swingImageBox:CGRectMake(0,0,0,0)
-									  selector:@selector(infoClicked) 
-										 title:@""];*/
+     imageBox:CGRectMake(187, 76, 40, 39) 
+     swingImageBox:CGRectMake(0,0,0,0)
+     selector:@selector(infoClicked) 
+     title:@""];*/
 	
 	[self addBackButtonToMenu:(HUDMenu*)selectedMenu];
 	
@@ -177,47 +174,47 @@
 	self.buildNextMenu = [[[HUDMenu alloc] init] autorelease];
 	
 	[buildNextMenu addButtonItemWithImageName:@"stdButtons.png"
-								   imageBox:CGRectMake(105, 78, 38, 37) 
-							  swingImageBox:CGRectMake(0, 0, 0, 0)
-								   selector:@selector(previousConstructionItems) 
-									  title:@""];
+                                     imageBox:CGRectMake(105, 78, 38, 37) 
+                                swingImageBox:CGRectMake(0, 0, 0, 0)
+                                     selector:@selector(previousConstructionItems) 
+                                        title:@""];
 	
 	[buildNextMenu addBuildItemWithImageName:@"arch.png"
-								  imageBox:CGRectMake(0, 0, 60, 30) 
-							 swingImageBox:CGRectMake(0, 0, 0, 0)
-									 class:[Arch class]
-									 price:ARCH_BUY_PRICE]; 
+                                    imageBox:CGRectMake(0, 0, 60, 30) 
+                               swingImageBox:CGRectMake(0, 0, 0, 0)
+                                       class:[Arch class]
+                                       price:ARCH_BUY_PRICE]; 
 	
 	[buildNextMenu addBuildItemWithImageName:@"wedge.png"
-									  imageBox:CGRectMake(0, 0, 30, 30) 
-								 swingImageBox:CGRectMake(0, 0, 0, 0)
-										 class:[Wedge class]
-										 price:WEDGE_BUY_PRICE]; 
+                                    imageBox:CGRectMake(0, 0, 30, 30) 
+                               swingImageBox:CGRectMake(0, 0, 0, 0)
+                                       class:[Wedge class]
+                                       price:WEDGE_BUY_PRICE]; 
 	
 	[buildNextMenu addBuildItemWithImageName:@"balcony.png"
-								  imageBox:CGRectMake(0, 0, 30, 30) 
-							 swingImageBox:CGRectMake(0, 0, 0, 0)
-									 class:[Balcony class]
-									 price:BALCONY_BUY_PRICE]; 
+                                    imageBox:CGRectMake(0, 0, 30, 30) 
+                               swingImageBox:CGRectMake(0, 0, 0, 0)
+                                       class:[Balcony class]
+                                       price:BALCONY_BUY_PRICE]; 
 	
 	[buildNextMenu addBuildItemWithImageName:@"wall.png"
-									  imageBox:CGRectMake(0, 0, 30, 30) 
-								 swingImageBox:CGRectMake(0, 0, 0, 0)
-										 class:[Wall class]
-										 price:WALL_BUY_PRICE];
+                                    imageBox:CGRectMake(0, 0, 30, 30) 
+                               swingImageBox:CGRectMake(0, 0, 0, 0)
+                                       class:[Wall class]
+                                       price:WALL_BUY_PRICE];
 	
 	[buildNextMenu addBuildItemWithImageName:@"merlin.png"
-									  imageBox:CGRectMake(0, 0, 30, 30) 
-								 swingImageBox:CGRectMake(0, 0, 0, 0)
-										 class:[Merlin class]
-										 price:MERLIN_BUY_PRICE];	
+                                    imageBox:CGRectMake(0, 0, 30, 30) 
+                               swingImageBox:CGRectMake(0, 0, 0, 0)
+                                       class:[Merlin class]
+                                       price:MERLIN_BUY_PRICE];	
 	
-		
+    
 	ButtonItem* leftBtn = [buildNextMenu addButtonItemWithImageName:@"stdButtons.png"
-								   imageBox:CGRectMake(146, 78, 38, 37) 
-							  swingImageBox:CGRectMake(0, 0, 0, 0)
-								   selector:@selector(nextConstructionItems) 
-									  title:@""];
+                                                           imageBox:CGRectMake(146, 78, 38, 37) 
+                                                      swingImageBox:CGRectMake(0, 0, 0, 0)
+                                                           selector:@selector(nextConstructionItems) 
+                                                              title:@""];
 	[leftBtn.img setOpacity:100.0f];
 	
 	[self addBackButtonToMenu:buildNextMenu];
@@ -229,47 +226,47 @@
 	self.buildMenu = [[[HUDMenu alloc] init] autorelease];
 	
 	ButtonItem* leftBtn = [buildMenu addButtonItemWithImageName:@"stdButtons.png"
-								   imageBox:CGRectMake(105, 78, 38, 37) 
-							  swingImageBox:CGRectMake(0, 0, 0, 0)
-								   selector:@selector(previousConstructionItems) 
-									  title:@""];
+                                                       imageBox:CGRectMake(105, 78, 38, 37) 
+                                                  swingImageBox:CGRectMake(0, 0, 0, 0)
+                                                       selector:@selector(previousConstructionItems) 
+                                                          title:@""];
 	[leftBtn.img setOpacity:100.0f];
 	
 	[buildMenu addBuildItemWithImageName:@"tower.png"
-								  imageBox:CGRectMake(0, 0, 30, 30) 
-							 swingImageBox:CGRectMake(0, 0, 0, 0)
-									 class:[Tower class] 
-									 price:TOWER_BUY_PRICE]; 
+                                imageBox:CGRectMake(0, 0, 30, 30) 
+                           swingImageBox:CGRectMake(0, 0, 0, 0)
+                                   class:[Tower class] 
+                                   price:TOWER_BUY_PRICE]; 
 	
 	[buildMenu addBuildItemWithImageName:@"turret.png"
-								  imageBox:CGRectMake(0, 0, 36, 30) 
-							 swingImageBox:CGRectMake(0, 0, 0, 0)
-									 class:[Turret class] 
-									 price:TURRET_BUY_PRICE]; 
+                                imageBox:CGRectMake(0, 0, 36, 30) 
+                           swingImageBox:CGRectMake(0, 0, 0, 0)
+                                   class:[Turret class] 
+                                   price:TURRET_BUY_PRICE]; 
 	
 	[buildMenu addBuildItemWithImageName:@"cannon.png"
-									  imageBox:CGRectMake(0,26,30,14)
-								 swingImageBox:CGRectMake(0,0,45,11) 
-										 class:[Cannon class]
-										 price:CANNON_BUY_PRICE];
+                                imageBox:CGRectMake(0,26,30,14)
+                           swingImageBox:CGRectMake(0,0,45,11) 
+                                   class:[Cannon class]
+                                   price:CANNON_BUY_PRICE];
 	
 	[buildMenu addBuildItemWithImageName:@"catapult.png"
-									  imageBox:CGRectMake(3, 6, 23, 22)
-								 swingImageBox:CGRectMake(0, 0, 35, 5) 
-										 class:[Catapult class]
-										 price:CATAPULT_BUY_PRICE];
+                                imageBox:CGRectMake(3, 6, 23, 22)
+                           swingImageBox:CGRectMake(0, 0, 35, 5) 
+                                   class:[Catapult class]
+                                   price:CATAPULT_BUY_PRICE];
 	
 	[buildMenu addBuildItemWithImageName:@"top.png"
-								  imageBox:CGRectMake(0, 0, 34, 27)
-							 swingImageBox:CGRectMake(0, 0, 0, 0)
-									 class:[Top class] 
-									 price:TOP_BUY_PRICE]; 
+                                imageBox:CGRectMake(0, 0, 34, 27)
+                           swingImageBox:CGRectMake(0, 0, 0, 0)
+                                   class:[Top class] 
+                                   price:TOP_BUY_PRICE]; 
 	
 	[buildMenu addButtonItemWithImageName:@"stdButtons.png"
-								   imageBox:CGRectMake(146, 78, 38, 37) 
-							  swingImageBox:CGRectMake(0, 0, 0, 0)
-								   selector:@selector(nextConstructionItems) 
-									  title:@""];
+                                 imageBox:CGRectMake(146, 78, 38, 37) 
+                            swingImageBox:CGRectMake(0, 0, 0, 0)
+                                 selector:@selector(nextConstructionItems) 
+                                    title:@""];
 	
 	[self addBackButtonToMenu:buildMenu];
 	
@@ -279,10 +276,10 @@
 -(void) addBackButtonToMenu:(HUDMenu*)menu {
 	
 	HUDItem * backButton = [menu addButtonItemWithImageName:@"stdButtons.png"
-													 imageBox:CGRectMake(125, 39, 49, 35) 
-												swingImageBox:CGRectMake(0, 0, 0, 0)
-													 selector:@selector(showMainMenu) 
-														title:@""]; 
+                                                   imageBox:CGRectMake(125, 39, 49, 35) 
+                                              swingImageBox:CGRectMake(0, 0, 0, 0)
+                                                   selector:@selector(showMainMenu) 
+                                                      title:@""]; 
 	
 	backButton.leftBound = 480-BACK_BUTTON_SPACING_FROM_RIGHT-(backButton.img.textureRect.size.width/2);
 	backButton.rightBound = 480-BACK_BUTTON_SPACING_FROM_RIGHT+(backButton.img.textureRect.size.width/2);
@@ -308,10 +305,10 @@
 		
 		[self initSelectedMenu:piece];
 		[self showMenu:selectedMenu];
-
+        
 		if(oldSelectedMenu) 
 			[oldSelectedMenu release];
-            
+        
 	} else {
 		if(inFocus && inFocus == selectedMenu)
 			[self showMainMenu];
@@ -352,7 +349,7 @@
 }
 
 -(void) showSettings {
-
+    
 	[[Battlefield instance] resetScreenToX:0.0];
 	
 	// add settings layer
@@ -370,11 +367,11 @@
 	tabUpSprite.position = CGPointMake(tabUpSprite.position.x - p.x, tabUpSprite.position.y);
 	tabDownSprite.position = CGPointMake(tabDownSprite.position.x - p.x, tabDownSprite.position.y);
 	tabSprite.position = CGPointMake(tabSprite.position.x - p.x, tabSprite.position.y);
-
+    
 	if(splashMsg != nil) {
 		splashMsg.position = CGPointMake(splashMsg.position.x - p.x, splashMsg.position.y);
 	}
-
+    
 	if (settingsView != nil) {
 		settingsView.position = ccp(settingsView.position.x - p.x, settingsView.position.y);
 	}
@@ -404,7 +401,7 @@
 		
 		return YES;
 	}
-		
+    
 	if(inFocus != nil)
 		return [inFocus handleInitialTouch:p];
 	
@@ -441,7 +438,7 @@
 	splashMsg.color = ccRED;
 	[splashMsg setPosition:CGPointMake(tabDownSprite.position.x, 320-HUD_HEIGHT-50)];
 	
-	 // add some animation
+    // add some animation
 	id labelAction1 = [CCScaleTo actionWithDuration:0.05 scale:1.1];
 	id labelAction2 = [CCScaleTo actionWithDuration:0.1 scale:1.0];
 	id labelAction3 = [CCScaleTo actionWithDuration:1.5 scale:1.0];
@@ -449,9 +446,9 @@
 	id seq3 = [CCSequence actionOne:labelAction3 two:[CCCallFunc actionWithTarget:self selector:@selector(removeMessage)]];
 	id seq2 = [CCSequence actionOne:labelAction2 two:seq3];
 	id seq1 = [CCSequence actionOne:labelAction1 two:seq2];
-	 
+    
 	[splashMsg runAction:seq1];
-	 
+    
 	[[Battlefield instance] addChild:splashMsg z:ANIMATION_Z_INDEX];
 	splashMsg.visible = YES;
 }

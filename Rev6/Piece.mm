@@ -299,8 +299,8 @@
 	if(!owner) { self.owner = [[Battlefield instance].playerAreaManager getCurrentPlayerArea]; }
 	if(pieceID < 0) { pieceID = [owner getUniquePieceID]; }
 	
-	float x = body->GetPosition().x*PTM_RATIO-owner.left;
-	float y = body->GetPosition().y*PTM_RATIO;
+	float x = body->GetPosition().x;
+	float y = body->GetPosition().y - owner.left;
 	
 	NSMutableDictionary* pieceInfo = [NSMutableDictionary dictionary];
 	[pieceInfo setObject:[NSString stringWithFormat:@"%@", [self class]] forKey:@"class"];

@@ -59,10 +59,6 @@ static HUDActionController* instance = nil;
     [[Battlefield instance] save];
 }
 
-/*-(void) load {
-	[[Battlefield instance] load];
-}*/
-
 -(void) showSettings {
 	[hud showSettings];
 }

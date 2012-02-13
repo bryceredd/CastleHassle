@@ -10,6 +10,7 @@
 #import "PlayerArea.h"
 #import "PlayerData.h"
 #import "GameSettings.h"
+#import "Battlefield.h"
 #import "AI.h"
 
 @implementation PlayerAreaManager
@@ -48,6 +49,7 @@
 			if(makeCity) { 
                 [playerArea makeCityWithColor:[[GameSettings instance] getColorForPlayerByID:i]]; 
             }
+    
 							
                             
 			[playerAreas addObject:playerArea];
@@ -75,6 +77,26 @@
 			pa.ai = [AI aiWithPlayer:pa];
 		}
 	}
+}
+
+- (void) loadPlayer {
+     NSString* file = nil;
+                
+    if([GameSettings instance].type == easy) 
+        file = @"playerEasy";
+    else if([GameSettings instance].type == medium)
+        file = @"playerMedium";
+    else if([GameSettings instance].type == hard)
+        file = @"playerHard";
+
+    
+    for(uint i=0; i<MAX_PLAYERS; i++) {
+        BOOL indexIsPlayer = i == [GameSettings instance].playerID;
+        if(indexIsPlayer) {
+            PlayerArea* pa = [playerAreas objectAtIndex:i];
+            [[Battlefield instance] loadForPlayer:pa file:file];
+        }
+    }
 }
 
 -(PlayerArea *) getLastPlayerArea {

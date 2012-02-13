@@ -153,6 +153,7 @@ static Battlefield * instance = nil;
 
 		self.playerAreaManager = [[[PlayerAreaManager alloc] initWithPlayerAreaWorld:world] autorelease];		
 		[playerAreaManager loadAI];
+        [playerAreaManager loadPlayer];
 
 
 		[self schedule: @selector(tick:)];
