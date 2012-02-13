@@ -231,10 +231,11 @@ static Battlefield * instance = nil;
 			if(pos.y < 0) { piece.shouldDestroy = YES; }
 			
 			// remove the destroyed pieces
-			if(piece.shouldDestroy) {
+			if(piece.shouldDestroy && piece.shouldDestroyReally) {
 				[self cleanupTick:piece body:b];
 				continue;
 			}
+            if(piece.shouldDestroy) piece.shouldDestroyReally = YES;
 			
 			piece.currentSprite.position = ccp(pos.x*PTM_RATIO, pos.y*PTM_RATIO);
 			piece.currentSprite.rotation = -1 * CC_RADIANS_TO_DEGREES(ang);

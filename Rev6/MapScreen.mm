@@ -161,6 +161,7 @@ NSString* kTerritoryFile = @"territories";
 
 +(void) saveConqueredTerritory:(int)territoryID {
     NSMutableDictionary* conqueredTerritories = [self conqueredDictionary];
+    if(!conqueredTerritories) conqueredTerritories = [NSMutableDictionary dictionary];
 
 	NSString* tempID = [NSString stringWithFormat:@"%d", territoryID];
 	[conqueredTerritories setObject:[NSNumber numberWithBool:YES] forKey:tempID];

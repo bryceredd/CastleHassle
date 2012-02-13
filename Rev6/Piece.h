@@ -65,6 +65,7 @@
 @property(nonatomic) BOOL acceptsTouches;
 @property(nonatomic) BOOL acceptsDamage;
 @property(nonatomic) BOOL shouldDestroy;
+@property(nonatomic) BOOL shouldDestroyReally; 
 @property(nonatomic) BOOL hasBeenPlaced;
 @property(nonatomic) BOOL isChanged;
 @property(nonatomic) BOOL acceptsPlayerColoring;
