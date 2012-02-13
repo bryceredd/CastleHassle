@@ -182,9 +182,6 @@ NSString* kTerritoryFile = @"territories";
 }
 
 
-
-
-
 #pragma mark Manage Touches
 
 -(void) ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -195,13 +192,21 @@ NSString* kTerritoryFile = @"territories";
 -(void) ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
 
     CGPoint location = [self transformTouchToPoint:[[touches allObjects] objectAtIndex:0] withCameraOffset:NO];
-    CGPoint delta = ccpSub(location, initialTouch);
+    CGPoint delta = ccpSub(initialTouch, location);
 
     float newX = self.position.x + delta.x;
     float newY = self.position.y + delta.y;
     
-    self.position = ccp(newX, newY);
+    newY = MAX(-195.f, newY);
+    newY = MIN(200.f, newY);
     
+    newX = MIN(230.f, newX);
+    newX = MAX(-220.f, newX);
+    
+    self.position = ccp(newX, newY);
+ 
+    //NSLog(@"position: %f, %f", newX, newY);
+        
     initialTouch = location;
 }
 
@@ -212,13 +217,6 @@ NSString* kTerritoryFile = @"territories";
 	
 	// convert the point to landscape
 	location = [[CCDirector sharedDirector] convertToGL: location];
-	
-	if(cam) {
-		// offset the touch by the camera
-		float x,y,z;
-		[self.camera centerX:&y centerY:&x centerZ:&z];
-		location.x += y - 160; location.y += x - 240;
-	}
 	
 	return location;
 }

@@ -84,8 +84,7 @@ territoryPosition:(CGPoint)territoryPosition
 		flag.position = flagPosition;
 		[self addChild:flag	z:10];
         
-        self.conquerable = YES;
-            
+        
         CGRect baseRect, castleRect;
         if (type == large) {
             baseRect = CGRectMake(0, 0, 88, 48);
@@ -98,24 +97,22 @@ territoryPosition:(CGPoint)territoryPosition
         if(type == small) {
             baseRect = CGRectMake(176, 0, 88, 48);
             castleRect = CGRectMake(134, 0, 67, 65);
-        }
+        }   
         
-    
+        
         
         castleBase = spriteWithRect(@"castleBase.png", baseRect);
         castleBase.position = baseOffset;
         [self addChild:castleBase];
+                
+        castle = spriteWithRect(@"castles.png", castleRect);
+        castle.flipX = self.castleRotation;
+        castle.position = ccpAdd(castleOffset, self.position);
         
-        castle = [CCMenuItemSprite itemFromNormalSprite:spriteWithRect(@"castles.png", castleRect) selectedSprite:spriteWithRect(@"castles.png", castleRect) target:self selector:@selector(territoryTapped)];
-        CCMenu* menu = [CCMenu menuWithItems:castle, nil];
-        
-        menu.position = ccpAdd(castleOffset, self.position);
-        //castle.flipX = self.castleRotation;
-        [self.mapScreen addChild:menu z:1000];
+        [self.mapScreen addChild:castle z:1000];
 
 
 	} return self;
-	
 }
 
 -(void) setConqured:(BOOL)c {
@@ -131,8 +128,6 @@ territoryPosition:(CGPoint)territoryPosition
 } 
 
 -(void) territoryTapped {
-    NSLog(@" territory %d tapped", territoryID.intValue);
-    return;
     
     if(conqured || !conquerable) {
         return;
@@ -175,7 +170,6 @@ territoryPosition:(CGPoint)territoryPosition
             castleBase.visible = YES;
             
 		} else {
-        
             
             overlayImage.visible = YES;
             overlayImage.color = gray;
@@ -193,42 +187,31 @@ territoryPosition:(CGPoint)territoryPosition
 	self.tapped = NO;
 }
 
-/*-(void) ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+-(void) ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
 	MapScreen* ms = (MapScreen*) self.parent;
 	
-    if(territoryID.intValue == 1) {
+    CGPoint touchOnMap = [self transformTouchToPoint:[[touches allObjects] objectAtIndex:0] withCameraOffset:NO];
+    CGPoint mapTouch = ccpAdd(touchOnMap, ms.position);            
+    CGRect castleRect = {ccpAdd(castleOffset, self.position), castle.textureRect.size};
     
-        CGPoint touchOnMap = [self transformTouchToPoint:[[touches allObjects] objectAtIndex:0] withCameraOffset:NO];
-        CGPoint relativePoint = ccp(touchOnMap.x/480.0, touchOnMap.y/320.0);
-        CGPoint mapTouch = ccp(relativePoint.x * ms.zoomBox.size.width + ms.zoomBox.origin.x, ms.zoomBox.origin.y - ms.zoomBox.size.height + (relativePoint.y*ms.zoomBox.size.height));
-                    
-        CGRect castleRect = {ccpSub(castleOffset, ccpMult(ccp(castle.textureRect.size.width,castle.textureRect.size.height), 0.5)), castle.textureRect.size};
-        
-        if(CGRectContainsPoint(castleRect, mapTouch) && self.tapped) {
-            [self territoryTapped];
-            return;
-        }
+    mapTouch = ccpMult(mapTouch, -1);
+    mapTouch = ccpAdd(ccp(500, 350), mapTouch); // dont ask.
+    
+    
+    if(CGRectContainsPoint(castleRect, mapTouch) && self.tapped) {
+        [self territoryTapped];
+        return;
     }
 	
 	self.tapped = YES;
-}*/
+}
 
 -(CGPoint) transformTouchToPoint:(UITouch *)touch withCameraOffset:(BOOL)cam {
-	MapScreen* ms = (MapScreen*) self.parent;
-	// get the x,y of the point on the iphone
-	CGPoint location = [touch locationInView:nil];
+	
+    CGPoint location = [touch locationInView:nil];
 	
 	// convert the point to landscape
 	location = [[CCDirector sharedDirector] convertToGL: location];
-	
-	
-	if(cam) {
-		// offset the touch by the camera
-		float x,y,z;
-		[ms.camera centerX:&x centerY:&y centerZ:&z];
-		location.x += x - 160;
-		location.y += y - 240;
-	}
 	
 	return location;
 }

@@ -22,12 +22,6 @@ typedef enum castleType {
 	
     tileset tileset;
     castleType type;
-	CCSprite* overlayImage;
-	CCSprite* borderImage;
-	CCSprite* flag;
-    
-	CCMenuItemSprite* castle;
-	CCSprite* castleBase;
     
 	CGPoint baseOffset;
 	CGPoint castleOffset;
@@ -53,7 +47,7 @@ typedef enum castleType {
 @property (nonatomic, retain) CCSprite* overlayImage;
 @property (nonatomic, retain) CCSprite* borderImage;
 @property (nonatomic, retain) CCSprite* flag;
-@property (nonatomic, retain) CCMenuItemSprite* castle;
+@property (nonatomic, retain) CCSprite* castle;
 @property (nonatomic, retain) CCSprite* castleBase;
 @property (nonatomic, assign) MapScreen* mapScreen;
 
