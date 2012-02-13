@@ -46,7 +46,7 @@ public:
 						  world:(b2World *)w {
 	
 	// convert point to cocos2d coords
-	b2Vec2 objLoc = b2Vec2(p->x, p->y);
+	b2Vec2 objLoc = b2Vec2(p->x, p->y+SNAPPING_Y_ADDITION);
 	b2Vec2 snappingVec = b2Vec2(p->x, p->y-SNAPPING_DISTANCE);
 	RayCastCallback callback;
 	

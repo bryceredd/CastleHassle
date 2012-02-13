@@ -26,7 +26,7 @@ typedef enum castleType {
 	CCSprite* borderImage;
 	CCSprite* flag;
     
-	CCSprite* castle;
+	CCMenuItemSprite* castle;
 	CCSprite* castleBase;
     
 	CGPoint baseOffset;
@@ -53,8 +53,9 @@ typedef enum castleType {
 @property (nonatomic, retain) CCSprite* overlayImage;
 @property (nonatomic, retain) CCSprite* borderImage;
 @property (nonatomic, retain) CCSprite* flag;
-@property (nonatomic, retain) CCSprite* castle;
+@property (nonatomic, retain) CCMenuItemSprite* castle;
 @property (nonatomic, retain) CCSprite* castleBase;
+@property (nonatomic, assign) MapScreen* mapScreen;
 
 
 -(id)  initWithID:(int)tid 
@@ -65,7 +66,8 @@ typedef enum castleType {
    castleRotation:(BOOL)r
 	   castleType:(castleType)cst 
 territoryPosition:(CGPoint)territoryPosition
-          tileset:(tileset)tileset;
+          tileset:(tileset)tileset
+        mapScreen:(MapScreen*)mapScreen;
 
 -(void) territoryTapped;
 

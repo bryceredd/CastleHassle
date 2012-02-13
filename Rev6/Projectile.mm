@@ -56,7 +56,7 @@
 		float delta = MAX_PLAYERS*PLAYER_GROUND_WIDTH;
 		b2Vec2 pos = b2Vec2(b->GetPosition().x-delta/PTM_RATIO, b->GetPosition().y);
 		b->SetTransform(pos, b->GetAngle());
-	}	
+	}
 	
 	if(self.trail) {
 		
@@ -69,6 +69,8 @@
 			[((Projectile*)piece) setIsBack:YES];
 			
 		} else {*/
+        
+            //NSLog(@"setting trail position to %f %f, should destroy %d",pos.x*PTM_RATIO, pos.y*PTM_RATIO, self.shouldDestroy);
 			
             self.trail.position = ccp(pos.x*PTM_RATIO, pos.y*PTM_RATIO);
 			[self setIsBack:NO];

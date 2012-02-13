@@ -13,7 +13,7 @@
 #import "Territory.h"
 
 
-float kZoomNormal = 415.009521;
+float kZoomNormal = 100;
 NSString* kMapFile = @"map.plist";	
 NSString* kTerritoryFile = @"territories";
 
@@ -31,7 +31,7 @@ NSString* kTerritoryFile = @"territories";
 -(id) init {
 	if((self = [super init])) {
 
-		zoom = kZoomNormal;
+		//zoom = kZoomNormal;
 		self.territories = [NSMutableDictionary dictionary];
         self.statusGrid = [NSMutableArray array];
 		
@@ -72,7 +72,7 @@ NSString* kTerritoryFile = @"territories";
 	return self;
 }
 
--(void)createTerritories {
+-(void) createTerritories {
 
     NSDictionary* conqueredDictionary = [MapScreen conqueredDictionary];
     
@@ -112,7 +112,7 @@ NSString* kTerritoryFile = @"territories";
             
         NSMutableArray* neighbors = [territoryData objectForKey:@"neighbors"];
     
-        Territory* territory = [[[Territory alloc] initWithID:[territoryId intValue] flagPosition:flagPosition hasBase:hasBase baseOffset:baseOffset castleOffset:castleOffset castleRotation:castleRotation castleType:type territoryPosition:territoryPosition tileset:tileset] autorelease];
+        Territory* territory = [[[Territory alloc] initWithID:[territoryId intValue] flagPosition:flagPosition hasBase:hasBase baseOffset:baseOffset castleOffset:castleOffset castleRotation:castleRotation castleType:type territoryPosition:territoryPosition tileset:tileset mapScreen:self] autorelease];
         territory.conqured = [[conqueredDictionary objectForKey:territoryId] boolValue];
         territory.neighbors = neighbors;
         
@@ -137,11 +137,12 @@ NSString* kTerritoryFile = @"territories";
 	float x,y,z;
 	[self.camera centerX:&x centerY:&y centerZ:&z];
 	float zoomFactor = zoom/kZoomNormal;
-	
-	float zoomx = x+80-(240*zoomFactor);
-	float zoomy = y-80+(160*zoomFactor);
-	float zoomw = x+80+(240*zoomFactor)-zoomx;
-	float zoomh = zoomy-(y-80-(160*zoomFactor));
+	zoomFactor = 1;
+    
+	float zoomx = x;
+	float zoomy = y;
+	float zoomw = 480 * zoomFactor;
+	float zoomh = 320 * zoomFactor;
 	
 	zoomBox = CGRectMake(zoomx, zoomy, zoomw, zoomh);	
 }
@@ -186,81 +187,22 @@ NSString* kTerritoryFile = @"territories";
 
 #pragma mark Manage Touches
 
+-(void) ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    initialTouch = [self transformTouchToPoint:[[touches allObjects] objectAtIndex:0] withCameraOffset:NO];
+}
+
 //this is where I deal with the ZOOM and PANNING of the mapScreen
 -(void) ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
 
-	float x,y,z;
-	[self.camera centerX:&x centerY:&y centerZ:&z];
-	
-	// ZOOMING
-	if([touches count] == 2) {
-		
-		// get the first 2 touches
-		CGPoint touch1 = [self transformTouchToPoint:[[touches allObjects] objectAtIndex:0] withCameraOffset:NO];
-		CGPoint touch2 = [self transformTouchToPoint:[[touches allObjects] objectAtIndex:1] withCameraOffset:NO];
-        
-		// get distance between the 2 touches
-		float currentDist = ccpLength(ccpSub(touch1, touch2));
-        
-		// get the previous 2 touches thanks to the method previousLocationInView called in the transformPreviousTouchToPoint
-		CGPoint previousTouch1 = [self transformPreviousTouchToPoint:[[touches allObjects] objectAtIndex:0]];
-		CGPoint previousTouch2 = [self transformPreviousTouchToPoint:[[touches allObjects] objectAtIndex:1]];
-        
-		// distance between the previous 2 touches
-		float previousDist = ccpLength(ccpSub(previousTouch1, previousTouch2));
-		
-		//ZOMMING
-		// 500 is closer
-		//1000 is further
-		
-		zoom += (previousDist - currentDist)*1.3;
-		
-		//limit zoom
-		zoom = MAX(zoom, 350);
-		zoom = MIN(zoom, 750);
-		
-		//set the camera
-		[self.camera setEyeX:x eyeY:y eyeZ:zoom];
-		
-	} else {
+    CGPoint location = [self transformTouchToPoint:[[touches allObjects] objectAtIndex:0] withCameraOffset:NO];
+    CGPoint delta = ccpSub(location, initialTouch);
 
-		// PANNING
-		
-		CGPoint delta = [self getTouchDelta:[[touches allObjects] objectAtIndex:0]];
-
-		float newX = x-delta.x;
-		float newY = y-delta.y;
-		
-        newX = MAX(newX, -190);
-        newX = MIN(newX, 500);
-		
-        newY = MAX(newY, -40);
-        newY = MIN(newY, 530);
-		
-		[self.camera setCenterX:newX centerY:newY centerZ:0.0];
-		[self.camera setEyeX:newX eyeY:newY eyeZ:zoom];
-		
-	}
-	
-	[self updateZoomBox];
-	
-}
-
--(CGPoint) getTouchDelta:(UITouch *)touch {
-	
-	CGPoint first = [touch locationInView:nil];
-	CGPoint second = [touch previousLocationInView:nil];
-	
-	return [[CCDirector sharedDirector] convertToGL:ccpSub(first, second)];
-	
-}
-
--(CGPoint) transformTouchesToPoint:(NSSet *)touches withCameraOffset:(BOOL)cam {
-
-	// select a touch object
-	UITouch *touch = [touches anyObject];
-	
-	return [self transformTouchToPoint:touch withCameraOffset:cam];
+    float newX = self.position.x + delta.x;
+    float newY = self.position.y + delta.y;
+    
+    self.position = ccp(newX, newY);
+    
+    initialTouch = location;
 }
 
 -(CGPoint) transformTouchToPoint:(UITouch *)touch withCameraOffset:(BOOL)cam {
@@ -280,12 +222,6 @@ NSString* kTerritoryFile = @"territories";
 	
 	return location;
 }
-
--(CGPoint) transformPreviousTouchToPoint:(UITouch *)touch {
-	CGPoint location = [touch previousLocationInView:nil];
-	return [[CCDirector sharedDirector] convertToGL: location];
-}
-	
 
 
 

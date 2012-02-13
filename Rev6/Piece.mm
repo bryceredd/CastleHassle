@@ -122,6 +122,7 @@
 	if(!hasBeenPlaced) {
 		
 		[currentSprite setOpacity:HUD_ITEM_DRAG_OPACITY];
+        [currentSprite setScale:HUD_ITEM_DRAG_SIZE];
 		
 		body->SetAwake(false);
 		
@@ -147,7 +148,11 @@
             return NO;
 		}
         
-        if([self touchIsInsideOtherBody:touch]) {
+        b2Vec2 touchInBox2dCoords = b2Vec2(touch.x/PTM_RATIO, touch.y/PTM_RATIO);
+        b2Vec2 snapPositionInBox2dCords = [self snapToPosition:touchInBox2dCoords];
+        CGPoint pos = ccp(snapPositionInBox2dCords.x * PTM_RATIO, snapPositionInBox2dCords.y * PTM_RATIO);
+        
+        if([self touchIsInsideOtherBody:pos]) {
             shouldDestroy = YES;
 			[[Battlefield instance].hud showMessage:@"Unable to build piece."];
             return NO;
@@ -248,6 +253,7 @@
 	body->SetAwake(true);
 	hasBeenPlaced = YES;
 	[currentSprite setOpacity:255];
+    [currentSprite setScale:1.f];
 	[self updateView];
 }
 

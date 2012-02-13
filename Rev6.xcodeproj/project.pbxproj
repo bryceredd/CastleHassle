@@ -1273,6 +1273,8 @@
 		02C3C72D14BDD219004BCC33 /* Pieces */ = {
 			isa = PBXGroup;
 			children = (
+				02C3C74D14BDD22C004BCC33 /* Piece.h */,
+				02C3C74E14BDD22C004BCC33 /* Piece.mm */,
 				02C3C76114BDD238004BCC33 /* Projectile */,
 				02C3C76014BDD235004BCC33 /* Weapon */,
 				02C3C75F14BDD232004BCC33 /* Structure */,
@@ -1301,8 +1303,6 @@
 				02C3C74A14BDD22C004BCC33 /* Wall.mm */,
 				02C3C74B14BDD22C004BCC33 /* Wedge.h */,
 				02C3C74C14BDD22C004BCC33 /* Wedge.mm */,
-				02C3C74D14BDD22C004BCC33 /* Piece.h */,
-				02C3C74E14BDD22C004BCC33 /* Piece.mm */,
 			);
 			name = Structure;
 			sourceTree = "<group>";
@@ -2910,6 +2910,7 @@
 				GCC_PREFIX_HEADER = Rev6/Prefix.pch;
 				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
 				INFOPLIST_FILE = Rev6/Resources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_LDFLAGS = "-lz";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "\"Rev6/libs\"";
@@ -2926,6 +2927,7 @@
 				GCC_PREFIX_HEADER = Rev6/Prefix.pch;
 				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
 				INFOPLIST_FILE = Rev6/Resources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_LDFLAGS = "-lz";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "\"Rev6/libs\"";

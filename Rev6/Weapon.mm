@@ -142,6 +142,9 @@
 		[self.currentSprite setOpacity:HUD_ITEM_DRAG_OPACITY];
 		[self.swingSprite setOpacity:HUD_ITEM_DRAG_OPACITY];
         
+        [self.currentSprite setScale:HUD_ITEM_DRAG_SIZE];
+        [self.swingSprite setScale:HUD_ITEM_DRAG_SIZE];
+        
 		shotPower = 0;
 	}
 	
@@ -200,7 +203,7 @@
     return [self onTouchEndedLocal:touch];
 }
 
--(BOOL)shouldDestroy {
+-(BOOL) shouldDestroy {
     BOOL isSleeping = !self.body->IsAwake();
     BOOL isTiltedTooFar = ((int) CC_RADIANS_TO_DEGREES(body->GetAngle())%360) > MAX_TILT_FOR_WEAPON || ((int) CC_RADIANS_TO_DEGREES(body->GetAngle())%360) < -MAX_TILT_FOR_WEAPON;
     
@@ -334,6 +337,7 @@
 	
 	[self updateView];
 	[swingSprite setOpacity:255];
+    [swingSprite setScale:1];
 	[super finalizePiece];
 }
 

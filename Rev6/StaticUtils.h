@@ -11,7 +11,8 @@
 #import "Box2D.h"
 
 #define MAX_ROTATION 20
-#define SNAPPING_DISTANCE 7.0
+#define SNAPPING_DISTANCE 10.0
+#define SNAPPING_Y_ADDITION 3.0
 #define ARCHWAY_ERROR_MARGIN 0.225
 
 @class Battlefield, Piece, Arch;

@@ -33,6 +33,7 @@
 	#define HUD_HEIGHT 57
 	#define HUD_STATUS_ITEM_SIZE 60
 	#define HUD_ITEM_DRAG_OPACITY 150
+    #define HUD_ITEM_DRAG_SIZE 1.5
 
 	// index properties
     #define HUD_Z_INDEX 7

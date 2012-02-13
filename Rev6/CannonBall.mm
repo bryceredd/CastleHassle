@@ -17,7 +17,7 @@
 
 -(id) initWithWorld:(b2World*)w coords:(CGPoint)p level:(int)l shooter:(PlayerArea*)s {
 	if((self = [super initWithCoords:p world:w from:s])) {
-	
+
 		bounces = l;
 		baseDamage = CANNONBALL_BASE_DAMAGE;
     
@@ -41,7 +41,7 @@
 		self.trail = [[[CannonBallTrail alloc] initWithTotalParticles:200 color:[[GameSettings instance] getColorForPlayer:s]] autorelease];
         //self.trail = [CCParticleSmoke new];
 		self.trail.position = p;
-		[[Battlefield instance] addChild:self.trail z:ANIMATION_Z_INDEX+2];
+		[[Battlefield instance] addChild:self.trail z:ANIMATION_Z_INDEX];
 		
 	}
 	return self;

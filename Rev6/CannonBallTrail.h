@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
 
-@interface CannonBallTrail : ARCH_OPTIMAL_PARTICLE_SYSTEM {
+@interface CannonBallTrail : CCParticleSmoke {
 
 }
 

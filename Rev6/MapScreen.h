@@ -15,7 +15,7 @@
 
 @interface MapScreen : BaseMenu {
 	CGPoint initialTouch;
-	CGPoint secondTouch;
+    
 	float initialDistance;
 	float diff;
 	float lastDist;
@@ -35,10 +35,7 @@
 @property(nonatomic, retain) CCTexture2D* flags;
 
 
--(CGPoint) getTouchDelta:(UITouch *)touches;
--(CGPoint) transformTouchesToPoint:(NSSet *)touches withCameraOffset:(BOOL)cam;
 -(CGPoint) transformTouchToPoint:(UITouch *)touch withCameraOffset:(BOOL)cam;
--(CGPoint) transformPreviousTouchToPoint:(UITouch *)touch;
 
 -(void) updateZoomBox;
 
