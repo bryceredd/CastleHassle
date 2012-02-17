@@ -104,6 +104,20 @@
 	
 }
 
+-(int) giveMoney {
+    int money = 0;
+    
+    // we'll calculate gold by height * .1 * total hp piece * .1
+    for(Piece* piece in self.pieces) {
+        if(piece.hasBeenPlaced)
+            money += (piece.currentSprite.position.y / PTM_RATIO) * piece.hp * MONEY_FACTOR;
+    }
+        
+    [self addMoney:money];
+    
+    return money;
+}
+
 -(void) addMoney:(int)g {
 	[self setGold:gold+g];
 }

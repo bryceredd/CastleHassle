@@ -64,13 +64,18 @@
 	
 }
 
--(void) hide {
-	[super hide];
+-(void) hideWithAnimation:(BOOL)animation {
+	[super hideWithAnimation:animation];
     
-    [healthBar runAction:[CCFadeOut actionWithDuration:.25]];
-    [healthBarContainer runAction:[CCFadeOut actionWithDuration:.25]];
-    
-    [swingImg runAction:[CCFadeOut actionWithDuration:.25]];
+    if(animation) {
+        [healthBar runAction:[CCFadeOut actionWithDuration:.25]];
+        [healthBarContainer runAction:[CCFadeOut actionWithDuration:.25]];
+        [swingImg runAction:[CCFadeOut actionWithDuration:.25]];
+    } else {
+        healthBar.visible = NO;
+        healthBarContainer.visible = NO;
+        swingImg.visible = NO;
+    }
 }
 
 -(void) show {

@@ -121,12 +121,18 @@
 	}
 }
 
--(void) hide {
-	[super hide];
+-(void) hideWithAnimation:(BOOL)animation {
+	[super hideWithAnimation:animation];
     
-    [coin runAction:[CCFadeOut actionWithDuration:.25]];
-    [price runAction:[CCFadeOut actionWithDuration:.25]];
-    [swingImg runAction:[CCFadeOut actionWithDuration:.25]];
+    if(animation) {
+        [coin runAction:[CCFadeOut actionWithDuration:.25]];
+        [price runAction:[CCFadeOut actionWithDuration:.25]];
+        [swingImg runAction:[CCFadeOut actionWithDuration:.25]];
+    } else {
+        coin.visible = NO;
+        price.visible = NO;
+        swingImg.visible = NO;
+    }
 }
 
 -(void) show {

@@ -135,8 +135,25 @@ territoryPosition:(CGPoint)territoryPosition
 	
 	[GameSettings instance].territoryID = [self.territoryID intValue];
 	[GameSettings instance].backgroundType = self.tileset;
-	[GameSettings instance].type = campaign;
-	[GameSettings instance].numPlayers = 2;
+    [GameSettings instance].isCampaign = YES;
+    
+    
+    if(self.type == small) {
+        [GameSettings instance].type = easy;
+    } if(self.type == mediumC) {
+        [GameSettings instance].type = medium;
+    } if(self.type == large) {
+        [GameSettings instance].type = hard;
+    }
+    
+    BOOL numPlayers = 2;
+    
+    if(self.territoryID.intValue % 5 == 0)
+        numPlayers = 3;
+    if(self.territoryID.intValue % 10 == 0)
+        numPlayers = 4;
+    
+	[GameSettings instance].numPlayers = numPlayers;
 	
     [[CCDirector sharedDirector] replaceScene:[MainScene scene]];
 }

@@ -73,13 +73,19 @@
 	price.position = ccp(xRight-20, img.position.y);
 }
 
--(void) hide {
-	[super hide];
+
+-(void) hideWithAnimation:(BOOL)animation {
+    [super hideWithAnimation:animation];
     
-    [buttonText runAction:[CCFadeOut actionWithDuration:.25]];
-    [coin runAction:[CCFadeOut actionWithDuration:.25]];
-    [price runAction:[CCFadeOut actionWithDuration:.25]];
-    
+    if(animation) {
+        [buttonText runAction:[CCFadeOut actionWithDuration:.25]];
+        [coin runAction:[CCFadeOut actionWithDuration:.25]];
+        [price runAction:[CCFadeOut actionWithDuration:.25]];
+    } else {
+        [buttonText setVisible:NO];
+        [coin setVisible:NO];
+        [price setVisible:NO];
+    }
 }
 
 -(void) show {
@@ -103,7 +109,7 @@
 		Weapon* w = (Weapon*)selectedPiece;
 		[price setString:[NSString stringWithFormat:@"%d", [w getUpgradePrice]]];
 		[buttonText setString:[NSString stringWithFormat:@"Upgrade Lv%d", w.weaponLevel]];
-		if(w.weaponLevel >= MAX_WEAPON_LEVEL) { [self hide]; }
+		if(w.weaponLevel >= MAX_WEAPON_LEVEL) { [self hideWithAnimation:NO]; }
 	}
 	
 	

@@ -14,7 +14,7 @@
 
 @implementation GameSettings
 
-@synthesize playerID, numPlayers, backgroundType, type, followShot, hasSound, territoryID;
+@synthesize playerID, numPlayers, backgroundType, type, followShot, hasSound, territoryID, isCampaign;
 
 static GameSettings * instance = nil;
 
@@ -52,7 +52,7 @@ static GameSettings * instance = nil;
 
 -(ccColor3B) getColorForPlayerByID:(int)pid {
 	
-	if (type == campaign ) {
+	if ([self isCampaign]) {
 		if(pid != 0) { pid = 1; }
 	}
 		

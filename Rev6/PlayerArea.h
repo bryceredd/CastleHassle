@@ -40,6 +40,7 @@
 -(void) removePiece:(Piece *)piece;
 -(void) moveToLeft:(float)l;
 -(void) updateOverallHealth;
+-(int) giveMoney;
 -(void) addMoney:(int)g;
 -(void) removeMoney:(int)g;
 -(BOOL) canAfford:(int)g;
@@ -48,5 +49,6 @@
 -(BOOL) hasWeapon;
 -(void)destroyPlayer;
 -(NSArray*) getPieceDescriptions;
+
 
 @end

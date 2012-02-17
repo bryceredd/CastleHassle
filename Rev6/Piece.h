@@ -35,6 +35,8 @@
 -(id) initWithWorld:(b2World*)w coords:(CGPoint)p;
 -(void) setupSpritesWithRect:(CGRect)rect image:(NSString*)image atPoint:(CGPoint)p;
 -(void) updateView;
+-(int) zIndex;
+-(int) zFarIndex;
 -(bool) containsPoint:(b2Vec2)p;
 -(void) targetWasHit:(b2Contact*)contact by:(Projectile*)p;
 -(void) onTouchBegan:(CGPoint)touch;

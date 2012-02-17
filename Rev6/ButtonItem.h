@@ -19,6 +19,4 @@
 @property(nonatomic, retain) CCLabelTTF* buttonText;
 
 -(void) postInitWithText:(NSString *)text;
--(void) hide;
--(void) show;
 @end

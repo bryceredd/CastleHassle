@@ -19,8 +19,7 @@ typedef enum tileset {
 typedef enum gametype {
 	easy,
 	medium,
-	hard,
-	campaign
+	hard
 } gametype;
 
 @class PlayerArea;
@@ -34,6 +33,7 @@ typedef enum gametype {
 	uint territoryID;
 }
 
+@property(nonatomic) BOOL isCampaign;
 @property(nonatomic) BOOL followShot; 
 @property(nonatomic) BOOL hasSound; 
 @property(nonatomic) uint playerID;

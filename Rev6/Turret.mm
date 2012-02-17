@@ -49,6 +49,14 @@
 	return pos;
 }
 
+-(int) zIndex {
+    return PIECE_Z_INDEX+1;
+}
+
+-(int) zFarIndex {
+    return FAR_PIECE_Z_INDEX+1;
+}
+
 
 -(void) finalizePiece {
 	

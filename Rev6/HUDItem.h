@@ -32,7 +32,7 @@
 -(BOOL) handleInitialTouch:(CGPoint)p;
 -(void) move:(CGPoint)p;
 -(void) postInit;
--(void) hide;
+-(void) hideWithAnimation:(BOOL)animation;
 -(void) show;
 
 @end

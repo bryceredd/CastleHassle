@@ -35,8 +35,6 @@
 					   context:nil];
                        
     isObserving = YES;
-
-	[self hide];
 }
 
 -(void) move:(CGPoint)p {
@@ -44,10 +42,13 @@
 	amount.position = ccpAdd(img.position, ccp(38.0, -1.0));
 }
 
--(void) hide {
-	[super hide];
+-(void) hideWithAnimation:(BOOL)animation {
+	[super hideWithAnimation:animation];
 	
-    [amount runAction:[CCFadeOut actionWithDuration:.25]];
+    if(animation) 
+        [amount runAction:[CCFadeOut actionWithDuration:.25]];
+    else
+        [amount setVisible:NO];
 }
 
 -(void) show {

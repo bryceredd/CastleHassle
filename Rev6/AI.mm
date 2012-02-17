@@ -42,7 +42,7 @@ static float CatapultForce = 0;
 			baseName = @"medium";
 		if([GameSettings instance].type == hard)
 			baseName = @"hard";
-		if([GameSettings instance].type == campaign) {
+		if([GameSettings instance].isCampaign) {
 			baseName = @"campaign";
 			fileNum = [GameSettings instance].territoryID;
 		}
@@ -163,8 +163,6 @@ static float CatapultForce = 0;
 			[self randomizeShot:&F by:MEDIUM_SHOT_VARIATION];
 		if([GameSettings instance].type == hard)
 			[self randomizeShot:&F by:HARD_SHOT_VARIATION];
-        if([GameSettings instance].type == campaign) 
-            [self randomizeShot:&F by:CAMPAIGN_SHOT_VARIATION];
 
 		CatapultForce = F;
 		

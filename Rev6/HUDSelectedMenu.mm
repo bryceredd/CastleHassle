@@ -21,7 +21,7 @@
 
 -(void) hideAll {
 	for (HUDItem *item in self.items) {
-		[item hide];
+		[item hideWithAnimation:YES];
 	}
 }
 

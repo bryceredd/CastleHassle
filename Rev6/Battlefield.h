@@ -11,6 +11,7 @@
 {
 	CGPoint initialTouch; 
 	float screenMomentum; 
+    float payclock;
 	BOOL isConstructionTouch;
 	BOOL followProjectile;
 	BOOL didMoveInFollow;

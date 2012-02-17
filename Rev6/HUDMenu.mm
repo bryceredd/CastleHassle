@@ -150,7 +150,7 @@
 
 -(void) hideAll {
 	for (HUDItem *item in items) {
-		[item hide];
+		[item hideWithAnimation:YES];
 	}
 }
 

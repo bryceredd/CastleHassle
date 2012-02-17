@@ -35,10 +35,14 @@
 	buttonText.position = CGPointMake(buttonText.position.x - p.x, buttonText.position.y);
 }
 
--(void) hide {
-	[super hide];
+- (void) hideWithAnimation:(BOOL)animation {
+    [super hideWithAnimation:animation];
     
-    [buttonText runAction:[CCFadeOut actionWithDuration:.25]];
+    if(animation) {
+        [buttonText runAction:[CCFadeOut actionWithDuration:.25]];
+    } else {    
+        buttonText.visible = NO;
+    }
 }
 
 -(void) show {

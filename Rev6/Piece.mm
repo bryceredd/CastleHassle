@@ -90,14 +90,23 @@
 	[self updateView];
 }
 
+-(int) zIndex {
+    return PIECE_Z_INDEX;
+}
+
+-(int) zFarIndex {
+    return FAR_PIECE_Z_INDEX;
+}
+
 -(void) setupSpritesWithRect:(CGRect)rect image:(NSString*)image atPoint:(CGPoint)p {
+
 	self.currentSprite = spriteWithRect(image, rect);
-	[[Battlefield instance] addChild:currentSprite z:FOREGROUND_Z_INDEX];
+	[[Battlefield instance] addChild:currentSprite z:[self zIndex]];
 	currentSprite.position = ccp(p.x, p.y);
 	
 	self.backSprite = spriteWithRect(image, rect);
 	[backSprite setScale:1/BACKGROUND_SCALE_FACTOR];
-	[[Battlefield instance] addChild:backSprite z:BACKGROUND_Z_INDEX];
+	[[Battlefield instance] addChild:backSprite z:[self zFarIndex]];
 	backSprite.position = ccp(p.x, p.y+PLAYER_BACKGROUND_HEIGHT);
 	backSprite.flipX = YES;
 }
@@ -197,16 +206,6 @@
 	hp -= damage;
 	
 	shouldDestroy = hp <= 0;
-	
-	//NSLog(@"hp value from Piece.mm : %d",hp);
-	
-	if(p.owner && owner != p.owner) {
-		//NSLog(@"%@", p.owner);
-		int newGold = (int)(p.baseDamage + speedFactor * DAMAGE_VELOCITY_MULTIPLIER);
-		[p.owner addMoney:newGold];
-	}
-	
-	//NSLog(@"Cannon ball hit object");
 
 	self.animationLabel = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%.0f", damage] fontName:@"Arial-BoldMT" fontSize:20];
 	[animationLabel setColor:ccc3(255,0,0)];

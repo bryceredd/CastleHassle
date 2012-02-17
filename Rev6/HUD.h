@@ -27,6 +27,7 @@
 @property(nonatomic, retain) SettingsFromGame *settingsView;
 @property(nonatomic, retain) HUDSelectedMenu *selectedMenu;
 @property(nonatomic, retain) CCLabelTTF *countDownTimer;
+@property(nonatomic, retain) CCLabelTTF *moneyLabel;
 @property(nonatomic, retain) HUDMenu *mainMenu;
 @property(nonatomic, retain) HUDMenu *buildMenu;
 @property(nonatomic, retain) HUDMenu *buildNextMenu;
@@ -50,6 +51,8 @@
 -(void) showSelectedMenu:(Piece *)piece;
 -(void) showMenu:(HUDMenu*)menu;
 -(void) showMessage:(NSString *)message;
+-(void) showPaycheck:(int)amount;
+-(void) removePaycheck;
 -(void) showSettings;
 -(void) hideSettings;
 -(void) hideMenu;

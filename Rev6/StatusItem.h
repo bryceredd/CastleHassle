@@ -23,6 +23,4 @@
 -(void) updateHPBar;
 -(void) postInitWithPiece:(Piece*)p;
 -(void) setBarPositions;
--(void) hide;
--(void) show;
 @end

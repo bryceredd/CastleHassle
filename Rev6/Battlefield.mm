@@ -168,6 +168,8 @@ static Battlefield * instance = nil;
 		screenMomentum = -PLAYER_GROUND_WIDTH*[GameSettings instance].playerID;
 		[self moveScreen];
 		screenMomentum = -6.0;
+        
+        payclock = MONEY_CLOCK;
 
 	}
 	
@@ -214,6 +216,13 @@ static Battlefield * instance = nil;
 	// countdown timer
 	if(gameTime < NO_FIRE_TIME+1.0) { [hud setCountdownTimer:NO_FIRE_TIME-gameTime]; }
 	
+    // payclock
+    if(gameTime > payclock) {
+        int amount = [[[self playerAreaManager] getCurrentPlayerArea] giveMoney];
+        [self.hud showPaycheck:amount];
+        payclock += MONEY_CLOCK;
+    }
+    
 	// get the camera position
 	float camX,camY,camZ;
 	[self.camera centerX:&camX centerY:&camY centerZ:&camZ];
@@ -389,7 +398,7 @@ static Battlefield * instance = nil;
 		[[CCDirector sharedDirector] replaceScene:[MainMenu instance]];
 		
 		
-		if([GameSettings instance].type == campaign) {
+		if([[GameSettings instance] isCampaign]) {
             [MapScreen saveConqueredTerritory:[GameSettings instance].territoryID];
 		}
 		

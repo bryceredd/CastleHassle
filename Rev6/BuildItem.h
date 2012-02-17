@@ -21,6 +21,4 @@
 
 -(id) initWithPrice:(int)p;
 -(void) postInit;
--(void) hide;
--(void) show;
 @end

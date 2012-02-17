@@ -15,6 +15,8 @@
 #import "ButtonItem.h"
 #import "BuildItem.h"
 #import "PurchaseItem.h"
+#import "PlayerArea.h"
+#import "PlayerAreaManager.h"
 #import "PieceList.h"
 #import "GoldItem.h"
 #import "SettingsFromGame.h"
@@ -23,7 +25,7 @@
 
 @implementation HUD
 
-@synthesize selectedMenu, countDownTimer, settingsView, inFocus, mainMenu, buildMenu, buildNextMenu, tabUpSprite, tabDownSprite, tabSprite;
+@synthesize selectedMenu, countDownTimer, settingsView, inFocus, mainMenu, buildMenu, buildNextMenu, tabUpSprite, tabDownSprite, tabSprite, moneyLabel;
 
 -(id) init {
 	
@@ -426,6 +428,38 @@
 		return [inFocus handleEndTouch:p];
 	
 	return NO;
+}
+
+-(void) showPaycheck:(int)amount {
+    if(moneyLabel) {
+        [[Battlefield instance] removeChild:self.moneyLabel cleanup:YES];
+    }
+    
+    float x = [[[[Battlefield instance] playerAreaManager] getCurrentPlayerArea] left] + 340.f;
+    float y = 320-HUD_HEIGHT-70;
+    
+    NSString* string = [NSString stringWithFormat:@"+ %d gold", amount];
+    self.moneyLabel = [CCLabelTTF labelWithString:string fontName:@"Arial" fontSize:24.f];
+    self.moneyLabel.color = ccc3(196, 196, 31);
+    [self.moneyLabel setPosition:ccp(x, y)];
+    self.moneyLabel.opacity = 0;
+    
+    [[Battlefield instance] addChild:moneyLabel z:ANIMATION_Z_INDEX];
+    
+    id labelAction1 = [CCFadeIn actionWithDuration:.25];
+    id labelAction2 = [CCMoveBy actionWithDuration:3.0 position:ccp(0, 40)];
+    id labelAction3 = [CCFadeOut actionWithDuration:2.75];
+    
+	id seq1 = [CCSequence actionOne:labelAction2 two:[CCCallFunc actionWithTarget:self selector:@selector(removePaycheck)]];
+    id seq2 = [CCSequence actionOne:labelAction1 two:labelAction3];
+    
+    [self.moneyLabel runAction:seq1];
+    [self.moneyLabel runAction:seq2];
+}
+
+- (void) removePaycheck {
+    if(self.moneyLabel)
+        [[Battlefield instance] removeChild:self.moneyLabel cleanup:YES];
 }
 
 -(void) showMessage:(NSString*)message {

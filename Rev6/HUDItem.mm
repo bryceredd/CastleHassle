@@ -28,8 +28,12 @@
 	img.position = CGPointMake(img.position.x - p.x, img.position.y);
 }
 
--(void) hide {
-    [img runAction:[CCFadeOut actionWithDuration:.25]];
+- (void) hideWithAnimation:(BOOL)animation {
+    if(animation) {
+        [img runAction:[CCFadeOut actionWithDuration:.25]];
+    } else {
+        img.visible = NO;
+    }
 }
 
 -(void) show {

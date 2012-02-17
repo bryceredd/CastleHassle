@@ -29,6 +29,5 @@ typedef enum itemType {
 
 -(id) initWithPiece:(Piece*)p;
 -(void) updatePrice;
--(void) hide;
--(void) show;
+
 @end
