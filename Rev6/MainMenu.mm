@@ -87,9 +87,9 @@ static MainMenu * instance = nil;
 					  withSelector:@selector(singlePlayer:)];
 		
 		
-		[self makeButtonWithString:@"Settings"
+		/*[self makeButtonWithString:@"Settings"
 						atPosition:ccp(-10,-121) 
-					  withSelector:@selector(settings:)];
+					  withSelector:@selector(settings:)];*/
 		
 		[self makeButtonWithString:@"Campaign"
 						atPosition:ccp(-150,-121)
@@ -99,9 +99,9 @@ static MainMenu * instance = nil;
 						atPosition:ccp(145,-75) 
 					withSelector:@selector(howToPlay:)];
 		
-		[self makeButtonWithString:@"Credits"
+		/*[self makeButtonWithString:@"Credits"
 						atPosition:ccp(145,-121) 
-					  withSelector:@selector(credits:)];
+					  withSelector:@selector(credits:)];*/
 	}
 	return self;
 }

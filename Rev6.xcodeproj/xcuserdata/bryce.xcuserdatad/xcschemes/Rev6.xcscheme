@@ -14,8 +14,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "02F5975914BDCB3F00C9349A"
-               BuildableName = "Rev6.app"
-               BlueprintName = "Rev6"
+               BuildableName = "generic.app"
+               BlueprintName = "generic"
                ReferencedContainer = "container:Rev6.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -32,8 +32,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "02F5975914BDCB3F00C9349A"
-            BuildableName = "Rev6.app"
-            BlueprintName = "Rev6"
+            BuildableName = "generic.app"
+            BlueprintName = "generic"
             ReferencedContainer = "container:Rev6.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -45,13 +45,14 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Debug"
       debugDocumentVersioning = "YES"
+      enablesOpenGLESFrameCapture = "YES"
       allowLocationSimulation = "YES">
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "02F5975914BDCB3F00C9349A"
-            BuildableName = "Rev6.app"
-            BlueprintName = "Rev6"
+            BuildableName = "generic.app"
+            BlueprintName = "generic"
             ReferencedContainer = "container:Rev6.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -73,8 +74,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "02F5975914BDCB3F00C9349A"
-            BuildableName = "Rev6.app"
-            BlueprintName = "Rev6"
+            BuildableName = "generic.app"
+            BlueprintName = "generic"
             ReferencedContainer = "container:Rev6.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

@@ -574,7 +574,7 @@
 		02C3C77414BDD6B2004BCC33 /* TVMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVMacros.h; sourceTree = "<group>"; };
 		02C3C77514BDF532004BCC33 /* Battlefield.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Battlefield.h; sourceTree = "<group>"; };
 		02C3C77614BDF535004BCC33 /* Battlefield.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Battlefield.mm; sourceTree = "<group>"; };
-		02F5975A14BDCB3F00C9349A /* Rev6.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Rev6.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		02F5975A14BDCB3F00C9349A /* generic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = generic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		02F5975E14BDCB3F00C9349A /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		02F5976014BDCB3F00C9349A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		02F5976214BDCB3F00C9349A /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
@@ -1373,7 +1373,7 @@
 		02F5975B14BDCB3F00C9349A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				02F5975A14BDCB3F00C9349A /* Rev6.app */,
+				02F5975A14BDCB3F00C9349A /* generic.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2359,9 +2359,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		02F5975914BDCB3F00C9349A /* Rev6 */ = {
+		02F5975914BDCB3F00C9349A /* generic */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 02F5994414BDCB4100C9349A /* Build configuration list for PBXNativeTarget "Rev6" */;
+			buildConfigurationList = 02F5994414BDCB4100C9349A /* Build configuration list for PBXNativeTarget "generic" */;
 			buildPhases = (
 				02F5975614BDCB3F00C9349A /* Sources */,
 				02F5975714BDCB3F00C9349A /* Frameworks */,
@@ -2371,9 +2371,9 @@
 			);
 			dependencies = (
 			);
-			name = Rev6;
+			name = generic;
 			productName = Rev6;
-			productReference = 02F5975A14BDCB3F00C9349A /* Rev6.app */;
+			productReference = 02F5975A14BDCB3F00C9349A /* generic.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -2397,7 +2397,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				02F5975914BDCB3F00C9349A /* Rev6 */,
+				02F5975914BDCB3F00C9349A /* generic */,
 			);
 		};
 /* End PBXProject section */
@@ -2908,7 +2908,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: ITV LLC";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: ITV LLC";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PREPROCESSOR_DEFINITIONS = NDEBUG;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
@@ -2916,6 +2917,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "944F265C-F6F9-4035-ADB4-58FBF9658133";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "944F265C-F6F9-4035-ADB4-58FBF9658133";
 				SDKROOT = iphoneos;
 			};
 			name = Release;
@@ -2968,7 +2971,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		02F5994414BDCB4100C9349A /* Build configuration list for PBXNativeTarget "Rev6" */ = {
+		02F5994414BDCB4100C9349A /* Build configuration list for PBXNativeTarget "generic" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				02F5994514BDCB4100C9349A /* Debug */,
