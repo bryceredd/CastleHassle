@@ -25,7 +25,7 @@
     CGRect buttonFrame = CGRectMake(0, 38, 124, 38);
     
     CCSprite* button = spriteWithRect(@"stdButtons.png", buttonFrame);
-    CCSprite* selectedButton = spriteWithRect(@"stdButtons.png", buttonFrame);
+    CCSprite* selectedButton = spriteWithRect(@"stdButtonsPressed.png", buttonFrame);
     
     CCMenuItemSprite* menuItem = [CCMenuItemSprite itemFromNormalSprite:button 
 													selectedSprite:selectedButton 
@@ -48,8 +48,8 @@
 
 -(CCMenuItemSprite*)makeButtonFromRect:(CGRect)rect atPosition:(CGPoint)p withSelector:(SEL)selector {
 	
-    CCSprite* button = spriteWithRect(@"stdButtons", rect);
-    CCSprite* selectedButton = spriteWithRect(@"stdButtons", rect);
+    CCSprite* button = spriteWithRect(@"stdButtons.png", rect);
+    CCSprite* selectedButton = spriteWithRect(@"stdButtonsPressed.png", rect);
 	
 	CCMenuItemSprite* menuItem = [CCMenuItemSprite itemFromNormalSprite:button 
 													selectedSprite:selectedButton 

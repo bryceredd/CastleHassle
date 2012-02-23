@@ -16,6 +16,7 @@
 		028E7C2614E968A300115B3E /* playerMedium.dat in Resources */ = {isa = PBXBuildFile; fileRef = 028E7C2314E968A300115B3E /* playerMedium.dat */; };
 		028E7C2714E968A300115B3E /* playerHard.dat in Resources */ = {isa = PBXBuildFile; fileRef = 028E7C2414E968A300115B3E /* playerHard.dat */; };
 		028E7C2814E968A300115B3E /* playerEasy.dat in Resources */ = {isa = PBXBuildFile; fileRef = 028E7C2514E968A300115B3E /* playerEasy.dat */; };
+		029E5F5E14F682DF007ABCF5 /* stdButtonsPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 029E5F5D14F682DD007ABCF5 /* stdButtonsPressed.png */; };
 		02A0C4DF14BEA8CB00B739E3 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 02A0C4DE14BEA8CB00B739E3 /* JSONKit.m */; };
 		02A0C4E214BEC68D00B739E3 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02A0C4E114BEC68D00B739E3 /* StoreKit.framework */; };
 		02C3C6F214BDD19E004BCC33 /* PListReader.mm in Sources */ = {isa = PBXBuildFile; fileRef = 02C3C6EB14BDD19E004BCC33 /* PListReader.mm */; };
@@ -489,6 +490,7 @@
 		028E7C2314E968A300115B3E /* playerMedium.dat */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = playerMedium.dat; sourceTree = "<group>"; };
 		028E7C2414E968A300115B3E /* playerHard.dat */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = playerHard.dat; sourceTree = "<group>"; };
 		028E7C2514E968A300115B3E /* playerEasy.dat */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = playerEasy.dat; sourceTree = "<group>"; };
+		029E5F5D14F682DD007ABCF5 /* stdButtonsPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stdButtonsPressed.png; sourceTree = "<group>"; };
 		02A0C4DD14BEA8CB00B739E3 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
 		02A0C4DE14BEA8CB00B739E3 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
 		02A0C4E114BEC68D00B739E3 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
@@ -2220,6 +2222,7 @@
 				02F59BA214BDCDE700C9349A /* heal.png */,
 				02F59BA314BDCDE700C9349A /* background.jpg */,
 				02F59BA414BDCDE700C9349A /* stdButtons.png */,
+				029E5F5D14F682DD007ABCF5 /* stdButtonsPressed.png */,
 				02F59BA514BDCDE700C9349A /* comboButtons.png */,
 				02F59BA614BDCDE700C9349A /* settingsScreen.png */,
 				02F59BA714BDCDE700C9349A /* coins.png */,
@@ -2670,6 +2673,7 @@
 				028E7C2614E968A300115B3E /* playerMedium.dat in Resources */,
 				028E7C2714E968A300115B3E /* playerHard.dat in Resources */,
 				028E7C2814E968A300115B3E /* playerEasy.dat in Resources */,
+				029E5F5E14F682DF007ABCF5 /* stdButtonsPressed.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
