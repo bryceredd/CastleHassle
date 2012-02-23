@@ -31,6 +31,10 @@ static GameSettings * instance = nil;
 	} return self;
 }
 
+-(int)startingGold {
+    return STARTING_GOLD * numPlayers + (arc4random() % 100);
+}
+
 -(void) resetGameProperties {
 	playerID = 0;
 	numPlayers = 1;

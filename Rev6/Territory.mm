@@ -128,6 +128,7 @@ territoryPosition:(CGPoint)territoryPosition
 } 
 
 -(void) territoryTapped {
+    NSLog(@"tapped territory %d", territoryID.intValue);
     
     if(conqured || !conquerable) {
         return;
@@ -148,10 +149,12 @@ territoryPosition:(CGPoint)territoryPosition
     
     BOOL numPlayers = 2;
     
-    if(self.territoryID.intValue % 5 == 0)
+    if(self.territoryID.intValue % 4 == 0)
         numPlayers = 3;
-    if(self.territoryID.intValue % 10 == 0)
+    if(self.territoryID.intValue % 17 == 0) {
         numPlayers = 4;
+        [GameSettings instance].type = medium;
+    }
     
 	[GameSettings instance].numPlayers = numPlayers;
 	

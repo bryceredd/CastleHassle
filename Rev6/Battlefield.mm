@@ -431,6 +431,7 @@ static Battlefield * instance = nil;
 	// check for winner
 	BOOL opponentLeft = YES;
 	if(gameTime > NO_FIRE_TIME) {
+    return YES;
 		opponentLeft = NO;
 		for(PlayerArea* pa in playerAreaManager.playerAreas) {
         
@@ -661,10 +662,14 @@ static Battlefield * instance = nil;
 	}
 	
 	self.lastCreated = nil;
-	
+    
 	if(!touchHandled && !firedPiece)
 		[self setSelected:nil updateHUD:NO];
 	
+    if([[[touches allObjects] objectAtIndex:0] tapCount] == 2) {
+            [self resetViewToLastShot]; 
+    }
+    
 }
 
 -(Piece*) getClosestPiece:(CGPoint)location {

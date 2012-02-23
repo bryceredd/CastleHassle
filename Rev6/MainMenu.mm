@@ -71,37 +71,30 @@ static MainMenu * instance = nil;
 		[self addChild:logo z:0];
 		
 		CCSprite* navBack = sprite(@"splashNavBack.png");
-        [navBack setPosition:ccp(160, 62)];
+        [navBack setPosition:ccp(240, 62)];
 		[self addChild:navBack z:0];
 		
-		CCSprite* navBack2 = sprite(@"smallBack.png");
-        [navBack2 setPosition:ccp(385, 62)];
-		[self addChild:navBack2 z:0];
 		
 		[CCMenuItemFont setFontSize:16];
 		[CCMenuItemFont setFontName:@"arial"];
 		
 		// add the four buttons
 		[self makeButtonWithString:@"Single Player" 
-						atPosition:ccp(-150,-75) 
+						atPosition:ccp(-70,-75) 
 					  withSelector:@selector(singlePlayer:)];
 		
 		
-		/*[self makeButtonWithString:@"Settings"
-						atPosition:ccp(-10,-121) 
-					  withSelector:@selector(settings:)];*/
+		[self makeButtonWithString:@"Settings"
+						atPosition:ccp(70,-121) 
+					  withSelector:@selector(settings:)];
 		
 		[self makeButtonWithString:@"Campaign"
-						atPosition:ccp(-150,-121)
+						atPosition:ccp(-70,-121)
 					  withSelector:@selector(campaign:)];
 		
 		[self makeButtonWithString:@"How-to-play"
-						atPosition:ccp(145,-75) 
+						atPosition:ccp(70,-75) 
 					withSelector:@selector(howToPlay:)];
-		
-		/*[self makeButtonWithString:@"Credits"
-						atPosition:ccp(145,-121) 
-					  withSelector:@selector(credits:)];*/
 	}
 	return self;
 }

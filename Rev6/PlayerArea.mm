@@ -13,6 +13,7 @@
 #import "City.h"
 #import "Battlefield.h"
 #import "Projectile.h"
+#import "GameSettings.h"
 
 @implementation PlayerArea
 
@@ -31,7 +32,9 @@
 		overallHealth = 1.0;
 		uniquePieceID = 0;
 		
-		gold = STARTING_GOLD;
+        
+        
+		gold = [[GameSettings instance] startingGold];
 		timeTillLoss = TIME_TO_LOSS_WITHOUT_WEAPON;
 		destroyed = NO;
 		hasWeapon = NO;

@@ -48,5 +48,6 @@ typedef enum gametype {
 -(ccColor3B) getColorForPlayerByID:(int)pid;
 -(ccColor3B) getColorForCurrentPlayer;
 -(NSString*) getBackgroundFileName:(NSString*)fname;
+-(int) startingGold;
 
 @end

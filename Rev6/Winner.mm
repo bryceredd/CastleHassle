@@ -11,7 +11,9 @@
 #import "MainScene.h"
 #import "MainMenu.h"
 #import "PlayerData.h"
-#include "GameSettings.h"
+#import "MapScreen.h"
+#import "BackButtonLayer.h"
+#import "GameSettings.h"
 
 @interface Winner()
 -(void)setTitle;
@@ -101,8 +103,16 @@
 	
 	MainMenu * main = [MainMenu instance];
 	[main removeChild:self cleanup:YES];
-	[main addChild:[MainMenuLayer node]];
-
+	
+    if([[GameSettings instance] isCampaign]) {
+        CCSprite* blackBg = sprite(@"blackWall.png");
+        [blackBg setPosition:ccp(240, 160)];
+        [main addChild:blackBg z:1];
+        [main addChild:[MapScreen node] z:2];
+        [main addChild:[BackButtonLayer node] z:3];
+    } else {
+        [main addChild:[MainMenuLayer node]];
+    }
 }
 
 
