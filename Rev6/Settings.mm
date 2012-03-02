@@ -15,53 +15,51 @@
 #import "PListReader.h"
 #import "PlayerData.h"
 #import "GameSettings.h"
+#import "MapScreen.h"
 
 NSString* settingsFile = @"settings.plist";
 
 @implementation Settings
-@synthesize nameField;
-@synthesize settingsPlistDict;
-@synthesize theSoundStateValue;
 
 -(id) init {
 	
-	if((self=[super init])){
+	if((self = [super init])){
+    
+        CCSprite* bg = sprite(@"background.jpg");
+        [bg setPosition:ccp(240, 160)];
+        [self addChild:bg z:0];
+    
 		CCSprite* navBack = sprite(@"menuBack.png");
         [navBack setPosition:ccp(240, 160)];
 		[self addChild:navBack z:0];	
+        
 		
 		CCLabelTTF* title = [CCLabelTTF labelWithString:@"Settings" fontName:@"Arial-BoldMT" fontSize:24];
 		[title setColor:ccc3(15, 147, 222)];
 		title.position = ccp(240,280);
 		[self addChild:title];
-		
-		CCLabelTTF* screenNameLabel = [CCLabelTTF labelWithString:@"Screen Name" fontName:@"Arial-BoldMT" fontSize:18];
-		[screenNameLabel setColor:ccc3(15, 147, 222)];
-		[screenNameLabel setAnchorPoint:ccp(0,0)];
-		screenNameLabel.position = ccp(20,228);
-		[self addChild:screenNameLabel];
-		
+				
 		CCLabelTTF* soundLabel = [CCLabelTTF labelWithString:@"Sound" fontName:@"Arial-BoldMT" fontSize:18];
+        [soundLabel setAnchorPoint:ccp(0,.5)];
 		[soundLabel setColor:ccc3(15, 147, 222)];
-		[screenNameLabel setAnchorPoint:ccp(0,0)];
-		soundLabel.position = ccp(50,172);
+		soundLabel.position = ccp(50,202);
 		[self addChild:soundLabel];
 		
 		//Sound On/Off Graphics		
 		soundState = [[CHToggle alloc] initWithImageName:@"comboButtons.png"];
-				
+
 		CHToggleItem *on = [[CHToggleItem alloc] initWithParent:soundState
-												   selectedRect:CGRectMake(0,122,94,33) 
-												 deselectedRect:CGRectMake(0,159,94,33) 
+												   selectedRect:CGRectMake(0,122,94,36) 
+												 deselectedRect:CGRectMake(0,159,94,36) 
 													 buttonText:@"         On        "];
-		
+
 		[on setYOffset:5];
 		[soundState addItem:on];
 		[on release];
 		
 		CHToggleItem *off = [[CHToggleItem alloc] initWithParent:soundState
-													selectedRect:CGRectMake(187,122,94,33) 
-												  deselectedRect:CGRectMake(187,159,94,33) 
+													selectedRect:CGRectMake(187,122,94,36) 
+												  deselectedRect:CGRectMake(187,159,94,36) 
 													  buttonText:@"        Off        "];
 		
 		[off setYOffset:5];
@@ -69,76 +67,82 @@ NSString* settingsFile = @"settings.plist";
 		[off release];
 		
 		
-		[soundState setPosition:ccp(70,10)];
+		[soundState setPosition:ccp(70,40)];
 		[self addChild:soundState z:3];
 		
 		[soundState selectItemAtIndex:([GameSettings instance].hasSound?0:1)];	
 
-		
-		// add the two buttons
-		/*[self makeButtonWithString:NSLocalizedString(@"Save",@"Save button from Settings.mm")
-						atPosition:ccp(150,-115) 
-					  withSelector:@selector(saveSettings:)];*/
 
-		[self makeButtonWithString:NSLocalizedString(@"Return",@"Return button from Settings.mm") 
+		[self makeButtonWithString:NSLocalizedString(@"Save",@"Return button from Settings.mm") 
 						atPosition:ccp(-150,-120) 
 					  withSelector:@selector(previousScreen:)];
 		
-		//UITextField stuff
-		NSDictionary* props = [PListReader getAppPlist];
-		NSString* name = (NSString *)[props objectForKey:@"name"];	
-
-
-		nameField = [[UITextField alloc] init];
-		nameField.backgroundColor = [UIColor whiteColor];
-		nameField.borderStyle = UITextBorderStyleRoundedRect;
-		nameField.bounds = CGRectMake(0,0,240.0,32.0);
-		[nameField setFont:[UIFont systemFontOfSize:22]];
-
-		if([name length] > 0) 
-			nameField.text = name;
-		else {
-			nameField.placeholder = NSLocalizedString( @"Screen Name",@"Screen Name UITextView place hoder from Settings.mm");
-		}
-
-		[nameField setTextColor:[UIColor blackColor]];
-		[nameField setBackgroundColor:[UIColor colorWithRed:72.2 green:80.8 blue:85.1 alpha:0]];
-		[nameField setReturnKeyType:UIReturnKeyDone];
-		[nameField setKeyboardType:UIKeyboardTypeNamePhonePad];
-
-		nameField.transform = CGAffineTransformTranslate(nameField.transform, 230, 333);// (x,y)
-		nameField.transform = CGAffineTransformRotate(nameField.transform, CC_DEGREES_TO_RADIANS(90));
-
-		[nameField setDelegate:self];
-		
-		//this puts the UITextField nameField on screen
-		[[[CCDirector sharedDirector] openGLView] addSubview:nameField]; 
-		
-		// use this if you want keyboard to come up when settings screen is loaded
-		//[nameField becomeFirstResponder];
-		
-		self.theSoundStateValue = [NSNumber numberWithInt:0];
+        [self makeButtonWithString:@"Reset Campaign" atPosition:ccp(150, -120) withSelector:@selector(resetCampaign)];
+        
+        [self setupFollowShot];
 	
 	}
 	return self;
 }
 
-+(id) settingsFile {
-	NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-	NSString* documentsDirectory = [paths objectAtIndex:0];
-	NSLog(@"Settings.m: %@", [documentsDirectory stringByAppendingPathComponent:settingsFile]);
-	return [documentsDirectory stringByAppendingPathComponent:settingsFile];
+- (void) resetCampaign {
+    [MapScreen resetConqueredDictionary];
 }
 
-+(BOOL) settingsFileExists {
-	return [[NSFileManager defaultManager] fileExistsAtPath:[self settingsFile] isDirectory:nil];
-}
-
--(NSMutableDictionary*) settingsPlistDict {
-	if(settingsPlistDict) { return settingsPlistDict; }
+-(void) setupFollowShot {
+	followShot = [[CHToggle alloc] initWithImageName:@"comboButtons.png"];
 	
-	return settingsPlistDict = [Settings settingsPlistDict];
+	CHToggleItem* on = [[CHToggleItem alloc] initWithParent:followShot 
+											   selectedRect:CGRectMake(0, 121, 94, 36) 
+											 deselectedRect:CGRectMake(0, 157, 94, 36) 
+												 buttonText:@"        On"];
+	[followShot addItem:on];
+	[on setYOffset:5];
+	[on release];
+	
+	CHToggleItem* off = [[CHToggleItem alloc] initWithParent:followShot 
+												selectedRect:CGRectMake(186, 121, 94, 36)
+											  deselectedRect:CGRectMake(186, 157, 94, 36) 
+												  buttonText:@"        Off"];
+	[followShot addItem:off];
+	[off setYOffset:5];
+	[off release];
+	[followShot setAnchorPoint:ccp(0,0)];
+	[followShot setPosition:ccp(70,-20)];
+	[self addChild:followShot z:3];
+	
+	
+	CCLabelTTF* followShotLabel = [CCLabelTTF labelWithString:@"Follow shot" fontName:@"Arial-BoldMT" fontSize:18];
+	[followShotLabel setColor:ccc3(15, 147, 222)];
+	[followShotLabel setAnchorPoint:ccp(0,.5)];
+	[followShotLabel setPosition:ccp(50,142)];
+	[followShot selectItemAtIndex:[GameSettings instance].followShot?0:1];
+	
+	[self addChild:followShotLabel];
 }
+
+-(BOOL)saveSettings:(id)sender {
+    [GameSettings instance].followShot = followShot.selectedIndex == 0;
+    [GameSettings instance].hasSound = soundState.selectedIndex == 0;
+    
+    NSMutableDictionary* settings = [Settings settingsPlistDict];
+	[settings setObject:[NSNumber numberWithInt:followShot.selectedIndex == 0? 1:0] forKey:@"FollowStateKey"];
+    [settings setObject:[NSNumber numberWithInt:soundState.selectedIndex==0? 1:0] forKey:@"SoundStateKey"];
+	[Settings saveSettings:settings];
+	
+	return YES;
+}
+
+-(void)previousScreen:(id)sender {
+	
+	if(![self saveSettings:self]) { return; }
+	
+	MainMenu * main = [MainMenu instance];
+	[main removeChild:self cleanup:YES];
+	[main addChild:[MainMenuLayer node]];
+}
+
+
 
 +(NSMutableDictionary*) settingsPlistDict {
 
@@ -148,63 +152,27 @@ NSString* settingsFile = @"settings.plist";
 		NSMutableDictionary* settingsPlistDict = [[[NSMutableDictionary alloc] init] autorelease];
 		[settingsPlistDict setObject:[NSNumber numberWithInt:0] forKey:@"hasMultiplayer"];
 		return settingsPlistDict;
-	}	
+	}
 }
 
 +(void) saveSettings:(NSDictionary*)settings {
 	[settings writeToFile:[Settings settingsFile] atomically:NO];
 }
 
--(BOOL)textFieldShouldReturn:(UITextField *)textField {
-	//dismiss keyboard
-    [nameField resignFirstResponder];
-    return YES;
++(id) settingsFile {
+	NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+	NSString* documentsDirectory = [paths objectAtIndex:0];
+	return [documentsDirectory stringByAppendingPathComponent:settingsFile];
 }
 
--(BOOL)saveSettings:(id)sender {
-	
-	if (nameField.text.length == 0) {
-		UIAlertView * screenNameNotValidAlert = [[UIAlertView alloc] initWithTitle:@"No Screen Name Entered"
-																		   message:nil
-																		  delegate:self
-																 cancelButtonTitle:@"Dismiss"
-																 otherButtonTitles:nil];
-		[screenNameNotValidAlert show];
-		[screenNameNotValidAlert release];
-		return NO;
-	}
-	
-	[PlayerData instance].name = nameField.text;
-	
-	//Add screenName and soundState to settginsPlistDict Dictionary
-	[self.settingsPlistDict setValue:nameField.text forKey:@"name"];
-	[self.settingsPlistDict setObject:theSoundStateValue forKey:@"SoundStateKey"];
-
-	//wite to file
-	[Settings saveSettings:self.settingsPlistDict];
-	
-	return YES;
++(BOOL) settingsFileExists {
+	return [[NSFileManager defaultManager] fileExistsAtPath:[self settingsFile] isDirectory:nil];
 }
 
--(void)previousScreen:(id)sender {
-	
-	if(![self saveSettings:self]) { return; }
-	
-	[nameField removeFromSuperview];// dismiss the text field when we exit from settings
-	MainMenu * main = [MainMenu instance];
-	[main removeChild:self cleanup:YES];
-	[main addChild:[MainMenuLayer node]];
 
-}
-
--(void)toggled:(id)sender {
-	[GameSettings instance].hasSound = soundState.selectedIndex==0;
-}
 
 -(void)dealloc {
-		self.settingsPlistDict = nil;
-		[nameField release];
-		[soundState release];
+    [soundState release];
 	[super dealloc];
 }
 

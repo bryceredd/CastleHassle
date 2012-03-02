@@ -24,12 +24,9 @@
 						
 			navBack = [CCSprite spriteWithFile:@"menuBack.png"];
 			navBack.position = ccp(480.0/2.0, 320.0/2.0);
-			
 			[self addChild:navBack z:0];
 			
-			CCLabelTTF* title = [CCLabelTTF labelWithString:@"Settings"
-                                                   fontName:@"Arial-BoldMT" 
-                                                   fontSize:24];
+			CCLabelTTF* title = [CCLabelTTF labelWithString:@"Settings" fontName:@"Arial-BoldMT" fontSize:24];
 			[title setColor:ccc3(15, 147, 222)];
 			title.position = ccp(240,280);
 			[self addChild:title];

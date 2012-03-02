@@ -11,6 +11,7 @@
 #import "PlayerArea.h"
 #import "PlayerAreaManager.h"
 #import "Battlefield.h"
+#import "Settings.h"
 
 @implementation GameSettings
 
@@ -21,13 +22,20 @@ static GameSettings * instance = nil;
 +(GameSettings *) instance {
 	if(instance == nil) {
 		instance = [[GameSettings alloc] init];
+        
+        NSMutableDictionary* settings = [Settings settingsPlistDict];
+        NSNumber* soundState = [settings objectForKey:@"SoundStateKey"];
+        NSNumber* followState = [settings objectForKey:@"FollowStateKey"];
+
+        [instance setHasSound:!!soundState.intValue];
+        instance.followShot = !!followState.intValue;
+
 	} return instance;
 }
 
 -(id) init {
 	if((self = [super init])) {		
 		[self resetGameProperties];
-		hasSound = YES;
 	} return self;
 }
 
@@ -39,7 +47,6 @@ static GameSettings * instance = nil;
 	playerID = 0;
 	numPlayers = 1;
 	backgroundType = tuscany;
-	followShot = YES;
 }
 
 -(void) setHasSound:(BOOL)b {

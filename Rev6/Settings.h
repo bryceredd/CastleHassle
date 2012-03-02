@@ -15,16 +15,9 @@
 @interface Settings : BaseMenu <UITextFieldDelegate> {
 	CCSprite *comboSprite;
 	NSMutableArray* toggles;
-	UITextField* nameField;
-	NSMutableDictionary* settingsPlistDict;
-	NSNumber* theSoundStateValue;
 	CHToggle *soundState;
-
+    CHToggle* followShot;
 }
-
-@property(nonatomic, retain) NSNumber * theSoundStateValue;
-@property(nonatomic, retain) UITextField *nameField;
-@property(nonatomic, retain) NSMutableDictionary *settingsPlistDict;
 
 +(id) settingsFile;
 +(BOOL) settingsFileExists;
@@ -33,5 +26,7 @@
 
 -(BOOL)saveSettings:(id)sender;
 -(void)previousScreen:(id)sender;
+-(void) setupFollowShot;
+-(void) resetCampaign;
 
 @end

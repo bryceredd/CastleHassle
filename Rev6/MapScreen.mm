@@ -67,6 +67,40 @@ NSString* kTerritoryFile = @"territories";
 		[self setIsTouchEnabled:YES];
 		[self createTerritories];
 		[self updateZoomBox];
+        
+        BOOL allTerritoriesConquered = YES;
+        for(Territory* territory in [territories allValues]) {
+            if(!territory.conqured) {
+                allTerritoriesConquered = NO;
+            }
+        }
+        
+        if(allTerritoriesConquered) {
+            victoryWhite = [CCLabelTTF labelWithString:@"Total Victory!" fontName:@"Arial" fontSize:80];
+            [victoryWhite setColor:ccc3(255, 255, 255)];
+            
+            victoryBlack = [CCLabelTTF labelWithString:@"Total Victory!" fontName:@"Arial" fontSize:80];
+            [victoryBlack setColor:ccc3(0, 0, 0)];
+            
+            [self addChild:victoryBlack z:9999];
+            [self addChild:victoryWhite z:9999];
+            
+            victoryBlack.position = ccp(240,160);
+            victoryWhite.position = ccp(243,163);
+            
+            victoryBlack.opacity = 0;
+            victoryWhite.opacity = 0;
+            
+            victoryBlack.scale = .3;
+            victoryWhite.scale = .3;
+            
+            [victoryBlack runAction:[CCFadeIn actionWithDuration:.5]];
+            [victoryWhite runAction:[CCFadeIn actionWithDuration:.5]];
+            
+            [victoryBlack runAction:[CCScaleTo actionWithDuration:.5 scale:1]];
+            [victoryWhite runAction:[CCScaleTo actionWithDuration:.5 scale:1]];
+        }
+        
 	}
 	
 	return self;
@@ -205,6 +239,9 @@ NSString* kTerritoryFile = @"territories";
     newX = MAX(-220.f, newX);
     
     self.position = ccp(newX, newY);
+    
+    victoryBlack.position = ccpAdd(victoryBlack.position, delta);
+    victoryWhite.position = ccpAdd(victoryWhite.position, delta);
  
     //NSLog(@"position: %f, %f", newX, newY);
         

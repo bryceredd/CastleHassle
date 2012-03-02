@@ -431,7 +431,7 @@ static Battlefield * instance = nil;
 	// check for winner
 	BOOL opponentLeft = YES;
 	if(gameTime > NO_FIRE_TIME) {
-    return YES;
+
 		opponentLeft = NO;
 		for(PlayerArea* pa in playerAreaManager.playerAreas) {
         

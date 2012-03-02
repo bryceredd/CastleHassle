@@ -91,6 +91,10 @@
 		gtype = @"AI - Medium";
 	if(g == hard)
 		gtype = @"AI - Hard";
+        
+    if([[GameSettings instance] isCampaign]) {
+        gtype = @"Royal Campaign";
+    }
 	
 	CCLabelTTF* gt = [CCLabelTTF labelWithString:gtype fontName:@"Arial-BoldMT" fontSize:24];
 	[gt setColor:ccc3(15, 147, 222)];

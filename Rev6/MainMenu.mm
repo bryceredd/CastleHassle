@@ -14,6 +14,7 @@
 #import "MapScreen.h"
 #import "Credits.h"
 #import "BackButtonLayer.h"
+#import "GameSettings.h"
 
 @implementation MainMenu
 
@@ -39,7 +40,6 @@ static MainMenu * instance = nil;
     if ((self = [super init])) {
         [self addChild:[MainMenuLayer node] z:1 tag:MAIN_MENU_LAYER];
 
-		
         [[SimpleAudioEngine sharedEngine] preloadBackgroundMusic:@"background-music.caf"];
         
         if ([SimpleAudioEngine sharedEngine].willPlayBackgroundMusic) {
@@ -47,6 +47,8 @@ static MainMenu * instance = nil;
         }
     
 		[[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"background-music.caf"];
+
+        [GameSettings instance];
 		
     }
 		
@@ -95,6 +97,8 @@ static MainMenu * instance = nil;
 		[self makeButtonWithString:@"How-to-play"
 						atPosition:ccp(70,-75) 
 					withSelector:@selector(howToPlay:)];
+                    
+        
 	}
 	return self;
 }

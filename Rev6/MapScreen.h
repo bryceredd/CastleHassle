@@ -23,6 +23,9 @@
 	
 	CCSprite* left;
 	CCSprite* right;
+    
+    CCLabelTTF* victoryBlack;
+    CCLabelTTF* victoryWhite;
 }
 
 @property(nonatomic, retain) NSMutableArray* statusGrid;

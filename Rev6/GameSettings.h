@@ -26,8 +26,6 @@ typedef enum gametype {
 @interface GameSettings : NSObject {
 	uint playerID;
 	uint numPlayers;
-	BOOL followShot;
-	BOOL hasSound;
 	gametype type;
 	tileset backgroundType;
 	uint territoryID;
