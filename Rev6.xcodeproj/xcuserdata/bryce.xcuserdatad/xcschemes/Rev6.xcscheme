@@ -14,8 +14,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "02F5975914BDCB3F00C9349A"
-               BuildableName = "generic.app"
-               BlueprintName = "generic"
+               BuildableName = "ch.app"
+               BlueprintName = "ch"
                ReferencedContainer = "container:Rev6.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -32,8 +32,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "02F5975914BDCB3F00C9349A"
-            BuildableName = "generic.app"
-            BlueprintName = "generic"
+            BuildableName = "ch.app"
+            BlueprintName = "ch"
             ReferencedContainer = "container:Rev6.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -44,6 +44,7 @@
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Debug"
+      ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       enablesOpenGLESFrameCapture = "YES"
       allowLocationSimulation = "YES">
@@ -51,8 +52,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "02F5975914BDCB3F00C9349A"
-            BuildableName = "generic.app"
-            BlueprintName = "generic"
+            BuildableName = "ch.app"
+            BlueprintName = "ch"
             ReferencedContainer = "container:Rev6.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -74,8 +75,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "02F5975914BDCB3F00C9349A"
-            BuildableName = "generic.app"
-            BlueprintName = "generic"
+            BuildableName = "ch.app"
+            BlueprintName = "ch"
             ReferencedContainer = "container:Rev6.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
